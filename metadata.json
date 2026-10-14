@@ -1,0 +1,12 @@
+{
+  "name": "Dandelious",
+  "description": "This is Dandelious, your AI Page for privacy and quality, hosted by Context Cloud.",
+  "requestFramePermissions": [
+    "microphone",
+    "camera",
+    "display-capture"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "summary": "Überarbeitete technische Spezifikation und Implementierungsplan für das Dandelious Benutzer-Authentifizierungs- und sichere Speichersystem. Behebt Privilege Escalation bei User-Tiers via Firestore Security Rules und Client-Stripping, implementiert DSGVO-konforme kaskadierende Account-Löschung über Client & Backend, konsolidiert Datenmodelle und Fehlerbehandlung gemäß dem Firebase-Sicherheitsleitfaden.",
+  "updatedAt": "2026-10-13T12:50:12.989029748Z",
+  "requestFeedback": true,
+  "userFacing": true
+}

@@ -1,0 +1,93 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Secure user profile document with client-side privilege escalation guards",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique Firebase Auth user identifier" },
+        "email": { "type": "string", "description": "Primary user email address" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "photoURL": { "type": "string", "description": "Avatar photo URL" },
+        "tier": { 
+          "type": "string", 
+          "enum": ["Kostenlos", "Plus", "Pro", "Ultra", "Extreme", "Expanded", "Unlimited"], 
+          "description": "Protected user subscription tier; non-writable by client" 
+        },
+        "userTier": { 
+          "type": "string", 
+          "enum": ["Kostenlos", "Plus", "Pro", "Ultra", "Extreme", "Expanded", "Unlimited"], 
+          "description": "Protected alias for subscription tier" 
+        },
+        "createdAt": { "type": "number", "description": "Timestamp when profile was created" },
+        "updatedAt": { "type": "number", "description": "Timestamp when profile was last updated" },
+        "lastLoginAt": { "type": "number", "description": "Timestamp of last sign-in" },
+        "authProvider": { "type": "string", "description": "Identity provider such as password or google" },
+        "userNickname": { "type": "string", "description": "Custom user nickname" },
+        "userOccupation": { "type": "string", "description": "User occupation or role" },
+        "userAbout": { "type": "string", "description": "Personal bio or instructions context" }
+      },
+      "required": ["uid", "createdAt", "updatedAt"]
+    },
+    "SubscriptionStatus": {
+      "title": "SubscriptionStatus",
+      "description": "Server-only subscription record protected from client modification",
+      "type": "object",
+      "properties": {
+        "tier": { "type": "string", "description": "Active tier tier assigned by payment system" },
+        "status": { "type": "string", "enum": ["active", "canceled", "past_due", "trialing"], "description": "Subscription state" },
+        "validUntil": { "type": "number", "description": "Expiration epoch timestamp" },
+        "stripeSubscriptionId": { "type": "string", "description": "Payment processor reference" }
+      },
+      "required": ["tier", "status"]
+    },
+    "UserSettings": {
+      "title": "UserSettings",
+      "description": "User preferences and system configuration",
+      "type": "object",
+      "properties": {
+        "config": { "type": "object", "description": "Application settings dictionary" },
+        "topics": { "type": "array", "description": "Memory topics extracted by engine" },
+        "graph": { "type": "object", "description": "Memory graph topology" }
+      }
+    },
+    "UserChat": {
+      "title": "UserChat",
+      "description": "Stored conversational chat session for an authenticated user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner user UID" },
+        "title": { "type": "string", "description": "Chat title" },
+        "createdAt": { "type": "number", "description": "Creation timestamp" },
+        "updatedAt": { "type": "number", "description": "Last update timestamp" },
+        "model": { "type": "string", "description": "Active model identifier" },
+        "isPinned": { "type": "boolean", "description": "Pinned status" },
+        "tags": { "type": "array", "description": "Associated topic tags" },
+        "messages": { "type": "array", "description": "Chat message history array" }
+      },
+      "required": ["userId", "title"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Primary user profile document restricted to the authenticated owner with protected tier field"
+    },
+    "/users/{userId}/subscription/status": {
+      "schema": "SubscriptionStatus",
+      "description": "Read-only subscription subcollection written exclusively by server or Cloud Functions"
+    },
+    "/users/{userId}/settings/{settingId}": {
+      "schema": "UserSettings",
+      "description": "User-specific settings and memory preferences"
+    },
+    "/users/{userId}/chats/{chatId}": {
+      "schema": "UserChat",
+      "description": "User-specific chat conversations and history"
+    },
+    "/user_settings/{userId}": {
+      "schema": "UserSettings",
+      "description": "Legacy fallback user settings document"
+    }
+  }
+}

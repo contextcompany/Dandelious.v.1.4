@@ -1,0 +1,65 @@
+{
+  "name": "Dandelious AI",
+  "short_name": "Dandelious",
+  "description": "Desktop-grade Liquid Glass KI-Workspace mit Dandelious, ARC Gruppenchat & Dice Studio.",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#030712",
+  "theme_color": "#030712",
+  "orientation": "any",
+  "lang": "de",
+  "categories": ["productivity", "utilities", "developer", "education"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Finanzen",
+      "short_name": "Finanzen",
+      "description": "Börsenkurse, Finanznachrichten & Märkte in Dandelious öffnen",
+      "url": "/?view=stocks",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Chat",
+      "short_name": "Chat",
+      "description": "Dandelious KI-Chat & Sprachassistent öffnen",
+      "url": "/?view=chat",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Projekte",
+      "short_name": "Projekte",
+      "description": "Dandelious Projekte, Dokumente & Workspace öffnen",
+      "url": "/?view=projects",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+  "prefer_related_applications": false
+}

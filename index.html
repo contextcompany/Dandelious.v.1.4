@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="de" class="dark bg-[#020409] text-slate-100 antialiased selection:bg-lime-500/30 selection:text-lime-200">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content" />
+    <title>Dandelious</title>
+    <meta name="description" content="This is Dandelious, your AI Page for privacy and quality, hosted by Context Cloud." />
+    <meta property="og:title" content="Dandelious" />
+    <meta property="og:description" content="This is Dandelious, your AI Page for privacy and quality, hosted by Context Cloud." />
+    <meta property="og:image" content="/icon-512.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/icon-512.png" />
+    
+    <!-- PWA & Mobile Web App Capabilities -->
+    <link rel="manifest" id="pwa-manifest" href="/manifest.json" />
+    <script>
+      (function() {
+        try {
+          var pathname = window.location.pathname.toLowerCase();
+          var hash = window.location.hash.toLowerCase();
+          var params = new URLSearchParams(window.location.search);
+          
+          var targetView = null;
+          if (pathname.indexOf('/wetter') === 0 || pathname.indexOf('/weather') === 0 || hash.indexOf('wetter') !== -1 || hash.indexOf('weather') !== -1 || params.get('view') === 'wetter') {
+            targetView = { key: 'wetter', path: '/wetter', name: 'Wetter', desc: 'Dandelious Wetter' };
+          } else if (pathname.indexOf('/crypto') === 0 || pathname.indexOf('/krypto') === 0 || pathname.indexOf('/crypo') === 0 || hash.indexOf('crypto') !== -1 || hash.indexOf('krypto') !== -1 || hash.indexOf('crypo') !== -1 || params.get('view') === 'crypto') {
+            targetView = { key: 'crypto', path: '/crypto', name: 'Krypto', desc: 'Dandelious Crypto Studio' };
+          } else if (pathname.indexOf('/aktien') === 0 || pathname.indexOf('/stocks') === 0 || pathname.indexOf('/finanzen') === 0 || hash.indexOf('stocks') !== -1 || params.get('view') === 'stocks') {
+            targetView = { key: 'stocks', path: '/stocks', name: 'Finanzen', desc: 'Dandelious Aktien Studio' };
+          } else if (pathname.indexOf('/projekte') === 0 || pathname.indexOf('/projects') === 0 || hash.indexOf('projects') !== -1 || params.get('view') === 'projects') {
+            targetView = { key: 'projects', path: '/projects', name: 'Projekte', desc: 'Dandelious Projekt Studio' };
+          } else if (pathname.indexOf('/mediathek') === 0 || pathname.indexOf('/media') === 0 || hash.indexOf('mediathek') !== -1 || params.get('view') === 'mediathek') {
+            targetView = { key: 'mediathek', path: '/mediathek', name: 'Mediathek', desc: 'Dandelious Mediathek' };
+          } else if (pathname.indexOf('/releases') === 0 || pathname.indexOf('/release') === 0 || pathname.indexOf('/relase') === 0 || pathname.indexOf('/premieren') === 0 || hash.indexOf('releases') !== -1 || hash.indexOf('release') !== -1 || hash.indexOf('relase') !== -1 || params.get('view') === 'releases') {
+            targetView = { key: 'releases', path: '/releases', name: 'Releases', desc: 'Dandelious Releases Studio' };
+          } else if (pathname.indexOf('/remote') === 0 || hash.indexOf('remote') !== -1 || params.get('view') === 'remote') {
+            targetView = { key: 'remote', path: '/remote', name: 'Remote', desc: 'Dandelious Remote Desktop' };
+          } else if (pathname.indexOf('/dice') === 0 || pathname.indexOf('/code') === 0 || hash.indexOf('dice') !== -1 || params.get('view') === 'dice') {
+            targetView = { key: 'code', path: '/dice', name: 'Dice Studio', desc: 'Dandelious Dice Studio' };
+          }
+
+          if (targetView) {
+            var baseManifest = {
+              "name": "Dandelious " + targetView.name,
+              "short_name": targetView.name,
+              "description": targetView.desc,
+              "start_url": targetView.path,
+              "id": targetView.path,
+              "scope": "/",
+              "display": "standalone",
+              "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+              "background_color": "#030712",
+              "theme_color": "#030712",
+              "orientation": "any",
+              "lang": "de",
+              "icons": [
+                {
+                  "src": "/icon-192.png",
+                  "sizes": "192x192",
+                  "type": "image/png",
+                  "purpose": "any"
+                },
+                {
+                  "src": "/icon-512.png",
+                  "sizes": "512x512",
+                  "type": "image/png",
+                  "purpose": "any"
+                },
+                {
+                  "src": "/icon-512.png",
+                  "sizes": "512x512",
+                  "type": "image/png",
+                  "purpose": "maskable"
+                },
+                {
+                  "src": "/icon.svg",
+                  "sizes": "any",
+                  "type": "image/svg+xml",
+                  "purpose": "any"
+                }
+              ],
+              "prefer_related_applications": false
+            };
+
+            var manifestBlob = new Blob([JSON.stringify(baseManifest)], { type: 'application/json' });
+            var manifestUrl = URL.createObjectURL(manifestBlob);
+            
+            var linkEl = document.getElementById('pwa-manifest');
+            if (linkEl) {
+              linkEl.setAttribute('href', manifestUrl);
+            }
+            
+            // Also adjust apple title for correct iPad/iOS home-screen web app label
+            var appleTitleEl = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+            if (appleTitleEl) {
+              appleTitleEl.setAttribute('content', targetView.name);
+            }
+            
+            // Sync page title
+            document.title = "Dandelious " + targetView.name;
+          }
+        } catch(e) {
+          console.warn("Dynamic PWA manifest warning:", e);
+        }
+      })();
+    </script>
+    <meta name="theme-color" content="#020409" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Dandelious" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=M+PLUS+Rounded+1c:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('vanguard_engine_settings_v1');
+          if (saved) {
+            var cfg = JSON.parse(saved);
+            var root = document.documentElement;
+            if (cfg.fontScale) root.classList.add('font-size-' + cfg.fontScale);
+            if (cfg.boldMode) root.classList.add('font-weight-bold');
+            if (cfg.fontFamily) root.classList.add('font-family-' + cfg.fontFamily);
+          }
+        } catch(e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-[#000000] text-slate-100 overflow-hidden font-['Nunito','SF_Pro_Rounded',ui-rounded,sans-serif]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Register Dandelious Progressive Web App Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' })
+            .then((registration) => {
+              console.log('[Dandelious PWA] Service Worker registered with scope:', registration.scope);
+            })
+            .catch((error) => {
+              console.warn('[Dandelious PWA] Service Worker registration warning:', error);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
+

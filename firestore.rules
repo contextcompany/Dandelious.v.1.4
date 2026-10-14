@@ -1,0 +1,119 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Default Deny catch-all to prevent unauthorized access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Health / connection probe
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    // 1. User Profiles - Protected against Privilege Escalation & Insecure Updates
+    match /users/{userId} {
+      // Direct document reads are allowed for the authenticated owner only
+      allow get: if request.auth != null && request.auth.uid == userId;
+      // List queries are disabled to prevent user enumeration
+      allow list: if false;
+
+      // Profile creation: client cannot set elevated tiers on creation
+      allow create: if request.auth != null 
+        && request.auth.uid == userId
+        && (!('tier' in request.resource.data) || request.resource.data.tier == 'Kostenlos')
+        && (!('userTier' in request.resource.data) || request.resource.data.userTier == 'Kostenlos');
+
+      // Profile updates: 'tier', 'userTier', 'createdAt', and 'uid' CANNOT be altered by the client
+      allow update: if request.auth != null 
+        && request.auth.uid == userId
+        && request.resource.data.uid == userId
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['tier', 'userTier', 'createdAt', 'uid'])
+            || (request.resource.data.tier == resource.data.tier 
+                && (!('userTier' in resource.data) || request.resource.data.userTier == resource.data.userTier)
+                && (!('createdAt' in resource.data) || request.resource.data.createdAt == resource.data.createdAt)));
+
+      // Account deletion: owner can delete their profile document for GDPR compliance
+      allow delete: if request.auth != null && request.auth.uid == userId;
+
+      // Subscription Subcollection: Read-only for client; write is strictly server/admin SDK only
+      match /subscription/{statusId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if false;
+      }
+
+      // User Settings & Preferences Subcollection
+      match /settings/{settingId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // User Chats Subcollection
+      match /chats/{chatId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // 2. Legacy / Fallback User Settings
+    match /user_settings/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // 3. User Chats (Flat collection format)
+    match /user_chats/{chatId} {
+      allow read, update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+
+    // 4. Collaborative Arc Rooms
+    match /arc_rooms/{roomId} {
+      allow read, write: if true;
+      
+      match /{allPaths=**} {
+        allow read, write: if true;
+      }
+    }
+
+    match /arc_messages/{messageId} {
+      allow read, write: if true;
+    }
+
+    // 5. Community Hub
+    match /community_hub/{itemId} {
+      allow read, write: if true;
+
+      match /{allPaths=**} {
+        allow read, write: if true;
+      }
+    }
+
+    // 6. Private Hub Tokens
+    match /private_hub/{token} {
+      allow read, write: if true;
+    }
+
+    // 7. Saphire Projects
+    match /saphire_projects/{projectId} {
+      allow read, write: if true;
+
+      match /{allPaths=**} {
+        allow read, write: if true;
+      }
+    }
+
+    // 8. Access Cards Redemption
+    match /redeemed_access_cards/{cardCode} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if false;
+    }
+
+    // 9. Remote Devices & Pairings
+    match /remote_devices/{deviceId} {
+      allow read, write: if true;
+    }
+
+    match /remote_pairings/{code} {
+      allow read, write: if true;
+    }
+  }
+}
