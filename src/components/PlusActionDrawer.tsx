@@ -67,7 +67,7 @@ export const PlusActionDrawer: React.FC<PlusActionDrawerProps> = ({
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-            className="relative z-50 w-full bg-[#1c1c1e] sm:bg-[#242426] border-t border-white/10 border-x-0 border-b-0 rounded-t-[28px] sm:rounded-t-[32px] rounded-b-none mb-0 pt-3 pb-8 sm:pb-10 px-4 sm:px-6 shadow-[0_-12px_40px_rgba(0,0,0,0.95)] text-white select-none max-h-[85vh] overflow-y-auto custom-scrollbar"
+            className="relative z-50 w-full bg-[#1c1c1e] sm:bg-[#242426] border-0 rounded-t-[28px] sm:rounded-t-[32px] rounded-b-none mb-0 pt-3 pb-8 sm:pb-10 px-4 sm:px-6 shadow-[0_-12px_40px_rgba(0,0,0,0.95)] text-white select-none max-h-[85vh] overflow-y-auto custom-scrollbar"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="max-w-xl mx-auto w-full">
@@ -100,7 +100,7 @@ export const PlusActionDrawer: React.FC<PlusActionDrawerProps> = ({
                   }}
                   className="flex flex-col items-center gap-2 group cursor-pointer"
                 >
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#2c2c2e] group-hover:bg-[#343438] border border-white/5 group-hover:border-white/15 text-neutral-200 group-hover:text-white flex items-center justify-center transition-all shadow-md">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#2c2c2e] group-hover:bg-[#343438] border-0 group-hover:border-white/15 text-neutral-200 group-hover:text-white flex items-center justify-center transition-all shadow-md">
                     <ImagePlus className="w-7 h-7 sm:w-8 sm:h-8 stroke-[1.75]" />
                   </div>
                   <span className="text-xs sm:text-[13px] font-medium text-neutral-300 group-hover:text-white">Fotos</span>
@@ -122,7 +122,7 @@ export const PlusActionDrawer: React.FC<PlusActionDrawerProps> = ({
                   }}
                   className="flex flex-col items-center gap-2 group cursor-pointer"
                 >
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#2c2c2e] group-hover:bg-[#343438] border border-white/5 group-hover:border-white/15 text-neutral-200 group-hover:text-white flex items-center justify-center transition-all shadow-md">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#2c2c2e] group-hover:bg-[#343438] border-0 group-hover:border-white/15 text-neutral-200 group-hover:text-white flex items-center justify-center transition-all shadow-md">
                     <Camera className="w-7 h-7 sm:w-8 sm:h-8 stroke-[1.75]" />
                   </div>
                   <span className="text-xs sm:text-[13px] font-medium text-neutral-300 group-hover:text-white">Kamera</span>
@@ -144,7 +144,7 @@ export const PlusActionDrawer: React.FC<PlusActionDrawerProps> = ({
                   }}
                   className="flex flex-col items-center gap-2 group cursor-pointer"
                 >
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#2c2c2e] group-hover:bg-[#343438] border border-white/5 group-hover:border-white/15 text-neutral-200 group-hover:text-white flex items-center justify-center transition-all shadow-md">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#2c2c2e] group-hover:bg-[#343438] border-0 group-hover:border-white/15 text-neutral-200 group-hover:text-white flex items-center justify-center transition-all shadow-md">
                     <Paperclip className="w-7 h-7 sm:w-8 sm:h-8 stroke-[1.75]" />
                   </div>
                   <span className="text-xs sm:text-[13px] font-medium text-neutral-300 group-hover:text-white">Dateien</span>
@@ -175,7 +175,7 @@ export const PlusActionDrawer: React.FC<PlusActionDrawerProps> = ({
                     if (onSelectDocument) onSelectDocument();
                     onClose();
                   }}
-                  className="w-full flex items-center gap-4 px-5 py-3.5 rounded-full bg-[#2c2c2e] border border-white/5 text-left transition-colors cursor-pointer group shadow-sm"
+                  className="w-full flex items-center gap-4 px-5 py-3.5 rounded-full bg-[#2c2c2e] border-0 text-left transition-colors cursor-pointer group shadow-sm"
                 >
                   <FileText className="w-5.5 h-5.5 text-neutral-300 group-hover:text-white shrink-0 stroke-[1.75]" />
                   <div className="flex flex-col">
@@ -198,7 +198,7 @@ export const PlusActionDrawer: React.FC<PlusActionDrawerProps> = ({
                     if (onSelectCanvas) onSelectCanvas();
                     onClose();
                   }}
-                  className="w-full flex items-center gap-4 px-5 py-3.5 rounded-full bg-[#2c2c2e] border border-white/5 text-left transition-colors cursor-pointer group shadow-sm"
+                  className="w-full flex items-center gap-4 px-5 py-3.5 rounded-full bg-[#2c2c2e] border-0 text-left transition-colors cursor-pointer group shadow-sm"
                 >
                   <SquareCode className="w-5.5 h-5.5 text-neutral-300 group-hover:text-white shrink-0 stroke-[1.75]" />
                   <div className="flex flex-col">
@@ -221,7 +221,7 @@ export const PlusActionDrawer: React.FC<PlusActionDrawerProps> = ({
                     if (onSelectDeepResearch) onSelectDeepResearch();
                     onClose();
                   }}
-                  className="w-full flex items-center gap-4 px-5 py-3.5 rounded-full bg-[#2c2c2e] border border-white/5 text-left transition-colors cursor-pointer group shadow-sm"
+                  className="w-full flex items-center gap-4 px-5 py-3.5 rounded-full bg-[#2c2c2e] border-0 text-left transition-colors cursor-pointer group shadow-sm"
                 >
                   <Orbit className="w-5.5 h-5.5 text-neutral-300 group-hover:text-white shrink-0 stroke-[1.75]" />
                   <div className="flex flex-col">
@@ -244,7 +244,7 @@ export const PlusActionDrawer: React.FC<PlusActionDrawerProps> = ({
                     if (onSelectTutor) onSelectTutor();
                     onClose();
                   }}
-                  className="w-full flex items-center gap-4 px-5 py-3.5 rounded-full bg-[#2c2c2e] border border-white/5 text-left transition-colors cursor-pointer group shadow-sm"
+                  className="w-full flex items-center gap-4 px-5 py-3.5 rounded-full bg-[#2c2c2e] border-0 text-left transition-colors cursor-pointer group shadow-sm"
                 >
                   <BookOpen className="w-5.5 h-5.5 text-neutral-300 group-hover:text-white shrink-0 stroke-[1.75]" />
                   <div className="flex flex-col">

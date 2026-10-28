@@ -220,7 +220,7 @@ export const RpSettingsModal: React.FC<RpSettingsModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="font-extrabold text-base text-white">Dandelious Tabletop HTML Studio</h3>
-                <span className="px-2.5 py-0.5 rounded-full bg-lime-500/15 border border-lime-500/30 text-[10px] font-bold text-lime-300">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#4c8dff]/15 border border-[#4c8dff]/30 text-[10px] font-bold text-blue-200">
                   Application Engine v2.0
                 </span>
               </div>
@@ -230,7 +230,7 @@ export const RpSettingsModal: React.FC<RpSettingsModalProps> = ({
 
           <div className="flex items-center gap-2">
             {feedbackMsg && (
-              <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 rounded-xl animate-fade-in">
+              <span className="text-xs font-semibold text-[#4c8dff] bg-[#4c8dff]/15 border border-[#4c8dff]/30 px-3 py-1 rounded-xl animate-fade-in">
                 {feedbackMsg}
               </span>
             )}
@@ -278,14 +278,14 @@ export const RpSettingsModal: React.FC<RpSettingsModalProps> = ({
                   : 'text-slate-400 hover:text-white hover:bg-white/5'
               }`}
             >
-              <Download className="w-4 h-4 text-lime-400" />
+              <Download className="w-4 h-4 text-[#4c8dff]" />
               <span>Import / Export</span>
             </button>
           </div>
 
           <button
             onClick={handleCreateNewModule}
-            className="px-3.5 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded-xl bg-[#4c8dff]/20 hover:bg-[#4c8dff]/30 border border-[#4c8dff]/40 text-blue-200 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
           >
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Neues Modul</span>
@@ -382,13 +382,13 @@ export const RpSettingsModal: React.FC<RpSettingsModalProps> = ({
                     </button>
                     <button
                       onClick={() => insertTagAtCursor('{{USER_ROLE}}')}
-                      className="px-2 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] text-lime-300 font-mono cursor-pointer"
+                      className="px-2 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] text-blue-200 font-mono cursor-pointer"
                     >
                       &#123;&#123;USER_ROLE&#125;&#125;
                     </button>
                     <button
                       onClick={() => insertTagAtCursor('{{ROOM_CODE}}')}
-                      className="px-2 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] text-lime-300 font-mono cursor-pointer"
+                      className="px-2 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] text-blue-200 font-mono cursor-pointer"
                     >
                       &#123;&#123;ROOM_CODE&#125;&#125;
                     </button>
@@ -491,7 +491,7 @@ export const RpSettingsModal: React.FC<RpSettingsModalProps> = ({
               {/* Export Box */}
               <div className="bg-[#12131b] border border-white/10 rounded-2xl p-5 space-y-3 shadow-lg">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-lime-500/15 border border-lime-500/30 flex items-center justify-center text-lime-400">
+                  <div className="w-9 h-9 rounded-xl bg-[#4c8dff]/15 border border-[#4c8dff]/30 flex items-center justify-center text-[#4c8dff]">
                     <Download className="w-5 h-5" />
                   </div>
                   <div>
@@ -506,7 +506,7 @@ export const RpSettingsModal: React.FC<RpSettingsModalProps> = ({
 
                 <button
                   onClick={handleExportJson}
-                  className="w-full py-2.5 rounded-xl bg-lime-600 hover:bg-lime-500 text-white font-extrabold text-xs transition-all cursor-pointer shadow-md flex items-center justify-center gap-2"
+                  className="w-full py-2.5 rounded-xl bg-[#4c8dff] hover:bg-blue-600 text-white font-extrabold text-xs transition-all cursor-pointer shadow-md flex items-center justify-center gap-2"
                 >
                   <Download className="w-4 h-4" />
                   <span>Setup Herunterladen</span>
@@ -516,7 +516,7 @@ export const RpSettingsModal: React.FC<RpSettingsModalProps> = ({
               {/* Import Box */}
               <div className="bg-[#12131b] border border-white/10 rounded-2xl p-5 space-y-3 shadow-lg">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-lime-500/15 border border-lime-500/30 flex items-center justify-center text-lime-400">
+                  <div className="w-9 h-9 rounded-xl bg-[#4c8dff]/15 border border-[#4c8dff]/30 flex items-center justify-center text-[#4c8dff]">
                     <Upload className="w-5 h-5" />
                   </div>
                   <div>
@@ -539,7 +539,7 @@ export const RpSettingsModal: React.FC<RpSettingsModalProps> = ({
 
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full py-2.5 rounded-xl bg-lime-500 hover:bg-lime-400 text-black font-extrabold text-xs transition-all cursor-pointer shadow-md flex items-center justify-center gap-2"
+                  className="w-full py-2.5 rounded-xl bg-[#4c8dff] hover:bg-blue-600 text-white font-extrabold text-xs transition-all cursor-pointer shadow-md flex items-center justify-center gap-2"
                 >
                   <Upload className="w-4 h-4" />
                   <span>JSON Datei Auswählen</span>

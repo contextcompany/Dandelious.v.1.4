@@ -34,7 +34,7 @@ export const SteamAchievementToast: React.FC = () => {
       case 'flame': return <Flame className="w-5 h-5 text-orange-400" />;
       case 'shield': return <Shield className="w-5 h-5 text-cyan-400" />;
       case 'star': return <Star className="w-5 h-5 text-yellow-300 fill-yellow-300" />;
-      case 'zap': return <Zap className="w-5 h-5 text-lime-400 fill-lime-400" />;
+      case 'zap': return <Zap className="w-5 h-5 text-blue-400 fill-blue-400" />;
       case 'target': return <Target className="w-5 h-5 text-purple-400" />;
       default: return <Sparkles className="w-5 h-5 text-amber-400" />;
     }

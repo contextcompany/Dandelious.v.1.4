@@ -79,7 +79,7 @@ const CATEGORY_ICONS: Record<MemoryCategory, React.ComponentType<{ className?: s
 
 const CATEGORY_COLORS: Record<MemoryCategory, { stroke: string; fill: string; text: string; glow: string }> = {
   person: { stroke: '#60a5fa', fill: 'rgba(96, 165, 250, 0.15)', text: '#93c5fd', glow: 'rgba(96, 165, 250, 0.4)' },
-  technology: { stroke: '#C5DC57', fill: 'rgba(197, 220, 87, 0.18)', text: '#d4ec67', glow: 'rgba(197, 220, 87, 0.5)' },
+  technology: { stroke: '#3b82f6', fill: 'rgba(59, 130, 246, 0.2)', text: '#93c5fd', glow: 'rgba(59, 130, 246, 0.5)' },
   preference: { stroke: '#f472b6', fill: 'rgba(244, 114, 182, 0.15)', text: '#fbcfe8', glow: 'rgba(244, 114, 182, 0.4)' },
   project: { stroke: '#fbbf24', fill: 'rgba(251, 191, 36, 0.15)', text: '#fde68a', glow: 'rgba(251, 191, 36, 0.4)' },
   fact: { stroke: '#a78bfa', fill: 'rgba(167, 139, 250, 0.15)', text: '#ddd6fe', glow: 'rgba(167, 139, 250, 0.4)' },
@@ -246,7 +246,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
       .attr('orient', 'auto')
       .append('path')
       .attr('d', 'M0,-5L10,0L0,5')
-      .attr('fill', '#C5DC57');
+      .attr('fill', '#3b82f6');
 
     // Glow filter
     const filter = defs.append('filter')
@@ -309,7 +309,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
       emptyGroup.append('text')
         .attr('text-anchor', 'middle')
         .attr('y', 5)
-        .attr('fill', '#C5DC57')
+        .attr('fill', '#3b82f6')
         .attr('font-size', '14px')
         .attr('font-weight', '600')
         .text('Wissensbasis ist leer');
@@ -341,7 +341,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
         const isConnected = selectedNodeId && 
           ((typeof d.source === 'object' ? d.source.id : d.source) === selectedNodeId || 
            (typeof d.target === 'object' ? d.target.id : d.target) === selectedNodeId);
-        return isConnected ? '#C5DC57' : 'rgba(255, 255, 255, 0.15)';
+        return isConnected ? '#3b82f6' : 'rgba(255, 255, 255, 0.15)';
       })
       .attr('stroke-width', d => {
         const isConnected = selectedNodeId && 
@@ -405,7 +405,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
     nodeContainers.append('circle')
       .attr('r', d => d.radius + 6)
       .attr('fill', 'none')
-      .attr('stroke', d => CATEGORY_COLORS[d.category]?.stroke || '#C5DC57')
+      .attr('stroke', d => CATEGORY_COLORS[d.category]?.stroke || '#3b82f6')
       .attr('stroke-opacity', d => selectedNodeId === d.id ? 0.8 : hoveredNodeId === d.id ? 0.5 : 0.15)
       .attr('stroke-width', d => selectedNodeId === d.id ? 2 : 1)
       .attr('stroke-dasharray', d => d.confidence < 0.8 ? '3 3' : 'none');
@@ -414,7 +414,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
     nodeContainers.append('circle')
       .attr('r', d => d.radius)
       .attr('fill', d => {
-        if (selectedNodeId === d.id) return '#C5DC57';
+        if (selectedNodeId === d.id) return '#3b82f6';
         return CATEGORY_COLORS[d.category]?.fill || 'rgba(255, 255, 255, 0.1)';
       })
       .attr('stroke', d => {
@@ -442,7 +442,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
       .attr('font-weight', d => selectedNodeId === d.id ? '700' : '500')
       .attr('font-family', 'Plus Jakarta Sans, sans-serif')
       .attr('fill', d => {
-        if (selectedNodeId === d.id) return '#C5DC57';
+        if (selectedNodeId === d.id) return '#3b82f6';
         if (hoveredNodeId === d.id) return '#ffffff';
         return 'rgba(255, 255, 255, 0.85)';
       })
@@ -600,7 +600,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
       {/* Top Header Bar */}
       <header className="shrink-0 h-16 border-b border-white/10 bg-neutral-950/40 backdrop-blur-xl px-4 sm:px-6 flex items-center justify-between z-20">
         <div className="flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-2xl bg-[#C5DC57]/15 border border-[#C5DC57]/30 flex items-center justify-center text-[#C5DC57] shadow-sm">
+          <div className="w-10 h-10 rounded-2xl bg-blue-600/15 border border-blue-500/30 flex items-center justify-center text-[#3b82f6] shadow-sm">
             <Network className="w-5 h-5 stroke-[2]" />
           </div>
           <div>
@@ -608,7 +608,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
               <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
                 Dandelious Knowledge Base
               </h1>
-              <span className="px-2 py-0.5 rounded-full bg-[#C5DC57]/15 text-[#d4ec67] border border-[#C5DC57]/25 text-[10px] font-mono font-bold tracking-wider uppercase">
+              <span className="px-2 py-0.5 rounded-full bg-blue-600/15 text-blue-300 border border-blue-500/25 text-[10px] font-mono font-bold tracking-wider uppercase">
                 GRAPH v1
               </span>
             </div>
@@ -628,7 +628,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
               }}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'network'
-                  ? 'bg-[#C5DC57] text-[#0e1603] shadow-md'
+                  ? 'bg-[#2563eb] text-white shadow-md'
                   : 'text-neutral-300 hover:text-white'
               }`}
             >
@@ -641,7 +641,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
               }}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'matrix'
-                  ? 'bg-[#C5DC57] text-[#0e1603] shadow-md'
+                  ? 'bg-[#2563eb] text-white shadow-md'
                   : 'text-neutral-300 hover:text-white'
               }`}
             >
@@ -654,7 +654,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
               }}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'topics'
-                  ? 'bg-[#C5DC57] text-[#0e1603] shadow-md'
+                  ? 'bg-[#2563eb] text-white shadow-md'
                   : 'text-neutral-300 hover:text-white'
               }`}
             >
@@ -667,7 +667,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
               playSound('click', enableSoundEffects);
               setIsAddNodeOpen(true);
             }}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-[#C5DC57] hover:bg-[#b5cc48] text-[#0e1603] font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold text-xs shadow-md transition-all active:scale-95 cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span className="hidden sm:inline">Knoten hinzufügen</span>
@@ -681,7 +681,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
             className="flex items-center gap-1.5 px-3 py-2 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-medium text-xs transition-all backdrop-blur-md cursor-pointer"
             title="KI-Wissens-Extraktor testen"
           >
-            <Sparkles className="w-4 h-4 text-lime-400" />
+            <Sparkles className="w-4 h-4 text-blue-400" />
             <span className="hidden md:inline">Auto-Extraktion</span>
           </button>
 
@@ -710,7 +710,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Knoten oder Relation suchen..."
-              className="w-full bg-white/[0.06] border border-white/10 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-neutral-400 focus:outline-none focus:border-[#C5DC57]/50 transition-colors"
+              className="w-full bg-white/[0.06] border border-white/10 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-neutral-400 focus:outline-none focus:border-blue-500/50 transition-colors"
             />
             {searchQuery && (
               <button
@@ -750,7 +750,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                   }}
                   className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-[#C5DC57]/20 text-[#d4ec67] border border-[#C5DC57]/30 font-semibold'
+                      ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30 font-semibold'
                       : 'bg-white/5 text-neutral-400 hover:text-white'
                   }`}
                 >
@@ -766,7 +766,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
         {/* Quick Graph Summary Metrics */}
         <div className="hidden lg:flex items-center gap-4 text-xs text-neutral-400">
           <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-[#C5DC57] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-[#3b82f6] animate-pulse" />
             <span className="text-white font-semibold font-mono">{graphData.nodes.length}</span>
             <span>Knoten</span>
           </div>
@@ -829,7 +829,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                 className="p-2.5 rounded-2xl bg-neutral-950/60 hover:bg-white/10 backdrop-blur-xl border border-white/15 text-neutral-200 hover:text-white shadow-2xl flex items-center justify-center cursor-pointer transition-colors"
                 title="Relation zwischen zwei Knoten verbinden"
               >
-                <LinkIcon className="w-4 h-4 text-lime-400" />
+                <LinkIcon className="w-4 h-4 text-blue-400" />
               </button>
             </div>
 
@@ -851,8 +851,8 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                           className="w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-base shadow-inner"
                           style={{
                             backgroundColor: CATEGORY_COLORS[selectedNode.category]?.fill || 'rgba(197, 220, 87, 0.2)',
-                            color: CATEGORY_COLORS[selectedNode.category]?.stroke || '#C5DC57',
-                            border: `1px solid ${CATEGORY_COLORS[selectedNode.category]?.stroke || '#C5DC57'}`
+                            color: CATEGORY_COLORS[selectedNode.category]?.stroke || '#3b82f6',
+                            border: `1px solid ${CATEGORY_COLORS[selectedNode.category]?.stroke || '#3b82f6'}`
                           }}
                         >
                           {selectedNode.label.charAt(0).toUpperCase()}
@@ -893,7 +893,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       <div className="p-3 bg-white/[0.04] rounded-2xl border border-white/10">
                         <span className="text-[10px] text-neutral-400 block">KI-Konfidenz</span>
-                        <span className="text-sm font-bold text-[#C5DC57] font-mono">
+                        <span className="text-sm font-bold text-[#3b82f6] font-mono">
                           {Math.round((selectedNode.confidence ?? 0.95) * 100)}%
                         </span>
                       </div>
@@ -909,7 +909,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                     <div className="space-y-2 pt-1">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-semibold text-neutral-300 flex items-center gap-1.5">
-                          <LinkIcon className="w-3.5 h-3.5 text-lime-400" />
+                          <LinkIcon className="w-3.5 h-3.5 text-blue-400" />
                           <span>Verbundene Relationen ({connectedEdges.length})</span>
                         </span>
                         <button
@@ -917,7 +917,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                             setEdgeSourceId(selectedNode.id);
                             setIsAddEdgeOpen(true);
                           }}
-                          className="text-[11px] text-lime-400 hover:text-lime-300 font-medium cursor-pointer"
+                          className="text-[11px] text-blue-400 hover:text-blue-300 font-medium cursor-pointer"
                         >
                           + Verbinden
                         </button>
@@ -940,12 +940,12 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                                 className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-between text-xs group/edge"
                               >
                                 <div className="flex items-center gap-2 min-w-0">
-                                  <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${isOutgoing ? 'text-lime-400' : 'text-blue-400'}`} />
+                                  <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${isOutgoing ? 'text-blue-400' : 'text-blue-400'}`} />
                                   <div className="truncate">
                                     <span className="text-neutral-400 text-[11px] italic mr-1.5">{edge.relation}:</span>
                                     <button
                                       onClick={() => setSelectedNodeId(otherId)}
-                                      className="font-bold text-white hover:text-lime-300 underline-offset-2 hover:underline cursor-pointer"
+                                      className="font-bold text-white hover:text-blue-300 underline-offset-2 hover:underline cursor-pointer"
                                     >
                                       {otherNode?.label || otherId}
                                     </button>
@@ -975,7 +975,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                           playSound('click', enableSoundEffects);
                           onNewChatWithPrompt(`Erzähle mir alles, was du über "${selectedNode.label}" (${selectedNode.description || ''}) in meiner Wissensbasis weißt.`);
                         }}
-                        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl bg-[#C5DC57] hover:bg-[#b5cc48] text-[#0e1603] font-bold text-xs shadow-md transition-all cursor-pointer"
+                        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold text-xs shadow-md transition-all cursor-pointer"
                       >
                         <MessageSquare className="w-3.5 h-3.5" />
                         <span>Im Chat analysieren</span>
@@ -1042,10 +1042,10 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                               className="p-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 transition-all cursor-pointer group"
                             >
                               <div className="flex items-center justify-between">
-                                <span className="font-semibold text-xs text-white group-hover:text-lime-300">
+                                <span className="font-semibold text-xs text-white group-hover:text-blue-300">
                                   {node.label}
                                 </span>
-                                <span className="text-[10px] text-[#C5DC57] font-mono">
+                                <span className="text-[10px] text-[#3b82f6] font-mono">
                                   {Math.round((node.confidence ?? 0.9) * 100)}%
                                 </span>
                               </div>
@@ -1091,7 +1091,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                   playSound('click', enableSoundEffects);
                   setIsAddTopicOpen(true);
                 }}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-[#C5DC57] text-[#0e1603] font-bold text-xs shadow-md cursor-pointer"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-[#2563eb] text-white font-bold text-xs shadow-md cursor-pointer"
               >
                 <Plus className="w-4 h-4 stroke-[2.5]" />
                 <span>Thema hinzufügen</span>
@@ -1158,7 +1158,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
             >
               <div className="flex items-center justify-between pb-2 border-b border-white/10">
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <Plus className="w-4 h-4 text-lime-400 stroke-[2.5]" />
+                  <Plus className="w-4 h-4 text-blue-400 stroke-[2.5]" />
                   <span>Neuen Wissensknoten erstellen</span>
                 </h3>
                 <button
@@ -1180,7 +1180,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                     value={nodeLabel}
                     onChange={(e) => setNodeLabel(e.target.value)}
                     placeholder="z.B. Python, Vincent, Next.js, Projekt Arc..."
-                    className="w-full bg-white/[0.06] border border-white/15 rounded-2xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-lime-400"
+                    className="w-full bg-white/[0.06] border border-white/15 rounded-2xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
                   />
                 </div>
 
@@ -1191,7 +1191,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                   <select
                     value={nodeCategory}
                     onChange={(e) => setNodeCategory(e.target.value as MemoryCategory)}
-                    className="w-full bg-[#181a24] border border-white/15 rounded-2xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-lime-400"
+                    className="w-full bg-[#181a24] border border-white/15 rounded-2xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
                   >
                     {(Object.keys(CATEGORY_CONFIG) as MemoryCategory[]).map(cat => (
                       <option key={cat} value={cat}>
@@ -1210,7 +1210,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                     onChange={(e) => setNodeDescription(e.target.value)}
                     rows={2}
                     placeholder="Zusätzliche Fakten, Vorlieben oder Beschreibungen..."
-                    className="w-full bg-white/[0.06] border border-white/15 rounded-2xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-lime-400 resize-none"
+                    className="w-full bg-white/[0.06] border border-white/15 rounded-2xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-blue-500 resize-none"
                   />
                 </div>
 
@@ -1254,7 +1254,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-2xl bg-[#C5DC57] text-[#0e1603] font-bold text-xs shadow-md hover:bg-[#b5cc48] cursor-pointer"
+                    className="px-5 py-2 rounded-2xl bg-[#2563eb] text-white font-bold text-xs shadow-md hover:bg-[#1d4ed8] cursor-pointer"
                   >
                     Knoten anlegen
                   </button>
@@ -1277,7 +1277,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
             >
               <div className="flex items-center justify-between pb-2 border-b border-white/10">
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <LinkIcon className="w-4 h-4 text-lime-400 stroke-[2.5]" />
+                  <LinkIcon className="w-4 h-4 text-blue-400 stroke-[2.5]" />
                   <span>Relation zwischen Knoten erstellen</span>
                 </h3>
                 <button
@@ -1297,7 +1297,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                     required
                     value={edgeSourceId}
                     onChange={(e) => setEdgeSourceId(e.target.value)}
-                    className="w-full bg-[#181a24] border border-white/15 rounded-2xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-lime-400"
+                    className="w-full bg-[#181a24] border border-white/15 rounded-2xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
                   >
                     <option value="">Ausgangsknoten wählen...</option>
                     {graphData.nodes.map(n => (
@@ -1316,7 +1316,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                     required
                     value={edgeTargetId}
                     onChange={(e) => setEdgeTargetId(e.target.value)}
-                    className="w-full bg-[#181a24] border border-white/15 rounded-2xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-lime-400"
+                    className="w-full bg-[#181a24] border border-white/15 rounded-2xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
                   >
                     <option value="">Zielknoten wählen...</option>
                     {graphData.nodes.filter(n => n.id !== edgeSourceId).map(n => (
@@ -1337,7 +1337,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                     value={edgeRelationText}
                     onChange={(e) => setEdgeRelationText(e.target.value)}
                     placeholder="z.B. nutzt, arbeitet an, entwickelt, bevorzugt..."
-                    className="w-full bg-white/[0.06] border border-white/15 rounded-2xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-lime-400"
+                    className="w-full bg-white/[0.06] border border-white/15 rounded-2xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-blue-500"
                   />
                 </div>
 
@@ -1351,7 +1351,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-2xl bg-[#C5DC57] text-[#0e1603] font-bold text-xs shadow-md hover:bg-[#b5cc48] cursor-pointer"
+                    className="px-5 py-2 rounded-2xl bg-[#2563eb] text-white font-bold text-xs shadow-md hover:bg-[#1d4ed8] cursor-pointer"
                   >
                     Verbinden
                   </button>
@@ -1374,7 +1374,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
             >
               <div className="flex items-center justify-between pb-2 border-b border-white/10">
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-lime-400" />
+                  <Sparkles className="w-4 h-4 text-blue-400" />
                   <span>Automatische Wissensextraktion testen</span>
                 </h3>
                 <button
@@ -1395,11 +1395,11 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                   onChange={(e) => setExtractorText(e.target.value)}
                   rows={4}
                   placeholder="z.B. Ich heiße Vincent, wohne in Berlin und entwickle gerade ein großes KI-Projekt mit TypeScript, Next.js und Drizzle ORM."
-                  className="w-full bg-white/[0.06] border border-white/15 rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-lime-400 resize-none"
+                  className="w-full bg-white/[0.06] border border-white/15 rounded-2xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 resize-none"
                 />
 
                 {extractorResult && (
-                  <div className="p-3 bg-lime-500/10 border border-lime-500/20 rounded-2xl text-xs text-lime-300 space-y-1">
+                  <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl text-xs text-blue-300 space-y-1">
                     <span className="font-bold flex items-center gap-1.5">
                       <Check className="w-3.5 h-3.5" /> Extraktion erfolgreich
                     </span>
@@ -1416,7 +1416,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                     onClick={() => {
                       setExtractorText("Merke dir: Meine Lieblingsfarbe ist Limettengrün und ich nutze täglich React, Tailwind und Gemini 3.7 Flash.");
                     }}
-                    className="text-[11px] text-lime-400 hover:text-lime-300 underline-offset-2 hover:underline cursor-pointer"
+                    className="text-[11px] text-blue-400 hover:text-blue-300 underline-offset-2 hover:underline cursor-pointer"
                   >
                     Beispiel einfügen
                   </button>
@@ -1431,7 +1431,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2 rounded-2xl bg-[#C5DC57] text-[#0e1603] font-bold text-xs shadow-md hover:bg-[#b5cc48] cursor-pointer"
+                      className="px-5 py-2 rounded-2xl bg-[#2563eb] text-white font-bold text-xs shadow-md hover:bg-[#1d4ed8] cursor-pointer"
                     >
                       Extrahieren & Speichern
                     </button>
@@ -1452,7 +1452,7 @@ export const KnowledgeBaseDashboard: React.FC<KnowledgeBaseDashboardProps> = ({
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             className="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-full bg-neutral-900/90 text-white text-xs font-semibold border border-white/20 shadow-2xl backdrop-blur-xl z-50 flex items-center gap-2"
           >
-            <Sparkles className="w-3.5 h-3.5 text-lime-400" />
+            <Sparkles className="w-3.5 h-3.5 text-blue-400" />
             <span>{toastMessage}</span>
           </motion.div>
         )}

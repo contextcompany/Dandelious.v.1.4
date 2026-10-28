@@ -811,9 +811,9 @@ export const MemoryGraphMindmap: React.FC<MemoryGraphMindmapProps> = ({
 
                         {hasRelations ? (
                           <div className="max-h-32 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
-                            {relations.outgoing.map(rel => (
+                            {relations.outgoing.map((rel, rIdx) => (
                               <div
-                                key={rel.edgeId}
+                                key={`out-rel-${rel.edgeId || rIdx}-${rIdx}`}
                                 className="flex items-center justify-between p-1.5 rounded-lg bg-white/5 text-xs text-neutral-300 group"
                               >
                                 <div className="flex items-center gap-1.5 truncate">
@@ -830,9 +830,9 @@ export const MemoryGraphMindmap: React.FC<MemoryGraphMindmapProps> = ({
                               </div>
                             ))}
 
-                            {relations.incoming.map(rel => (
+                            {relations.incoming.map((rel, rIdx) => (
                               <div
-                                key={rel.edgeId}
+                                key={`in-rel-${rel.edgeId || rIdx}-${rIdx}`}
                                 className="flex items-center justify-between p-1.5 rounded-lg bg-white/5 text-xs text-neutral-300 group"
                               >
                                 <div className="flex items-center gap-1.5 truncate">
@@ -964,18 +964,18 @@ export const MemoryGraphMindmap: React.FC<MemoryGraphMindmapProps> = ({
 
                       {totalRelCount > 0 && (
                         <div className="pt-1.5 border-t border-white/5 flex flex-wrap gap-1">
-                          {relations.outgoing.map(rel => (
+                          {relations.outgoing.map((rel, rIdx) => (
                             <span
-                              key={rel.edgeId}
+                              key={`out-span-${rel.edgeId || rIdx}-${rIdx}`}
                               className="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-neutral-300 border border-white/5 flex items-center gap-1"
                             >
                               <span className="text-neutral-500">→ {rel.relation}:</span>
                               <span className="text-white">{rel.targetNode?.label}</span>
                             </span>
                           ))}
-                          {relations.incoming.map(rel => (
+                          {relations.incoming.map((rel, rIdx) => (
                             <span
-                              key={rel.edgeId}
+                              key={`in-span-${rel.edgeId || rIdx}-${rIdx}`}
                               className="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-neutral-300 border border-white/5 flex items-center gap-1"
                             >
                               <span className="text-white">{rel.sourceNode?.label}</span>

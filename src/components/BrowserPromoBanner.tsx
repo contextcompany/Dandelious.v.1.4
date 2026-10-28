@@ -68,12 +68,12 @@ export const BrowserPromoBanner: React.FC<BrowserPromoBannerProps> = ({
         {/* Left: Browser Indicator & Rotating Promo */}
         <div className="flex items-center gap-2.5 min-w-0 flex-1">
           <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[11px] text-neutral-300 shrink-0 font-medium">
-            <Globe className="w-3 h-3 text-[#C5DC57]" />
+            <Globe className="w-3 h-3 text-[#3b82f6]" />
             <span>Browser-Ansicht</span>
           </div>
 
           <div className="flex items-center gap-2 min-w-0">
-            <span className="text-[#C5DC57] font-semibold hidden md:inline">Tipp:</span>
+            <span className="text-[#3b82f6] font-semibold hidden md:inline">Tipp:</span>
             <span className="text-neutral-300 truncate text-[12px] sm:text-[13px]">
               {promoCards[activePromoIndex].text}
             </span>
@@ -118,7 +118,7 @@ export const BrowserPromoBanner: React.FC<BrowserPromoBannerProps> = ({
             }}
             className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 text-white font-medium text-[11.5px] transition-all cursor-pointer active:scale-95"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#C5DC57]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#3b82f6]" />
             <span>Abo</span>
           </button>
 

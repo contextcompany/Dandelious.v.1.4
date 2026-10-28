@@ -103,7 +103,7 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({
 
             {/* App Icon (Exact same emblem as above "Womit fangen wir an?") */}
             <div className="relative mt-2 mb-4 group">
-              <div className="absolute inset-0 rounded-3xl bg-[#C5DC57]/30 blur-2xl group-hover:bg-[#C5DC57]/45 transition-all pointer-events-none" />
+              <div className="absolute inset-0 rounded-3xl bg-blue-600/30 blur-2xl group-hover:bg-blue-500/45 transition-all pointer-events-none" />
               <DandeliousLogo className="w-24 h-24 shadow-2xl relative z-10" variant="badge" />
             </div>
 
@@ -117,24 +117,24 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({
             {/* Feature Highlights */}
             <div className="w-full my-5 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.08] text-left space-y-2.5">
               <div className="flex items-center gap-2.5 text-xs text-neutral-200">
-                <Check className="w-4 h-4 text-[#C5DC57] shrink-0" />
+                <Check className="w-4 h-4 text-[#3b82f6] shrink-0" />
                 <span>Originales Dandelious Icon auf deinem Home-Bildschirm</span>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-neutral-200">
-                <Check className="w-4 h-4 text-[#C5DC57] shrink-0" />
+                <Check className="w-4 h-4 text-[#3b82f6] shrink-0" />
                 <span>Voller Offline-Cache & sofortiger Start ohne Adressleiste</span>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-neutral-200">
-                <Check className="w-4 h-4 text-[#C5DC57] shrink-0" />
+                <Check className="w-4 h-4 text-[#3b82f6] shrink-0" />
                 <span>Sichere lokale Speicherung & Echtzeit-KI-Sprachsteuerung</span>
               </div>
             </div>
 
             {/* iOS Specific Instructions */}
             {isIOS ? (
-              <div className="w-full p-4 rounded-2xl bg-[#C5DC57]/10 border border-[#C5DC57]/20 text-left space-y-2 mb-4">
+              <div className="w-full p-4 rounded-2xl bg-blue-600/10 border border-blue-500/20 text-left space-y-2 mb-4">
                 <p className="text-xs font-semibold text-[#eaf79d] flex items-center gap-1.5">
-                  <Smartphone className="w-4 h-4 text-[#C5DC57]" />
+                  <Smartphone className="w-4 h-4 text-[#3b82f6]" />
                   Installation auf iPhone / iPad:
                 </p>
                 <ol className="text-xs text-neutral-300 space-y-1.5 list-decimal list-inside">
@@ -152,7 +152,7 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({
                   type="button"
                   disabled={isInstalling}
                   onClick={handleInstallClick}
-                  className="w-full py-3.5 px-5 rounded-2xl bg-[#C5DC57] hover:bg-[#b8d049] active:bg-[#a6bd3a] text-[#0e1603] font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(197,220,87,0.35)] transition-all cursor-pointer"
+                  className="w-full py-3.5 px-5 rounded-2xl bg-[#2563eb] hover:bg-[#1d4ed8] active:bg-[#1e40af] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(37,99,235,0.4)] transition-all cursor-pointer"
                 >
                   <Download className="w-4.5 h-4.5 stroke-[2.2]" />
                   <span>{isInstalling ? 'Wird vorbereitet...' : 'Jetzt als App installieren'}</span>
@@ -167,7 +167,7 @@ export const PWAInstallModal: React.FC<PWAInstallModalProps> = ({
                       onOpenDesktopGuide();
                     }
                   }}
-                  className="w-full py-3.5 px-5 rounded-2xl bg-[#C5DC57] hover:bg-[#b8d049] active:bg-[#a6bd3a] text-[#0e1603] font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(197,220,87,0.35)] transition-all cursor-pointer"
+                  className="w-full py-3.5 px-5 rounded-2xl bg-[#2563eb] hover:bg-[#1d4ed8] active:bg-[#1e40af] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(37,99,235,0.4)] transition-all cursor-pointer"
                 >
                   <Monitor className="w-4.5 h-4.5 stroke-[2.2]" />
                   <span>Desktop App (.exe) & Installations-Guide</span>

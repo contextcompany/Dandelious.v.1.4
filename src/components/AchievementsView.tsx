@@ -85,7 +85,7 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
       lines.push(
         <line
           key={i}
-          className={isDone ? 'stroke-[#cfe45a]' : 'stroke-[#1e271b]'}
+          className={isDone ? 'stroke-[#3b82f6]' : 'stroke-[#132244]'}
           style={{ strokeWidth: 5, strokeLinecap: 'round' }}
           x1={50 + c * 34}
           y1={50 + s * 34}
@@ -125,7 +125,7 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
   const filterIndex = filter === 'all' ? 0 : filter === 'done' ? 1 : 2;
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#eef2e4] font-['DM_Sans',system-ui,sans-serif] pb-16">
+    <div className="min-h-screen bg-[#000000] text-[#f1f5f9] font-['DM_Sans',system-ui,sans-serif] pb-16">
       <div className="max-w-[480px] mx-auto px-4.5 pt-4">
         {/* Header */}
         <header className="flex items-center gap-3.5 py-2">
@@ -133,12 +133,12 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
             type="button"
             onClick={onBack}
             aria-label="Zurück"
-            className="w-11 h-11 rounded-full bg-[#161d14] border border-[#2b3627] flex items-center justify-center text-[#eef2e4] hover:border-[#cfe45a]/50 transition-colors cursor-pointer"
+            className="w-11 h-11 rounded-full bg-[#0c1529] border border-[#1e3568] flex items-center justify-center text-[#f1f5f9] hover:border-[#3b82f6]/50 transition-colors cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <h1
-            className="text-[22px] font-bold tracking-tight text-[#eef2e4]"
+            className="text-[22px] font-bold tracking-tight text-[#f1f5f9]"
             style={{ fontFamily: '"Bricolage Grotesque", sans-serif' }}
           >
             Erfolge
@@ -147,7 +147,7 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
 
         {/* Hero Section */}
         <section
-          className="mt-3.5 flex items-center gap-5 bg-[#161d14] border border-[#2b3627] rounded-[26px] p-5"
+          className="mt-3.5 flex items-center gap-5 bg-[#0c1529] border border-[#1e3568] rounded-[26px] p-5 shadow-lg shadow-[#1e3a8a]/10"
           aria-label="Fortschritt"
         >
           {/* Ring */}
@@ -155,36 +155,36 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
             <svg viewBox="0 0 100 100" className="w-full h-full" aria-hidden="true">
               {tickLines}
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center text-[#cfe45a]">
+            <div className="absolute inset-0 flex items-center justify-center text-[#3b82f6]">
               <Trophy className="w-[34px] h-[34px] stroke-[1.9]" />
             </div>
           </div>
 
           {/* Stats */}
           <div>
-            <small className="block text-[#9aa58f] text-sm">Freigeschaltet</small>
+            <small className="block text-[#94a3b8] text-sm">Freigeschaltet</small>
             <b
-              className="block text-[34px] leading-tight font-bold text-[#eef2e4]"
+              className="block text-[34px] leading-tight font-bold text-[#f1f5f9]"
               style={{ fontFamily: '"Bricolage Grotesque", sans-serif' }}
             >
               {doneCount}{' '}
-              <em className="not-italic text-[19px] text-[#9aa58f] font-medium font-sans">
+              <em className="not-italic text-[19px] text-[#94a3b8] font-medium font-sans">
                 von {totalCount}
               </em>
             </b>
-            <p className="mt-1.5 text-sm text-[#9aa58f]">{percentDone} % geschafft</p>
+            <p className="mt-1.5 text-sm text-[#94a3b8]">{percentDone} % geschafft</p>
           </div>
         </section>
 
         {/* Segmented Filter Control */}
         <div
-          className="relative grid grid-cols-3 bg-[#1e271b] rounded-full p-1 mt-4"
+          className="relative grid grid-cols-3 bg-[#132244] border border-[#1e3568] rounded-full p-1 mt-4"
           role="tablist"
           aria-label="Filter"
         >
           {/* Sliding Thumb */}
           <span
-            className="absolute top-1 bottom-1 left-1 w-[calc((100%-8px)/3)] rounded-full bg-[#cfe45a] transition-transform duration-250 ease-out"
+            className="absolute top-1 bottom-1 left-1 w-[calc((100%-8px)/3)] rounded-full bg-[#2563eb] shadow-md transition-transform duration-250 ease-out"
             style={{ transform: `translateX(${filterIndex * 100}%)` }}
           />
 
@@ -194,10 +194,10 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
             aria-selected={filter === 'all'}
             onClick={() => setFilter('all')}
             className={`relative z-10 min-h-[44px] rounded-full font-semibold text-[15px] flex items-center justify-center transition-colors cursor-pointer ${
-              filter === 'all' ? 'text-[#1a2307]' : 'text-[#9aa58f] hover:text-[#eef2e4]'
+              filter === 'all' ? 'text-white' : 'text-[#94a3b8] hover:text-[#f1f5f9]'
             }`}
           >
-            Alle<span className="font-medium opacity-70 ml-1 text-xs">{totalCount}</span>
+            Alle<span className="font-medium opacity-75 ml-1 text-xs">{totalCount}</span>
           </button>
 
           <button
@@ -206,10 +206,10 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
             aria-selected={filter === 'done'}
             onClick={() => setFilter('done')}
             className={`relative z-10 min-h-[44px] rounded-full font-semibold text-[15px] flex items-center justify-center transition-colors cursor-pointer ${
-              filter === 'done' ? 'text-[#1a2307]' : 'text-[#9aa58f] hover:text-[#eef2e4]'
+              filter === 'done' ? 'text-white' : 'text-[#94a3b8] hover:text-[#f1f5f9]'
             }`}
           >
-            Erreicht<span className="font-medium opacity-70 ml-1 text-xs">{doneCount}</span>
+            Erreicht<span className="font-medium opacity-75 ml-1 text-xs">{doneCount}</span>
           </button>
 
           <button
@@ -218,10 +218,10 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
             aria-selected={filter === 'open'}
             onClick={() => setFilter('open')}
             className={`relative z-10 min-h-[44px] rounded-full font-semibold text-[15px] flex items-center justify-center transition-colors cursor-pointer ${
-              filter === 'open' ? 'text-[#1a2307]' : 'text-[#9aa58f] hover:text-[#eef2e4]'
+              filter === 'open' ? 'text-white' : 'text-[#94a3b8] hover:text-[#f1f5f9]'
             }`}
           >
-            Offen<span className="font-medium opacity-70 ml-1 text-xs">{openCount}</span>
+            Offen<span className="font-medium opacity-75 ml-1 text-xs">{openCount}</span>
           </button>
         </div>
 
@@ -235,17 +235,17 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
                 <section key={group.name} className="space-y-2.5">
                   <div className="flex justify-between items-baseline px-1">
                     <h2
-                      className="text-[13px] font-semibold tracking-wider uppercase text-[#9aa58f]"
+                      className="text-[13px] font-semibold tracking-wider uppercase text-[#94a3b8]"
                       style={{ fontFamily: '"DM Sans", sans-serif' }}
                     >
                       {group.name}
                     </h2>
-                    <span className="text-[13px] text-[#9aa58f]">
-                      <b className="text-[#cfe45a] font-semibold">{group.done}</b> / {group.total}
+                    <span className="text-[13px] text-[#94a3b8]">
+                      <b className="text-[#3b82f6] font-semibold">{group.done}</b> / {group.total}
                     </span>
                   </div>
 
-                  <div className="bg-[#161d14] border border-[#2b3627] rounded-[26px] overflow-hidden divide-y divide-[#2b3627]">
+                  <div className="bg-[#0c1529] border border-[#1e3568] rounded-[26px] overflow-hidden divide-y divide-[#1e3568]">
                     {group.visibleItems.map((item) => (
                       <div
                         key={item.id}
@@ -255,8 +255,8 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
                         <span
                           className={`w-10 h-10 rounded-[13px] flex items-center justify-center flex-none transition-colors ${
                             item.unlocked
-                              ? 'bg-[#cfe45a] text-[#1a2307]'
-                              : 'bg-[#1e271b] text-[#9aa58f]'
+                              ? 'bg-[#2563eb] text-white shadow-sm'
+                              : 'bg-[#132244] text-[#94a3b8]'
                           }`}
                         >
                           {item.unlocked ? (
@@ -270,14 +270,14 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
                         <div className="flex-1 min-w-0">
                           <b
                             className={`block font-semibold text-sm leading-tight ${
-                              item.unlocked ? 'text-[#eef2e4]' : 'text-[#c6cfba]'
+                              item.unlocked ? 'text-[#f1f5f9]' : 'text-slate-400'
                             }`}
                           >
                             {item.title}
                           </b>
                           <span
                             className={`block text-xs leading-normal mt-0.5 ${
-                              item.unlocked ? 'text-[#9aa58f]' : 'text-[#78826f]'
+                              item.unlocked ? 'text-[#94a3b8]' : 'text-slate-500'
                             }`}
                           >
                             {item.description}
@@ -286,7 +286,7 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
 
                         {/* Badge */}
                         {item.unlocked && (
-                          <span className="flex-none text-xs font-semibold text-[#cfe45a] px-2.5 py-1 rounded-full bg-[#cfe45a]/15">
+                          <span className="flex-none text-xs font-semibold text-[#60a5fa] px-2.5 py-1 rounded-full bg-[#2563eb]/20 border border-[#3b82f6]/30">
                             Erreicht
                           </span>
                         )}
@@ -297,7 +297,7 @@ export const AchievementsView: React.FC<AchievementsViewProps> = ({
               );
             })
           ) : (
-            <div className="text-center text-[#9aa58f] py-12 text-sm">Nichts zu zeigen.</div>
+            <div className="text-center text-[#94a3b8] py-12 text-sm">Nichts zu zeigen.</div>
           )}
         </div>
       </div>

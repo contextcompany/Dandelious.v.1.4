@@ -295,7 +295,7 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
       {/* Toast Notification */}
       {toastMessage && (
         <div className="absolute top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-neutral-900/90 text-white text-xs border border-white/10 shadow-2xl backdrop-blur-md flex items-center gap-2">
-          <Check className="w-3.5 h-3.5 text-lime-300" />
+          <Check className="w-3.5 h-3.5 text-blue-300" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -315,13 +315,13 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
           )}
 
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-lime-900/30 border border-lime-500/30 flex items-center justify-center text-lime-300">
+            <div className="w-8 h-8 rounded-xl bg-blue-900/30 border border-blue-500/30 flex items-center justify-center text-blue-300">
               <Music className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-white">Dandelious Lyria</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-lime-900/20 text-lime-300 border border-lime-500/20 font-mono">
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-900/20 text-blue-300 border border-blue-500/20 font-mono">
                   Audio Studio
                 </span>
               </div>
@@ -387,7 +387,7 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Beschreibe die Instrumente, Rhythmus, Melodie oder die emotionale Stimmung..."
               rows={3}
-              className="w-full bg-[#121218] border border-white/10 rounded-xl p-3 text-sm text-neutral-200 placeholder:text-neutral-500 focus:outline-none focus:border-lime-500 transition-colors resize-none"
+              className="w-full bg-[#121218] border border-white/10 rounded-xl p-3 text-sm text-neutral-200 placeholder:text-neutral-500 focus:outline-none focus:border-blue-500 transition-colors resize-none"
             />
           </div>
 
@@ -406,7 +406,7 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
                   }}
                   className={`p-2.5 rounded-xl border text-left text-xs font-medium transition-all cursor-pointer flex flex-col gap-1 ${
                     selectedGenre === g.id
-                      ? 'bg-lime-900/25 border-lime-500/50 text-lime-200'
+                      ? 'bg-lime-900/25 border-lime-500/50 text-blue-200'
                       : 'bg-white/5 border-white/5 text-neutral-400 hover:text-white hover:bg-white/10'
                   }`}
                 >
@@ -429,7 +429,7 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
                   onClick={() => setSelectedMood(m)}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
                     selectedMood === m
-                      ? 'bg-lime-700 text-white'
+                      ? 'bg-blue-700 text-white'
                       : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'
                   }`}
                 >
@@ -443,7 +443,7 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
           <div className="bg-[#121218] rounded-xl p-4 border border-white/5 space-y-3">
             <div className="flex items-center justify-between text-xs">
               <span className="text-neutral-400 flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-lime-300" />
+                <Clock className="w-3.5 h-3.5 text-blue-300" />
                 Track-Dauer
               </span>
               <span className="font-mono text-white font-semibold">{durationSec} Sekunden</span>
@@ -464,7 +464,7 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
                 onClick={() => fileInputRef.current?.click()}
                 className="text-xs text-neutral-400 hover:text-white flex items-center gap-1.5 cursor-pointer"
               >
-                <ImageIcon className="w-3.5 h-3.5 text-lime-300" />
+                <ImageIcon className="w-3.5 h-3.5 text-blue-300" />
                 {referenceImage ? 'Bild-Inspiration aktiv' : 'Cover-Bild für Inspiration hochladen'}
               </button>
               {referenceImage && (
@@ -482,16 +482,16 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
           <button
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-lime-800 to-lime-600 hover:from-lime-700 hover:to-lime-500 text-white font-semibold text-sm shadow-lg shadow-lime-900/25 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.99]"
+            className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-700 hover:to-blue-500 text-white font-semibold text-sm shadow-lg shadow-blue-900/25 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.99]"
           >
             {isGenerating ? (
               <>
-                <Disc3 className="w-4 h-4 animate-spin text-lime-100" />
+                <Disc3 className="w-4 h-4 animate-spin text-blue-100" />
                 <span>Lyria komponiert Track...</span>
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4 text-lime-100" />
+                <Sparkles className="w-4 h-4 text-blue-100" />
                 <span>Musikstück generieren ({activeModel === 'lyria-3-pro-preview' ? 'Pro' : 'Clip'})</span>
               </>
             )}
@@ -507,7 +507,7 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
                 {/* Track Meta Header */}
                 <div className="flex items-start justify-between gap-4">
                   <div className="space-y-1">
-                    <span className="text-[11px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-lime-900/20 text-lime-300 border border-lime-500/20">
+                    <span className="text-[11px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-blue-900/20 text-blue-300 border border-blue-500/20">
                       {currentTrack.modelUsed}
                     </span>
                     <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight pt-1">
@@ -577,7 +577,7 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
                   {/* Big Play / Pause Button */}
                   <button
                     onClick={togglePlay}
-                    className="w-14 h-14 rounded-full bg-lime-700 hover:bg-lime-600 text-white flex items-center justify-center shadow-lg shadow-lime-900/30 transition-all cursor-pointer active:scale-95"
+                    className="w-14 h-14 rounded-full bg-blue-700 hover:bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-900/30 transition-all cursor-pointer active:scale-95"
                   >
                     {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current ml-0.5" />}
                   </button>
@@ -610,7 +610,7 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
               </div>
             ) : (
               <div className="text-center p-8 border border-dashed border-white/10 rounded-2xl max-w-md">
-                <div className="w-14 h-14 rounded-2xl bg-lime-900/20 border border-lime-500/20 flex items-center justify-center mx-auto mb-4 text-lime-300">
+                <div className="w-14 h-14 rounded-2xl bg-blue-900/20 border border-blue-500/20 flex items-center justify-center mx-auto mb-4 text-blue-300">
                   <Music className="w-6 h-6" />
                 </div>
                 <h3 className="text-base font-semibold text-white mb-2">Noch kein Track aktiv</h3>
@@ -626,7 +626,7 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
             <div className="w-full max-w-3xl mx-auto space-y-3">
               <div className="flex items-center justify-between text-xs text-neutral-400 font-medium">
                 <span className="flex items-center gap-1.5">
-                  <ListMusic className="w-4 h-4 text-lime-300" />
+                  <ListMusic className="w-4 h-4 text-blue-300" />
                   Bisher generierte Tracks ({library.length})
                 </span>
               </div>
@@ -637,14 +637,14 @@ export const MusicStudio: React.FC<MusicStudioProps> = ({
                     onClick={() => playTrack(t)}
                     className={`p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all ${
                       currentTrack?.id === t.id
-                        ? 'bg-lime-900/25 border-lime-500/40 text-white'
+                        ? 'bg-blue-900/25 border-blue-500/40 text-white'
                         : 'bg-white/5 border-white/5 text-neutral-300 hover:bg-white/10'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-lime-300">
+                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-blue-300">
                         {currentTrack?.id === t.id && isPlaying ? (
-                          <Disc3 className="w-4 h-4 animate-spin text-lime-300" />
+                          <Disc3 className="w-4 h-4 animate-spin text-blue-300" />
                         ) : (
                           <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                         )}

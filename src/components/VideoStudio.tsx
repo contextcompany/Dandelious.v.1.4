@@ -251,7 +251,7 @@ export const VideoStudio: React.FC<VideoStudioProps> = ({
       {/* Toast Notification */}
       {toastMessage && (
         <div className="absolute top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-neutral-900/90 text-white text-xs border border-white/10 shadow-2xl backdrop-blur-md flex items-center gap-2">
-          <Check className="w-3.5 h-3.5 text-lime-400" />
+          <Check className="w-3.5 h-3.5 text-[#4c8dff]" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -271,13 +271,13 @@ export const VideoStudio: React.FC<VideoStudioProps> = ({
           )}
 
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-lime-600/20 border border-lime-500/30 flex items-center justify-center text-lime-400">
+            <div className="w-8 h-8 rounded-xl bg-[#4c8dff]/20 border border-[#4c8dff]/30 flex items-center justify-center text-[#4c8dff]">
               <Film className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-white">Dandelious Veo 3</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-lime-500/10 text-lime-400 border border-lime-500/20 font-mono">
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4c8dff]/15 text-[#4c8dff] border border-[#4c8dff]/30 font-mono">
                   Video Studio
                 </span>
               </div>

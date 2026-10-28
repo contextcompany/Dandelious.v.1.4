@@ -383,7 +383,7 @@ export const GeminiLiveModal: React.FC<GeminiLiveModalProps> = ({
                   rotate: { duration: 24, repeat: Infinity, ease: 'linear' },
                   scale: { duration: 0.08 },
                 }}
-                className="relative w-48 h-48 rounded-full bg-gradient-to-tr from-[#131d08] via-[#0d1405] to-[#27380c] border-2 border-[#C5DC57]/50 shadow-[0_0_50px_rgba(197,220,87,0.35)] flex items-center justify-center overflow-hidden"
+                className="relative w-48 h-48 rounded-full bg-gradient-to-tr from-[#0c1529] via-[#050814] to-[#1e3a8a] border-2 border-blue-500/50 shadow-[0_0_50px_rgba(37,99,235,0.4)] flex items-center justify-center overflow-hidden"
               >
                 {/* Inner Specular Lighting Refractions */}
                 <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-black/40 rounded-full" />
@@ -399,7 +399,7 @@ export const GeminiLiveModal: React.FC<GeminiLiveModalProps> = ({
                         key={i}
                         animate={{ height: dynamicHeight }}
                         transition={{ duration: 0.08 }}
-                        className="w-1.5 rounded-full bg-gradient-to-t from-[#C5DC57] to-white shadow-[0_0_10px_rgba(197,220,87,0.7)]"
+                        className="w-1.5 rounded-full bg-gradient-to-t from-[#3b82f6] to-white shadow-[0_0_10px_rgba(59,130,246,0.7)]"
                       />
                     );
                   })}

@@ -148,34 +148,35 @@ export const GeminiPromptBar: React.FC<GeminiPromptBarProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
-          {/* Backdrop Blur */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => {
-              playSound('click', enableSound);
-              onClose();
-            }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100]"
-          />
+        <motion.div
+          key="gemini-prompt-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => {
+            playSound('click', enableSound);
+            onClose();
+          }}
+          className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100]"
+        />
+      )}
 
-          {/* Gemini Style Bottom Sheet / Prompt Bar Container */}
-          <motion.div
-            initial={{ y: '100%', opacity: 0, scale: 0.98 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: '100%', opacity: 0, scale: 0.98 }}
-            transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-            className="fixed bottom-0 left-0 right-0 z-[101] p-3 sm:p-5 pb-6 sm:pb-8 flex flex-col items-center justify-end pointer-events-none"
-          >
-            <div className="w-full max-w-3xl pointer-events-auto relative rounded-3xl bg-[#242426] border border-white/10 shadow-[0_-15px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(197,220,87,0.1)] overflow-hidden backdrop-blur-2xl">
+      {isOpen && (
+        <motion.div
+          key="gemini-prompt-sheet"
+          initial={{ y: '100%', opacity: 0, scale: 0.98 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ y: '100%', opacity: 0, scale: 0.98 }}
+          transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+          className="fixed bottom-0 left-0 right-0 z-[101] p-3 sm:p-5 pb-6 sm:pb-8 flex flex-col items-center justify-end pointer-events-none"
+        >
+          <div className="w-full max-w-3xl pointer-events-auto relative rounded-3xl bg-black/80 border border-white/10 shadow-[0_-15px_60px_rgba(0,0,0,0.9),0_0_40px_rgba(197,220,87,0.1)] overflow-hidden backdrop-blur-2xl">
               
               {/* Luminous Animated Aurora Glow Line */}
-              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-lime-500 via-emerald-400 to-cyan-400 animate-pulse" />
+              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 animate-pulse" />
               {isListening && (
                 <div 
-                  className="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-amber-400 via-lime-300 to-emerald-400 transition-all duration-150"
+                  className="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-400 transition-all duration-150"
                   style={{ opacity: 0.7 + voiceVolume * 0.3, filter: `blur(${voiceVolume * 2}px)` }}
                 />
               )}
@@ -184,12 +185,12 @@ export const GeminiPromptBar: React.FC<GeminiPromptBarProps> = ({
               <div className="px-4 py-3 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-full bg-[#2c2c2e] border border-white/10 flex items-center justify-center shadow-inner">
-                    <Sparkles className="w-3.5 h-3.5 text-[#C5DC57] animate-spin-slow" />
+                    <Sparkles className="w-3.5 h-3.5 text-[#3b82f6] animate-spin-slow" />
                   </div>
                   <div>
-                    <span className="text-xs font-bold tracking-wider uppercase text-lime-300 flex items-center gap-1.5">
+                    <span className="text-xs font-bold tracking-wider uppercase text-blue-300 flex items-center gap-1.5">
                       Gemini Sprach- & Promptleiste
-                      <span className="inline-block w-2 h-2 rounded-full bg-lime-400 animate-ping" />
+                      <span className="inline-block w-2 h-2 rounded-full bg-blue-400 animate-ping" />
                     </span>
                     <p className="text-[10px] text-neutral-400 hidden xs:block">
                       Via Ein-Ausschaltknopf, Actionbutton oder Kurzbefehl
@@ -208,7 +209,7 @@ export const GeminiPromptBar: React.FC<GeminiPromptBarProps> = ({
                       className="flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-medium bg-[#2c2c2e] hover:bg-[#343438] text-neutral-200 border border-white/10 transition-colors cursor-pointer"
                       title="Ein-Ausschaltknopf & Actionbutton konfigurieren"
                     >
-                      <Settings2 className="w-3 h-3 text-[#C5DC57]" />
+                      <Settings2 className="w-3 h-3 text-[#3b82f6]" />
                       <span className="hidden sm:inline">Button-Setup</span>
                     </button>
                   )}
@@ -251,7 +252,7 @@ export const GeminiPromptBar: React.FC<GeminiPromptBarProps> = ({
                         onClick={toggleListening}
                         className={`mr-2 p-2 rounded-xl transition-all ${
                           isListening
-                            ? 'bg-[#C5DC57] text-black shadow-lg shadow-lime-500/30 scale-105 animate-pulse'
+                            ? 'bg-[#2563eb] text-white shadow-lg shadow-blue-500/30 scale-105 animate-pulse'
                             : 'text-neutral-300 hover:text-white hover:bg-white/10'
                         }`}
                         title={isListening ? 'Mikrofon ausschalten' : 'Sprechen (Spracherkennung)'}
@@ -271,7 +272,7 @@ export const GeminiPromptBar: React.FC<GeminiPromptBarProps> = ({
                     disabled={!promptText.trim()}
                     className={`p-3.5 rounded-2xl flex items-center justify-center transition-all ${
                       promptText.trim()
-                        ? 'bg-[#C5DC57] hover:bg-[#b8d049] text-black font-semibold shadow-lg shadow-[#C5DC57]/20 hover:scale-105 active:scale-95 cursor-pointer'
+                        ? 'bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold shadow-lg shadow-blue-600/30 hover:scale-105 active:scale-95 cursor-pointer'
                         : 'bg-[#2c2c2e] text-neutral-500 cursor-not-allowed border border-white/5'
                     }`}
                     title="Prompt senden"
@@ -282,10 +283,10 @@ export const GeminiPromptBar: React.FC<GeminiPromptBarProps> = ({
 
                 {/* Voice Visualizer Indicator when recording */}
                 {isListening && (
-                  <div className="mt-3 py-2 px-3 rounded-xl bg-lime-500/10 border border-lime-500/20 flex items-center justify-between animate-fade-in">
+                  <div className="mt-3 py-2 px-3 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-between animate-fade-in">
                     <div className="flex items-center gap-2">
-                      <Volume2 className="w-4 h-4 text-lime-400 animate-pulse" />
-                      <span className="text-xs font-medium text-lime-300">
+                      <Volume2 className="w-4 h-4 text-blue-400 animate-pulse" />
+                      <span className="text-xs font-medium text-blue-300">
                         Spracheingabe aktiv...
                       </span>
                     </div>
@@ -294,7 +295,7 @@ export const GeminiPromptBar: React.FC<GeminiPromptBarProps> = ({
                       {[0.4, 0.8, 0.3, 0.9, 0.5, 0.7, 0.2].map((factor, i) => (
                         <div
                           key={i}
-                          className="w-1 bg-lime-400 rounded-full transition-all duration-100"
+                          className="w-1 bg-blue-400 rounded-full transition-all duration-100"
                           style={{
                             height: `${Math.max(4, voiceVolume * 24 * factor)}px`,
                           }}
@@ -307,7 +308,7 @@ export const GeminiPromptBar: React.FC<GeminiPromptBarProps> = ({
                 {/* Quick Suggestion Chips */}
                 <div className="mt-4 flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
                   <span className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider whitespace-nowrap flex items-center gap-1 mr-1">
-                    <Zap className="w-3 h-3 text-[#C5DC57]" />
+                    <Zap className="w-3 h-3 text-[#3b82f6]" />
                     Schnellaktionen:
                   </span>
 
@@ -334,7 +335,7 @@ export const GeminiPromptBar: React.FC<GeminiPromptBarProps> = ({
                     onClick={() => handleChipClick('Hallo Dandelious! Was kannst du heute für mich tun?')}
                     className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#2c2c2e] hover:bg-[#343438] border border-white/5 text-xs font-medium text-neutral-200 hover:text-white transition-all whitespace-nowrap group cursor-pointer shadow-sm"
                   >
-                    <MessageSquare className="w-3.5 h-3.5 text-[#C5DC57] group-hover:scale-110 transition-transform" />
+                    <MessageSquare className="w-3.5 h-3.5 text-[#3b82f6] group-hover:scale-110 transition-transform" />
                     <span>Neuer Chat</span>
                   </button>
 
@@ -351,7 +352,6 @@ export const GeminiPromptBar: React.FC<GeminiPromptBarProps> = ({
 
             </div>
           </motion.div>
-        </>
       )}
     </AnimatePresence>
   );

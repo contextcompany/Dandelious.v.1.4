@@ -77,7 +77,7 @@ export const DeepResearchSourcesModal: React.FC<DeepResearchSourcesModalProps> =
     {
       id: 'chat',
       name: 'Chat',
-      icon: <MessageSquare className="w-5 h-5 text-lime-400 stroke-[1.8]" />,
+      icon: <MessageSquare className="w-5 h-5 text-blue-400 stroke-[1.8]" />,
       description: 'Chat-Verläufe und gespeicherte Notizen'
     },
   ];

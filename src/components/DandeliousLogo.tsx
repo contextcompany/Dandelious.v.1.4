@@ -21,7 +21,7 @@ export const DandeliousLogo: React.FC<DandeliousIconProps> = ({
 }) => {
   return (
     <div
-      className={`relative inline-flex items-center justify-center overflow-hidden rounded-2xl sm:rounded-[18px] shadow-[0_4px_20px_rgba(197,220,87,0.35)] shrink-0 ${className}`}
+      className={`relative inline-flex items-center justify-center overflow-hidden rounded-2xl sm:rounded-[18px] shadow-[0_4px_20px_rgba(37,99,235,0.35)] shrink-0 ${className}`}
       title={alt}
     >
       <img

@@ -82,12 +82,12 @@ export const RealtimeAudioWaveform: React.FC<RealtimeAudioWaveformProps> = ({
       const spacing = (width - barCount * barWidth) / (barCount - 1 || 1);
       const centerY = h / 2;
 
-      // Dynamic color interpolation to Dandelious Chartreuse / Warm Lime-Green when speaking:
-      const gradStart = lerpColor(60, 75, 45, 95, 125, 25, intensity);
-      const gradMid = lerpColor(120, 145, 60, 197, 220, 87, intensity);
-      const gradEnd = lerpColor(160, 185, 90, 225, 245, 120, intensity);
+      // Dynamic color interpolation to Dandelious Rich Sapphire / Saturated Dark Blue when speaking:
+      const gradStart = lerpColor(30, 58, 138, 37, 99, 235, intensity);
+      const gradMid = lerpColor(37, 99, 235, 59, 130, 246, intensity);
+      const gradEnd = lerpColor(96, 165, 250, 147, 197, 253, intensity);
       const glowBlur = 2 + intensity * 12;
-      const glowColor = `rgba(197, 220, 87, ${0.1 + intensity * 0.75})`;
+      const glowColor = `rgba(59, 130, 246, ${0.15 + intensity * 0.75})`;
 
       for (let i = 0; i < barCount; i++) {
         // Calculate target height for this bar

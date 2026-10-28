@@ -174,13 +174,13 @@ export const GoogleMapsViewer: React.FC<GoogleMapsViewerProps> = ({
       {/* Top Header Bar */}
       <div className="px-5 py-3.5 bg-black/80 backdrop-blur-md border-b border-white/10 flex items-center justify-between z-20 shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-lime-500/20 border border-lime-500/30 flex items-center justify-center text-lime-400">
+          <div className="w-9 h-9 rounded-2xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
             <MapPin className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-sm font-semibold text-white tracking-tight">Google Maps Explorer</h2>
-              <span className="text-[10px] font-semibold text-lime-400 bg-lime-500/10 border border-lime-500/20 px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-semibold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded-full">
                 Interactive SDK
               </span>
             </div>
@@ -224,7 +224,7 @@ export const GoogleMapsViewer: React.FC<GoogleMapsViewerProps> = ({
                 href="https://mapsplatform.google.com/maps-demo-key?utm_campaign=gmp_mcp_codeassist_v1_aistudio" 
                 target="_blank" 
                 rel="noreferrer"
-                className="ml-1 text-lime-400 underline font-medium hover:text-lime-300"
+                className="ml-1 text-blue-400 underline font-medium hover:text-blue-300"
               >
                 Maps Demo Key holen &rarr;
               </a>
@@ -259,7 +259,7 @@ export const GoogleMapsViewer: React.FC<GoogleMapsViewerProps> = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Ort, Adresse oder Sehenswürdigkeit suchen..."
-            className="w-full bg-[#18181b] text-xs text-white placeholder-neutral-500 rounded-full pl-10 pr-4 py-2.5 focus:outline-none border border-white/10 focus:border-lime-500/50 transition-all"
+            className="w-full bg-[#18181b] text-xs text-white placeholder-neutral-500 rounded-full pl-10 pr-4 py-2.5 focus:outline-none border border-white/10 focus:border-blue-500/50 transition-all"
           />
         </form>
 
@@ -361,7 +361,7 @@ export const GoogleMapsViewer: React.FC<GoogleMapsViewerProps> = ({
         <div className="absolute bottom-4 left-4 z-10 max-w-xs w-full bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl p-3 shadow-2xl hidden sm:block">
           <div className="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
             <span className="text-xs font-semibold text-neutral-300 flex items-center gap-1.5">
-              <Compass className="w-3.5 h-3.5 text-lime-400" />
+              <Compass className="w-3.5 h-3.5 text-blue-400" />
               Entdeckungen ({filteredPlaces.length})
             </span>
           </div>
@@ -378,7 +378,7 @@ export const GoogleMapsViewer: React.FC<GoogleMapsViewerProps> = ({
                 }}
                 className={`p-2 rounded-xl text-xs transition-all cursor-pointer ${
                   selectedPlace?.id === p.id 
-                    ? 'bg-lime-600/30 border border-lime-500/50 text-white' 
+                    ? 'bg-blue-600/30 border border-blue-500/50 text-white' 
                     : 'bg-white/5 hover:bg-white/10 text-neutral-300 border border-transparent'
                 }`}
               >

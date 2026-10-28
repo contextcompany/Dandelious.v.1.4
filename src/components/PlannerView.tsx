@@ -664,9 +664,9 @@ Wichtig:
             <span>Tages-Aufnahmen:</span>
           </div>
 
-          {scans.map((scan) => (
+          {scans.map((scan, sIdx) => (
             <button
-              key={scan.id}
+              key={`scan-tab-${scan.id || sIdx}-${sIdx}`}
               type="button"
               onClick={() => {
                 playSound('click');
@@ -1073,9 +1073,9 @@ Wichtig:
                   </p>
                 </div>
               ) : (
-                filteredShopping.map((item) => (
+                filteredShopping.map((item, itmIdx) => (
                   <div 
-                    key={item.id}
+                    key={`shopping-item-${item.id || itmIdx}-${itmIdx}`}
                     onClick={() => handleToggleShoppingItem(item.id)}
                     className={`group relative flex flex-col items-center justify-center p-4 rounded-[24px] cursor-pointer transition-all border ${
                       item.completed 

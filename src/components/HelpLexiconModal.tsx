@@ -453,7 +453,7 @@ export const HelpLexiconModal: React.FC<HelpLexiconModalProps> = ({
                             {/* Practical Tips */}
                             {art.tips.length > 0 && (
                               <div className="bg-neutral-900/90 rounded-xl p-3.5 border border-white/10 space-y-1.5">
-                                <div className="flex items-center gap-2 text-lime-400 font-medium text-xs">
+                                <div className="flex items-center gap-2 text-[#4c8dff] font-medium text-xs">
                                   <Lightbulb className="w-3.5 h-3.5 stroke-[2]" />
                                   <span>Profi-Tipp</span>
                                 </div>
@@ -478,7 +478,7 @@ export const HelpLexiconModal: React.FC<HelpLexiconModalProps> = ({
             {/* Bottom Footer Info */}
             <div className="p-4 sm:px-6 bg-neutral-950 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400 shrink-0">
               <span className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-lime-400" />
+                <Sparkles className="w-3.5 h-3.5 text-[#4c8dff]" />
                 Dandelious v3.4.0 • Dandelious Engine
               </span>
               <button

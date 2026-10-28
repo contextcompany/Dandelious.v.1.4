@@ -118,11 +118,11 @@ export const GlassCapsuleDock: React.FC<GlassCapsuleDockProps> = ({
             whileTap={{ scale: 0.88 }}
             whileHover={{ scale: 1.1 }}
             onClick={() => triggerClick(onOpenPromptBar)}
-            className="relative p-2 rounded-full text-lime-300 hover:text-lime-200 bg-lime-500/10 hover:bg-lime-500/20 border border-lime-400/30 transition-all cursor-pointer flex items-center justify-center shadow-[0_0_15px_rgba(163,190,52,0.25)]"
+            className="relative p-2 rounded-full text-blue-300 hover:text-blue-200 bg-blue-500/15 hover:bg-blue-500/25 border border-blue-400/30 transition-all cursor-pointer flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.35)]"
             title="Gemini Promptleiste (Ein-Ausschaltknopf / Actionbutton)"
             aria-label="Gemini Promptleiste"
           >
-            <Sparkles className="w-4.5 h-4.5 stroke-[2] text-lime-400" />
+            <Sparkles className="w-4.5 h-4.5 stroke-[2] text-blue-400" />
           </motion.button>
         )}
 

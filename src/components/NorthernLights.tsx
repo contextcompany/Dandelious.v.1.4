@@ -121,16 +121,16 @@ export const NorthernLights: React.FC<{ className?: string }> = ({ className = '
 
         <defs>
           <linearGradient id="cardAuroraCurtain1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#C5DC57" stopOpacity="0.85" />
-            <stop offset="35%" stopColor="#84a323" stopOpacity="0.9" />
-            <stop offset="70%" stopColor="#a3c932" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#10b981" stopOpacity="0.5" />
+            <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.85" />
+            <stop offset="35%" stopColor="#1d4ed8" stopOpacity="0.9" />
+            <stop offset="70%" stopColor="#2563eb" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.5" />
           </linearGradient>
 
           <linearGradient id="cardAuroraCurtain2" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#d2eb63" stopOpacity="0.75" />
-            <stop offset="50%" stopColor="#96be28" stopOpacity="0.85" />
-            <stop offset="100%" stopColor="#415a0c" stopOpacity="0.7" />
+            <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.75" />
+            <stop offset="50%" stopColor="#1e40af" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#0f172a" stopOpacity="0.7" />
           </linearGradient>
 
           <filter id="cardAuroraBlur" x="-30%" y="-30%" width="160%" height="160%">
@@ -143,7 +143,7 @@ export const NorthernLights: React.FC<{ className?: string }> = ({ className = '
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[18%] left-[12%] w-1.5 h-1.5 rounded-full bg-emerald-200 animate-pulse" style={{ animationDuration: '3.2s' }} />
         <div className="absolute top-[28%] right-[14%] w-1 h-1 rounded-full bg-cyan-200 animate-pulse" style={{ animationDuration: '4.1s' }} />
-        <div className="absolute bottom-[22%] left-[18%] w-1.5 h-1.5 rounded-full bg-lime-200 animate-pulse" style={{ animationDuration: '3.8s' }} />
+        <div className="absolute bottom-[22%] left-[18%] w-1.5 h-1.5 rounded-full bg-blue-300 animate-pulse" style={{ animationDuration: '3.8s' }} />
         <div className="absolute bottom-[16%] right-[22%] w-1 h-1 rounded-full bg-emerald-100 animate-pulse" style={{ animationDuration: '2.9s' }} />
         <div className="absolute top-[65%] left-[8%] w-1 h-1 rounded-full bg-white animate-pulse" style={{ animationDuration: '4.8s' }} />
         <div className="absolute top-[35%] right-[9%] w-1 h-1 rounded-full bg-cyan-300 animate-pulse" style={{ animationDuration: '3.5s' }} />

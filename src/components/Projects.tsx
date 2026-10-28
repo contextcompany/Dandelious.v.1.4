@@ -444,13 +444,13 @@ export const Projects: React.FC<ProjectsProps> = ({
     }
   };
 
-  // Helper to render highlighted text with lime green keywords like Mediathek
+  // Helper to render highlighted text with rich blue keywords like Mediathek
   const renderHighlightedText = (text: string) => {
     const parts = text.split(/(\*\*[^*]+\*\*)/g);
     return parts.map((part, i) => {
       if (part.startsWith('**') && part.endsWith('**')) {
         return (
-          <span key={`highlight-${i}`} className="font-semibold text-[#C5DC57]">
+          <span key={`highlight-${i}`} className="font-semibold text-[#3b82f6]">
             {part.slice(2, -2)}
           </span>
         );
@@ -1174,7 +1174,7 @@ export const Projects: React.FC<ProjectsProps> = ({
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-neutral-900/95 backdrop-blur-md border border-white/15 text-white text-xs font-medium shadow-2xl flex items-center gap-2"
           >
-            <Check className="w-3.5 h-3.5 text-lime-400" />
+            <Check className="w-3.5 h-3.5 text-blue-400" />
             <span>{toastMessage}</span>
           </motion.div>
         )}
@@ -1464,7 +1464,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                             </div>
                             <div className="flex items-center gap-2 shrink-0">
                               {proj.isPublished && (
-                                <span className="text-[10px] text-lime-400 bg-lime-400/10 border border-lime-400/20 px-2 py-0.5 rounded-full font-medium">
+                                <span className="text-[10px] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded-full font-medium">
                                   Community
                                 </span>
                               )}
@@ -1517,7 +1517,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                             </div>
                             <div className="flex items-center gap-2 shrink-0">
                               {cb.isPublished && (
-                                <span className="text-[10px] text-lime-400 bg-lime-400/10 border border-lime-400/20 px-2 py-0.5 rounded-full font-medium">
+                                <span className="text-[10px] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded-full font-medium">
                                   Community
                                 </span>
                               )}
@@ -1599,9 +1599,9 @@ export const Projects: React.FC<ProjectsProps> = ({
                           >
                             <div className="flex items-center gap-3.5 min-w-0 mr-2 flex-1">
                               {isCb ? (
-                                <ChefHat className="w-5 h-5 text-lime-400 stroke-[1.8] shrink-0" />
+                                <ChefHat className="w-5 h-5 text-blue-400 stroke-[1.8] shrink-0" />
                               ) : (
-                                renderVectorIcon(item.icon || 'folder', "w-5 h-5 text-lime-400 stroke-[1.8] shrink-0")
+                                renderVectorIcon(item.icon || 'folder', "w-5 h-5 text-blue-400 stroke-[1.8] shrink-0")
                               )}
                               <div className="flex flex-col min-w-0 flex-1">
                                 <span className="text-[15px] font-normal text-white truncate">{item.name}</span>
@@ -1612,7 +1612,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                             </div>
                             <div className="flex items-center gap-2 shrink-0">
                               {isOwn ? (
-                                <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2.5 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2.5 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                   Von dir
                                 </span>
                               ) : (
@@ -1718,7 +1718,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                     handleCopyCommunityProject(itemMenuTarget.item);
                     setItemMenuTarget(null);
                   }}
-                  className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-lime-400 hover:bg-lime-400/10 transition-colors text-left font-normal cursor-pointer"
+                  className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-blue-400 hover:bg-blue-500/10 transition-colors text-left font-normal cursor-pointer"
                 >
                   <Copy className="w-4 h-4 stroke-[1.8] shrink-0" />
                   <span className="text-[14px]">Als Kopie übernehmen</span>
@@ -1812,7 +1812,7 @@ export const Projects: React.FC<ProjectsProps> = ({
             <div className="max-w-xl mx-auto w-full px-4 sm:px-6 mb-2">
               <div className="w-full px-4 py-2.5 rounded-2xl bg-[#1c1c1e] border border-white/10 flex items-center justify-between gap-3 text-xs">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <Sparkles className="w-4 h-4 text-lime-400 shrink-0" />
+                  <Sparkles className="w-4 h-4 text-blue-400 shrink-0" />
                   <span className="text-neutral-300 truncate">
                     {selectedProject.createdBy === auth.currentUser?.uid || selectedProject.createdByName === (settings.userNickname || 'Du') ? (
                       <span>Von dir in der Community veröffentlicht</span>
@@ -1879,11 +1879,11 @@ export const Projects: React.FC<ProjectsProps> = ({
                 {projectChats.length === 0 ? (
                   <div className="py-14 sm:py-16 flex flex-col items-center justify-center text-center relative px-4">
                     {/* Soft Lime Glow in Background */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-[#C5DC57]/20 rounded-full blur-3xl pointer-events-none -z-10" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl pointer-events-none -z-10" />
 
                     {/* Dandelious Logo above the Project Title */}
                     <div className="relative group mb-4">
-                      <div className="absolute inset-0 rounded-3xl bg-[#C5DC57]/35 blur-2xl group-hover:bg-[#C5DC57]/50 transition-all pointer-events-none" />
+                      <div className="absolute inset-0 rounded-3xl bg-blue-600/35 blur-2xl group-hover:bg-blue-500/50 transition-all pointer-events-none" />
                       <DandeliousLogo className="w-16 h-16 sm:w-20 sm:h-20 shadow-2xl relative z-10" variant="badge" />
                     </div>
 
@@ -2107,7 +2107,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                       tutorialStep === null || tutorialStep === 3 ? 'cursor-grab active:cursor-grabbing' : 'cursor-default'
                     } ${
                       tutorialStep === 3
-                        ? 'border-[#C5DC57]/70 shadow-[0_0_30px_rgba(197,220,87,0.25)]'
+                        ? 'border-blue-500/70 shadow-[0_0_30px_rgba(59,130,246,0.25)]'
                         : 'border-white/10'
                     }`}
                   >
@@ -2124,7 +2124,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                       }}
                       className={`w-10 h-10 rounded-full flex items-center justify-center shadow-sm shrink-0 transition-all active:scale-95 cursor-pointer mr-2.5 ${
                         tutorialStep === 1
-                          ? 'bg-[#C5DC57] text-black ring-4 ring-[#C5DC57]/60 shadow-[0_0_20px_rgba(197,220,87,0.8)] animate-pulse'
+                          ? 'bg-[#2563eb] text-white ring-4 ring-blue-500/60 shadow-[0_0_20px_rgba(37,99,235,0.8)] animate-pulse'
                           : 'bg-white/10 hover:bg-white/15 border border-white/10 text-neutral-200 hover:text-white'
                       }`}
                       title="Icon ändern"
@@ -2165,7 +2165,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                       placeholder={creationType === 'cookbook' ? "Name des Kochbuchs eingeben..." : "Name des Projekts eingeben..."}
                       autoFocus
                       className={`flex-1 bg-transparent text-white placeholder:text-[#8e8e93] font-medium text-[15px] sm:text-[16px] outline-none min-w-0 ${
-                        tutorialStep === 2 ? 'border-b border-[#C5DC57]/80 pb-0.5' : ''
+                        tutorialStep === 2 ? 'border-b border-blue-500/80 pb-0.5' : ''
                       }`}
                     />
 
@@ -2181,7 +2181,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                       }`}
                       title="Nach rechts wischen zum Öffnen"
                     >
-                      <ChevronRight className={`w-5 h-5 animate-pulse stroke-[2.5] ${tutorialStep === 3 ? 'text-[#C5DC57]' : 'text-[#8e8e93]'}`} />
+                      <ChevronRight className={`w-5 h-5 animate-pulse stroke-[2.5] ${tutorialStep === 3 ? 'text-[#3b82f6]' : 'text-[#8e8e93]'}`} />
                     </div>
 
                     {/* Animated visual slide indicator for Step 3 without emojis */}
@@ -2199,10 +2199,10 @@ export const Projects: React.FC<ProjectsProps> = ({
                         }}
                         className="absolute top-1/2 -translate-y-1/2 left-14 z-30 pointer-events-none flex items-center gap-1.5"
                       >
-                        <div className="w-7 h-7 rounded-full bg-[#C5DC57] text-black flex items-center justify-center shadow-[0_0_20px_rgba(197,220,87,0.9)]">
+                        <div className="w-7 h-7 rounded-full bg-[#2563eb] text-white flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.9)]">
                           <ChevronRight className="w-4 h-4 stroke-[3]" />
                         </div>
-                        <div className="h-1.5 w-14 bg-gradient-to-r from-[#C5DC57] via-[#C5DC57]/60 to-transparent rounded-full" />
+                        <div className="h-1.5 w-14 bg-gradient-to-r from-[#2563eb] via-[#3b82f6]/60 to-transparent rounded-full" />
                       </motion.div>
                     )}
                   </motion.div>
@@ -2406,7 +2406,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                   }}
                   className={`rounded-full px-5 py-3.5 flex items-center justify-between transition-all cursor-pointer group shadow-sm active:scale-[0.99] w-full ${
                     sourceTutorialStep === 1
-                      ? 'bg-[#C5DC57] text-black ring-4 ring-[#C5DC57]/80 shadow-[0_0_25px_rgba(197,220,87,0.9)] animate-pulse'
+                      ? 'bg-[#2563eb] text-white ring-4 ring-blue-500/80 shadow-[0_0_25px_rgba(37,99,235,0.9)] animate-pulse'
                       : 'bg-[#242426] hover:bg-[#2c2c2e]'
                   }`}
                 >
@@ -2654,7 +2654,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                 onChange={(e) => setProjectInstructionsInput(e.target.value)}
                 placeholder="z. B. Beantworte alle Fragen im akademischen Stil, beziehe Formeln ein und formatiere Quellcode präzise."
                 rows={5}
-                className="w-full rounded-2xl bg-white/15 backdrop-blur-2xl border border-white/20 border border-white/10 p-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-lime-500/50 resize-none"
+                className="w-full rounded-2xl bg-white/15 backdrop-blur-2xl border border-white/20 border border-white/10 p-3.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-blue-500/50 resize-none"
               />
 
               <div className="flex justify-end gap-2 pt-2">
@@ -2727,7 +2727,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                 autoFocus
                 className={`w-full rounded-2xl bg-white/15 backdrop-blur-2xl px-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors ${
                   sourceTutorialStep === 2
-                    ? 'border-2 border-[#C5DC57] ring-4 ring-[#C5DC57]/50 shadow-[0_0_20px_rgba(197,220,87,0.5)]'
+                    ? 'border-2 border-blue-500 ring-4 ring-blue-500/50 shadow-[0_0_20px_rgba(59,130,246,0.5)]'
                     : 'border border-white/20'
                 }`}
               />
@@ -2766,7 +2766,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                   }}
                   className={`px-5 py-2 rounded-full font-semibold text-xs cursor-pointer transition-all shadow-lg ${
                     sourceTutorialStep === 3
-                      ? 'bg-[#C5DC57] text-black ring-4 ring-[#C5DC57]/80 shadow-[0_0_25px_rgba(197,220,87,0.9)] animate-pulse'
+                      ? 'bg-[#2563eb] text-white ring-4 ring-blue-500/80 shadow-[0_0_25px_rgba(37,99,235,0.9)] animate-pulse'
                       : 'bg-white text-black hover:bg-neutral-200 disabled:opacity-40'
                   }`}
                 >
@@ -3388,7 +3388,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                       }}
                       className="w-full py-3.5 rounded-full bg-[#242426] hover:bg-[#2c2c2e] border border-white/10 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-colors active:scale-98 shadow-sm"
                     >
-                      <Sparkles className="w-4 h-4 text-[#C5DC57]" />
+                      <Sparkles className="w-4 h-4 text-[#3b82f6]" />
                       <span>Schritt-für-Schritt Tutorial starten</span>
                     </button>
                   </div>
@@ -3416,7 +3416,7 @@ export const Projects: React.FC<ProjectsProps> = ({
             >
               <div className="flex items-center justify-between">
                 <h3 className="text-base font-semibold text-white flex items-center gap-2">
-                  <MessageSquare className="w-5 h-5 text-lime-400" />
+                  <MessageSquare className="w-5 h-5 text-blue-400" />
                   Feedback zu Projekten
                 </h3>
                 <button
@@ -3440,7 +3440,7 @@ export const Projects: React.FC<ProjectsProps> = ({
                 onChange={(e) => setFeedbackText(e.target.value)}
                 placeholder="Dein Feedback oder Ideen..."
                 rows={4}
-                className="w-full p-3.5 rounded-2xl bg-white/15 backdrop-blur-2xl border border-white/20 border border-white/10 text-white text-xs placeholder:text-neutral-500 focus:outline-none focus:border-lime-500/50 resize-none"
+                className="w-full p-3.5 rounded-2xl bg-white/15 backdrop-blur-2xl border border-white/20 border border-white/10 text-white text-xs placeholder:text-neutral-500 focus:outline-none focus:border-blue-500/50 resize-none"
               />
 
               <div className="flex justify-end gap-2 pt-2">

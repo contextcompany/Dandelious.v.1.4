@@ -120,7 +120,7 @@ export const RemoteSetupModal: React.FC<RemoteSetupModalProps> = ({
               <div className="w-full mt-7 space-y-4 px-1">
                 <div className="flex items-start gap-3.5 text-left">
                   <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mt-0.5 text-neutral-300">
-                    <MessageSquare className="w-4 h-4 stroke-[1.8] text-[#C5DC57]" />
+                    <MessageSquare className="w-4 h-4 stroke-[1.8] text-[#3b82f6]" />
                   </div>
                   <p className="text-[13px] text-neutral-300 leading-relaxed font-normal">
                     <span className="font-medium text-white">Live-Chats spiegeln:</span> Führe Unterhaltungen nahtlos zwischen Handy und PC fort.
@@ -180,7 +180,7 @@ export const RemoteSetupModal: React.FC<RemoteSetupModalProps> = ({
           {step === 'enter_code' && (
             <div className="flex flex-col items-center text-center mt-2">
               <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-white mb-4 shadow-inner">
-                <KeyRound className="w-7 h-7 text-[#C5DC57] stroke-[1.8]" />
+                <KeyRound className="w-7 h-7 text-[#3b82f6] stroke-[1.8]" />
               </div>
 
               <h2 className="text-[22px] font-semibold text-white tracking-tight">
@@ -208,7 +208,7 @@ export const RemoteSetupModal: React.FC<RemoteSetupModalProps> = ({
                     }}
                     placeholder="492-815"
                     autoFocus
-                    className="w-full text-center text-2xl font-mono tracking-widest bg-neutral-900 border border-white/15 focus:border-[#C5DC57] rounded-2xl py-3 px-4 text-white placeholder-neutral-600 outline-none transition-all shadow-inner"
+                    className="w-full text-center text-2xl font-mono tracking-widest bg-neutral-900 border border-white/15 focus:border-blue-500 rounded-2xl py-3 px-4 text-white placeholder-neutral-600 outline-none transition-all shadow-inner"
                   />
                   {pinError && (
                     <p className="text-xs text-red-400 mt-2">{pinError}</p>

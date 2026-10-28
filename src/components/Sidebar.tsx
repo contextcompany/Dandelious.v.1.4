@@ -425,26 +425,26 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <AnimatePresence initial={false}>
       {isOpen && (
-        <>
-          {/* Floating Overlay Backdrop on iPad, Tablet & PC (clicking outside closes the floating sidebar) */}
-          <motion.div
-            key="sidebar-floating-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => {
-              playSound('click', enableSoundEffects);
-              onToggleOpen();
-            }}
-            className={`fixed inset-0 z-40 bg-black/45 backdrop-blur-[2px] cursor-pointer ${
-              isHandy ? "hidden" : "block"
-            } sm:block`}
-            id="sidebar-backdrop"
-          />
+        <motion.div
+          key="sidebar-floating-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          onClick={() => {
+            playSound('click', enableSoundEffects);
+            onToggleOpen();
+          }}
+          className={`fixed inset-0 z-40 bg-black/45 backdrop-blur-[2px] cursor-pointer ${
+            isHandy ? "hidden" : "block"
+          } sm:block`}
+          id="sidebar-backdrop"
+        />
+      )}
 
-          <motion.aside 
-            key="sidebar-drawer"
+      {isOpen && (
+        <motion.aside 
+          key="sidebar-drawer"
             initial={{ opacity: 0, x: "-100%" }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "-100%" }}
@@ -490,7 +490,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           playSound('click', enableSoundEffects);
                           setShowSearchInput(!showSearchInput);
                         }}
-                        className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/15 flex items-center justify-center text-white transition-colors cursor-pointer shrink-0"
+                        className="w-10 h-10 rounded-full bg-[#242426] hover:bg-[#2c2c2e] border-0 flex items-center justify-center text-white transition-colors cursor-pointer shrink-0"
                         title="Suchen"
                       >
                         <Search className="w-5 h-5 stroke-[2]" />
@@ -504,7 +504,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           placeholder="Suchen..."
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
-                          className="w-full bg-[#1c1c1e] text-xs text-white placeholder-neutral-400 rounded-full px-4 py-2.5 outline-none border border-white/10 focus:border-white/20"
+                          className="w-full bg-[#1c1c1e] text-xs text-white placeholder-neutral-400 rounded-full px-4 py-2.5 outline-none border-0"
                           autoFocus
                         />
                       </div>
@@ -665,10 +665,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         className="w-full bg-[#242426] hover:bg-[#2c2c2e] rounded-full px-5 py-3.5 flex items-center justify-between transition-all group shadow-sm cursor-pointer text-left active:scale-[0.99]"
                       >
                         <div className="flex items-center gap-3.5">
-                          <Laptop className="w-5 h-5 text-lime-400 stroke-[1.8] shrink-0" />
-                          <span className="text-[15px] font-normal text-lime-300">Als WebApp nutzen</span>
+                          <Laptop className="w-5 h-5 text-[#4c8dff] stroke-[1.8] shrink-0" />
+                          <span className="text-[15px] font-normal text-white">Als WebApp nutzen</span>
                         </div>
-                        <span className="text-[11px] font-semibold bg-lime-500/20 text-lime-300 px-2 py-0.5 rounded-full uppercase tracking-wider">Vollversion</span>
+                        <span className="text-[11px] font-semibold bg-[#4c8dff]/20 text-[#4c8dff] px-2 py-0.5 rounded-full uppercase tracking-wider">Vollversion</span>
                       </button>
                     </div>
                   </div>
@@ -911,7 +911,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <span className="text-[15px] font-normal text-white">Chats durchsuchen</span>
                     </div>
                     {searchTerm ? (
-                      <span className="text-[11px] font-mono text-lime-400 bg-lime-500/10 px-2 py-0.5 rounded-full border border-lime-500/20">
+                      <span className="text-[11px] font-mono text-[#4c8dff] bg-[#4c8dff]/15 px-2 py-0.5 rounded-full border border-[#4c8dff]/25">
                         {filteredSessions.length} {filteredSessions.length === 1 ? 'Treffer' : 'Treffer'}
                       </span>
                     ) : (
@@ -1256,12 +1256,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
           {!isHandy && (
             <div 
               onMouseDown={handleStartResize}
-              className="absolute top-0 right-0 w-2 h-full cursor-col-resize hover:bg-lime-500/20 active:bg-lime-500/40 transition-colors z-20 hidden sm:block"
+              className="absolute top-0 right-0 w-2 h-full cursor-col-resize hover:bg-[#4c8dff]/20 active:bg-[#4c8dff]/40 transition-colors z-20 hidden sm:block"
               title="Breite anpassen"
             />
           )}
         </motion.aside>
-      </>
       )}
     </AnimatePresence>
   );

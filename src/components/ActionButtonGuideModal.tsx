@@ -67,13 +67,13 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
           className="relative w-full max-w-2xl rounded-3xl bg-[#090d18] border border-white/15 shadow-[0_25px_70px_rgba(0,0,0,0.95),0_0_50px_rgba(163,190,52,0.1)] overflow-hidden z-10 backdrop-blur-2xl"
         >
           {/* Header Line */}
-          <div className="h-[3px] bg-gradient-to-r from-lime-400 via-emerald-400 to-cyan-400" />
+          <div className="h-[3px] bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400" />
 
           {/* Modal Header */}
           <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-lime-500/10 border border-lime-400/30 flex items-center justify-center">
-                <Zap className="w-5 h-5 text-lime-400" />
+              <div className="w-9 h-9 rounded-2xl bg-blue-500/15 border border-blue-400/30 flex items-center justify-center">
+                <Zap className="w-5 h-5 text-blue-400" />
               </div>
               <div>
                 <h2 className="text-base font-bold text-white flex items-center gap-2">
@@ -109,7 +109,7 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
                 }}
                 className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                   activeTab === 'apple'
-                    ? 'bg-gradient-to-r from-lime-400 to-emerald-400 text-black shadow-lg'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-black shadow-lg'
                     : 'text-neutral-400 hover:text-white'
                 }`}
               >
@@ -124,7 +124,7 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
                 }}
                 className={`flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                   activeTab === 'android'
-                    ? 'bg-gradient-to-r from-lime-400 to-emerald-400 text-black shadow-lg'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-black shadow-lg'
                     : 'text-neutral-400 hover:text-white'
                 }`}
               >
@@ -133,9 +133,9 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
             </div>
 
             {/* Quick Link Generator Box */}
-            <div className="p-3.5 rounded-2xl bg-lime-500/10 border border-lime-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="p-3.5 rounded-2xl bg-blue-500/15 border border-blue-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div className="min-w-0 flex-1">
-                <span className="text-[11px] font-bold text-lime-300 uppercase tracking-wider block">
+                <span className="text-[11px] font-bold text-blue-300 uppercase tracking-wider block">
                   Dein persönlicher Prompt-Trigger Link:
                 </span>
                 <span className="text-xs font-mono text-white/90 truncate block mt-0.5 select-all">
@@ -145,7 +145,7 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-lime-400 hover:bg-lime-300 text-black text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
+                className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
               >
                 {copiedLink ? (
                   <>
@@ -165,7 +165,7 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
             {activeTab === 'apple' && (
               <div className="space-y-3.5 text-xs text-neutral-300">
                 <div className="flex gap-3 items-start p-3 rounded-2xl bg-white/[0.03] border border-white/5">
-                  <span className="w-6 h-6 rounded-full bg-lime-400/20 text-lime-300 font-bold flex items-center justify-center shrink-0">
+                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 font-bold flex items-center justify-center shrink-0">
                     1
                   </span>
                   <div>
@@ -177,7 +177,7 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
                 </div>
 
                 <div className="flex gap-3 items-start p-3 rounded-2xl bg-white/[0.03] border border-white/5">
-                  <span className="w-6 h-6 rounded-full bg-lime-400/20 text-lime-300 font-bold flex items-center justify-center shrink-0">
+                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 font-bold flex items-center justify-center shrink-0">
                     2
                   </span>
                   <div>
@@ -189,7 +189,7 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
                 </div>
 
                 <div className="flex gap-3 items-start p-3 rounded-2xl bg-white/[0.03] border border-white/5">
-                  <span className="w-6 h-6 rounded-full bg-lime-400/20 text-lime-300 font-bold flex items-center justify-center shrink-0">
+                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 font-bold flex items-center justify-center shrink-0">
                     3
                   </span>
                   <div>
@@ -206,7 +206,7 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
             {activeTab === 'android' && (
               <div className="space-y-3.5 text-xs text-neutral-300">
                 <div className="flex gap-3 items-start p-3 rounded-2xl bg-white/[0.03] border border-white/5">
-                  <span className="w-6 h-6 rounded-full bg-lime-400/20 text-lime-300 font-bold flex items-center justify-center shrink-0">
+                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 font-bold flex items-center justify-center shrink-0">
                     1
                   </span>
                   <div>
@@ -218,7 +218,7 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
                 </div>
 
                 <div className="flex gap-3 items-start p-3 rounded-2xl bg-white/[0.03] border border-white/5">
-                  <span className="w-6 h-6 rounded-full bg-lime-400/20 text-lime-300 font-bold flex items-center justify-center shrink-0">
+                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 font-bold flex items-center justify-center shrink-0">
                     2
                   </span>
                   <div>
@@ -230,14 +230,14 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
                 </div>
 
                 <div className="flex gap-3 items-start p-3 rounded-2xl bg-white/[0.03] border border-white/5">
-                  <span className="w-6 h-6 rounded-full bg-lime-400/20 text-lime-300 font-bold flex items-center justify-center shrink-0">
+                  <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-300 font-bold flex items-center justify-center shrink-0">
                     3
                   </span>
                   <div>
                     <strong className="text-white block font-semibold mb-0.5">
                       Bixby Routine oder Button Mapper (Optional)
                     </strong>
-                    Erstelle eine Bixby Routine oder nutze Button Mapper / Tasker, um beim Gedrückthalten des Powerbuttons die URL mit <code className="text-lime-300">?action=prompt</code> auszuführen!
+                    Erstelle eine Bixby Routine oder nutze Button Mapper / Tasker, um beim Gedrückthalten des Powerbuttons die URL mit <code className="text-blue-300">?action=prompt</code> auszuführen!
                   </div>
                 </div>
               </div>
@@ -247,7 +247,7 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
           {/* Footer Actions */}
           <div className="px-5 py-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 bg-white/[0.02]">
             <span className="text-[11px] text-neutral-400 flex items-center gap-1">
-              <Command className="w-3.5 h-3.5 text-lime-400" />
+              <Command className="w-3.5 h-3.5 text-blue-400" />
               In der App kannst du auch jederzeit <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-white font-mono text-[10px]">Strg+Shift+P</kbd> drücken.
             </span>
 
@@ -259,7 +259,7 @@ export const ActionButtonGuideModal: React.FC<ActionButtonGuideModalProps> = ({
                   onClose();
                   onTestPromptBar();
                 }}
-                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-gradient-to-r from-lime-400 via-emerald-400 to-cyan-400 hover:opacity-90 text-black font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-lime-500/20 cursor-pointer"
+                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 hover:opacity-90 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-500/30 cursor-pointer"
               >
                 <Play className="w-3.5 h-3.5 fill-black" />
                 <span>Promptleiste jetzt testen</span>

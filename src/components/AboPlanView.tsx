@@ -167,7 +167,7 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
 
   return (
     <div
-      className="min-h-full text-[#eef2e4] bg-[#000000] pb-28 selection:bg-[#cfe45a] selection:text-[#1a2307]"
+      className="min-h-full text-[#f1f5f9] bg-[#030712] pb-28 selection:bg-blue-600/30 selection:text-blue-200"
       style={{
         fontFamily: '"DM Sans", system-ui, -apple-system, sans-serif'
       }}
@@ -180,12 +180,12 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
               type="button"
               onClick={onBack}
               aria-label="Zurück"
-              className="w-11 h-11 rounded-full bg-[#161d14] border border-[#2b3627] flex items-center justify-center text-[#eef2e4] hover:border-[#cfe45a]/50 hover:bg-[#1e271b] transition-all cursor-pointer active:scale-95"
+              className="w-11 h-11 rounded-full bg-[#0c1529] border border-[#1e3568] flex items-center justify-center text-[#f1f5f9] hover:border-[#3b82f6]/50 hover:bg-[#111e3b] transition-all cursor-pointer active:scale-95"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <h1
-              className="text-[22px] font-bold text-[#eef2e4] tracking-tight"
+              className="text-[22px] font-bold text-[#f1f5f9] tracking-tight"
               style={{ fontFamily: '"Bricolage Grotesque", "DM Sans", sans-serif' }}
             >
               Dein Plan
@@ -196,37 +196,37 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
             <button
               type="button"
               onClick={onOpenLimits}
-              className="px-3 py-1.5 rounded-full bg-[#161d14] border border-[#2b3627] hover:border-[#cfe45a]/50 text-xs text-[#9aa58f] hover:text-[#cfe45a] font-medium transition-all cursor-pointer"
+              className="px-3 py-1.5 rounded-full bg-[#0c1529] border border-[#1e3568] hover:border-[#3b82f6]/50 text-xs text-[#94a3b8] hover:text-[#3b82f6] font-medium transition-all cursor-pointer"
             >
               Nutzung & Limits
             </button>
           )}
         </header>
 
-        {/* Aktueller Plan Banner (Lime Green Card with Dandelion SVG silhouette) */}
-        <div className="relative rounded-[26px] bg-[#cfe45a] text-[#1a2307] p-5 overflow-hidden shadow-lg shadow-[#cfe45a]/10">
-          <small className="text-sm font-semibold opacity-80 block tracking-wide">
+        {/* Aktueller Plan Banner (Rich Deep Navy Blue Card with Dandelion SVG silhouette) */}
+        <div className="relative rounded-[26px] bg-gradient-to-br from-[#1d4ed8] via-[#1e3a8a] to-[#0f172a] text-white p-5 overflow-hidden border border-[#3b82f6]/40 shadow-xl shadow-[#1e3a8a]/20">
+          <small className="text-sm font-semibold opacity-85 block tracking-wide text-blue-200">
             Aktuell aktiv
           </small>
           <h2
-            className="text-[30px] font-bold my-1 tracking-tight leading-none"
+            className="text-[30px] font-bold my-1 tracking-tight leading-none text-white"
             style={{ fontFamily: '"Bricolage Grotesque", "DM Sans", sans-serif' }}
           >
             Dandelious {PLANS[normalizedTier]?.name || currentTier}
           </h2>
-          <p className="m-0 text-[15px] max-w-[26ch] opacity-90 leading-snug">
+          <p className="m-0 text-[15px] max-w-[26ch] text-blue-100/90 leading-snug">
             {normalizedTier === 'Free'
               ? 'Kostenlose Standard-Kapazität für deine täglichen Recherchen.'
               : `${PLANS[normalizedTier]?.tag} Tarif mit erweiterten Denk- und Antwortkapazitäten.`}
           </p>
 
-          <div className="absolute right-4 top-4 bg-[#1a2307] text-[#cfe45a] rounded-full px-3 py-1 font-semibold text-xs tracking-wide">
+          <div className="absolute right-4 top-4 bg-[#0a1124] text-[#60a5fa] border border-[#3b82f6]/30 rounded-full px-3 py-1 font-semibold text-xs tracking-wide shadow-sm">
             {normalizedTier === 'Free' ? '0,00 €' : '1× Access Card'}
           </div>
 
           {/* Dandelion seed art silhouette in background */}
           <svg
-            className="absolute -right-4 -bottom-6 w-44 pointer-events-none opacity-25"
+            className="absolute -right-4 -bottom-6 w-44 pointer-events-none opacity-25 text-blue-300"
             viewBox="0 0 200 200"
             fill="none"
             stroke="currentColor"
@@ -249,17 +249,17 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
 
         {/* Section: Pläne erkunden */}
         <h2
-          className="text-[19px] font-bold mt-7 mb-1 text-[#eef2e4]"
+          className="text-[19px] font-bold mt-7 mb-1 text-[#f1f5f9]"
           style={{ fontFamily: '"Bricolage Grotesque", "DM Sans", sans-serif' }}
         >
           Pläne erkunden
         </h2>
-        <p className="m-0 mb-3 text-[#9aa58f] text-[15px]">
+        <p className="m-0 mb-3 text-[#94a3b8] text-[15px]">
           Wähle den Umfang, der am besten zu deinem Alltag passt.
         </p>
 
         {/* Segmented Control / Tab Switcher */}
-        <div className="grid grid-cols-4 bg-[#1e271b] border border-[#2b3627] rounded-full p-1 gap-1">
+        <div className="grid grid-cols-4 bg-[#132244] border border-[#1e3568] rounded-full p-1 gap-1">
           {(['Free', 'Plus', 'Pro', 'Ultra'] as PlanId[]).map((pid) => {
             const plan = PLANS[pid];
             const isSelected = selectedPlanId === pid;
@@ -272,19 +272,19 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
                 onClick={() => setSelectedPlanId(pid)}
                 className={`min-h-[46px] rounded-full font-semibold text-xs flex flex-col items-center justify-center transition-all cursor-pointer relative ${
                   isSelected
-                    ? 'bg-[#161d14] text-[#eef2e4] shadow-md border border-[#2b3627]'
-                    : 'text-[#9aa58f] hover:text-[#eef2e4]'
+                    ? 'bg-[#0c1529] text-[#f1f5f9] shadow-md border border-[#1e3568]'
+                    : 'text-[#94a3b8] hover:text-[#f1f5f9]'
                 }`}
               >
                 <div className="flex items-center gap-1">
                   <span>{plan.name}</span>
                   {isCurrent && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#cfe45a]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6]" />
                   )}
                 </div>
                 <span
                   className={`text-[10px] font-medium leading-tight ${
-                    isSelected ? 'text-[#cfe45a]' : 'text-[#9aa58f]/70'
+                    isSelected ? 'text-[#60a5fa]' : 'text-[#94a3b8]/70'
                   }`}
                 >
                   {plan.tag}
@@ -295,11 +295,11 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
         </div>
 
         {/* Plan Detail Card */}
-        <div className="mt-3.5 bg-[#161d14] border border-[#2b3627] rounded-[26px] p-5 shadow-sm">
+        <div className="mt-3.5 bg-[#0c1529] border border-[#1e3568] rounded-[26px] p-5 shadow-sm">
           <div className="flex justify-between items-start gap-3">
             <div>
               <h3
-                className="text-[26px] font-bold text-[#eef2e4] leading-tight"
+                className="text-[26px] font-bold text-[#f1f5f9] leading-tight"
                 style={{ fontFamily: '"Bricolage Grotesque", "DM Sans", sans-serif' }}
               >
                 Dandelious {selectedPlan.name}
@@ -307,8 +307,8 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
               <span
                 className={`inline-block mt-1 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                   selectedPlan.tagHighlight
-                    ? 'bg-[#cfe45a] text-[#1a2307]'
-                    : 'bg-[#1e271b] text-[#cfe45a] border border-[#2b3627]'
+                    ? 'bg-[#2563eb] text-white shadow-sm'
+                    : 'bg-[#132244] text-[#60a5fa] border border-[#1e3568]'
                 }`}
               >
                 {selectedPlan.tag}
@@ -317,12 +317,12 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
 
             <div className="text-right">
               <div
-                className="text-xl font-bold text-[#cfe45a] font-mono leading-none"
+                className="text-xl font-bold text-[#3b82f6] font-mono leading-none"
                 style={{ fontFamily: '"Bricolage Grotesque", monospace' }}
               >
                 {selectedPlan.isFree ? '0,00 €' : '1× Access Card'}
               </div>
-              <div className="text-[11px] text-[#9aa58f] mt-1">
+              <div className="text-[11px] text-[#94a3b8] mt-1">
                 {selectedPlan.isFree
                   ? 'dauerhaft kostenlos'
                   : '365 Tage Laufzeit pro Karte'}
@@ -330,43 +330,43 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
             </div>
           </div>
 
-          <p className="my-3.5 text-[#9aa58f] text-[15px] leading-relaxed">
+          <p className="my-3.5 text-[#94a3b8] text-[15px] leading-relaxed">
             {selectedPlan.lead}
           </p>
 
           {/* Level Indicator (Dots) */}
-          <div className="flex items-center gap-1.5 mb-4 text-xs text-[#9aa58f]">
-            <b className="text-[#eef2e4] font-semibold mr-1">Kapazität:</b>
-            {[1, 2, 3, 4].map((dot) => (
+          <div className="flex items-center gap-1.5 mb-4 text-xs text-[#94a3b8]">
+            <b className="text-[#f1f5f9] font-semibold mr-1">Kapazität:</b>
+            {[1, 2, 3, 4].map((dot, dIdx) => (
               <span
-                key={dot}
+                key={`plan-dot-${dot}-${dIdx}`}
                 className={`w-3 h-3 rounded-full border transition-colors ${
                   dot <= selectedPlan.dots
-                    ? 'bg-[#cfe45a] border-[#cfe45a]'
-                    : 'bg-[#1e271b] border-[#2b3627]'
+                    ? 'bg-[#3b82f6] border-[#3b82f6]'
+                    : 'bg-[#132244] border-[#1e3568]'
                 }`}
               />
             ))}
-            <span className="ml-1 text-[11px] text-[#cfe45a]">
+            <span className="ml-1 text-[11px] text-[#60a5fa]">
               Stufe {selectedPlan.dots} von 4
             </span>
           </div>
 
           {/* Feature List */}
-          <ul className="list-none m-0 p-0 border-t border-[#2b3627]">
+          <ul className="list-none m-0 p-0 border-t border-[#1e3568]">
             {selectedPlan.features.map((feat, idx) => (
               <li
-                key={idx}
-                className="flex items-start gap-3 py-3 border-b border-[#2b3627] last:border-b-0 last:pb-0"
+                key={`feat-${selectedPlan.name}-${feat.title || idx}-${idx}`}
+                className="flex items-start gap-3 py-3 border-b border-[#1e3568] last:border-b-0 last:pb-0"
               >
-                <div className="w-5 h-5 rounded-full bg-[#cfe45a]/15 text-[#cfe45a] flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-5 h-5 rounded-full bg-[#2563eb]/20 text-[#60a5fa] flex items-center justify-center shrink-0 mt-0.5">
                   <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                 </div>
                 <div>
-                  <strong className="block text-[15px] font-semibold text-[#eef2e4] leading-snug">
+                  <strong className="block text-[15px] font-semibold text-[#f1f5f9] leading-snug">
                     {feat.title}
                   </strong>
-                  <span className="text-xs text-[#9aa58f] leading-relaxed">
+                  <span className="text-xs text-[#94a3b8] leading-relaxed">
                     {feat.desc}
                   </span>
                 </div>
@@ -377,72 +377,72 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
 
         {/* Feature-Vergleich Tabelle (Tablewrap) */}
         <h2
-          className="text-[19px] font-bold mt-7 mb-2 text-[#eef2e4]"
+          className="text-[19px] font-bold mt-7 mb-2 text-[#f1f5f9]"
           style={{ fontFamily: '"Bricolage Grotesque", "DM Sans", sans-serif' }}
         >
           Im Vergleich
         </h2>
 
-        <div className="overflow-x-auto bg-[#161d14] border border-[#2b3627] rounded-[26px] p-3 shadow-sm">
+        <div className="overflow-x-auto bg-[#0c1529] border border-[#1e3568] rounded-[26px] p-3 shadow-sm">
           <table className="w-full text-xs text-left border-collapse min-w-[340px]">
             <thead>
-              <tr className="border-b border-[#2b3627] text-[#9aa58f]">
+              <tr className="border-b border-[#1e3568] text-[#94a3b8]">
                 <th className="py-2.5 px-2 font-medium">Funktion</th>
                 <th className="py-2.5 px-2 text-center font-medium">Free</th>
                 <th className="py-2.5 px-2 text-center font-medium">Plus</th>
-                <th className="py-2.5 px-2 text-center font-medium text-[#cfe45a]">Pro</th>
+                <th className="py-2.5 px-2 text-center font-medium text-[#60a5fa]">Pro</th>
                 <th className="py-2.5 px-2 text-center font-medium">Ultra</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#2b3627] text-[#9aa58f]">
+            <tbody className="divide-y divide-[#1e3568] text-[#94a3b8]">
               <tr>
-                <td className="py-2.5 px-2 font-medium text-[#eef2e4]">Preis</td>
+                <td className="py-2.5 px-2 font-medium text-[#f1f5f9]">Preis</td>
                 <td className="py-2.5 px-2 text-center">0 €</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">1× Access Card</td>
-                <td className="py-2.5 px-2 text-center font-semibold text-[#cfe45a]">1× Access Card</td>
-                <td className="py-2.5 px-2 text-center font-semibold text-[#cfe45a]">1× Access Card</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">1× Access Card</td>
+                <td className="py-2.5 px-2 text-center font-semibold text-[#60a5fa]">1× Access Card</td>
+                <td className="py-2.5 px-2 text-center font-semibold text-[#60a5fa]">1× Access Card</td>
               </tr>
               <tr>
-                <td className="py-2.5 px-2 font-medium text-[#eef2e4]">Kontingent</td>
+                <td className="py-2.5 px-2 font-medium text-[#f1f5f9]">Kontingent</td>
                 <td className="py-2.5 px-2 text-center">Basis</td>
                 <td className="py-2.5 px-2 text-center">2×</td>
-                <td className="py-2.5 px-2 text-center font-semibold text-[#cfe45a]">4×</td>
+                <td className="py-2.5 px-2 text-center font-semibold text-[#60a5fa]">4×</td>
                 <td className="py-2.5 px-2 text-center">Max</td>
               </tr>
               <tr>
-                <td className="py-2.5 px-2 font-medium text-[#eef2e4]">Priorität</td>
+                <td className="py-2.5 px-2 font-medium text-[#f1f5f9]">Priorität</td>
                 <td className="py-2.5 px-2 text-center">Normal</td>
                 <td className="py-2.5 px-2 text-center">Schnell</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">Priorität</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">Priorität</td>
                 <td className="py-2.5 px-2 text-center">VIP</td>
               </tr>
               <tr>
-                <td className="py-2.5 px-2 font-medium text-[#eef2e4]">Kontextfenster</td>
+                <td className="py-2.5 px-2 font-medium text-[#f1f5f9]">Kontextfenster</td>
                 <td className="py-2.5 px-2 text-center">32k</td>
                 <td className="py-2.5 px-2 text-center">128k</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">256k</td>
-                <td className="py-2.5 px-2 text-center font-bold text-[#cfe45a]">1M</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">256k</td>
+                <td className="py-2.5 px-2 text-center font-bold text-[#60a5fa]">1M</td>
               </tr>
               <tr>
-                <td className="py-2.5 px-2 font-medium text-[#eef2e4]">Flaggschiff-Denken</td>
-                <td className="py-2.5 px-2 text-center text-[#2b3627]">—</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">✓</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">✓</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">✓</td>
+                <td className="py-2.5 px-2 font-medium text-[#f1f5f9]">Flaggschiff-Denken</td>
+                <td className="py-2.5 px-2 text-center text-[#1e3568]">—</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">✓</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">✓</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">✓</td>
               </tr>
               <tr>
-                <td className="py-2.5 px-2 font-medium text-[#eef2e4]">Forschungsmodelle</td>
-                <td className="py-2.5 px-2 text-center text-[#2b3627]">—</td>
-                <td className="py-2.5 px-2 text-center text-[#2b3627]">—</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">✓</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">✓</td>
+                <td className="py-2.5 px-2 font-medium text-[#f1f5f9]">Forschungsmodelle</td>
+                <td className="py-2.5 px-2 text-center text-[#1e3568]">—</td>
+                <td className="py-2.5 px-2 text-center text-[#1e3568]">—</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">✓</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">✓</td>
               </tr>
               <tr>
-                <td className="py-2.5 px-2 font-medium text-[#eef2e4]">Werbefrei & Privat</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">✓</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">✓</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">✓</td>
-                <td className="py-2.5 px-2 text-center text-[#cfe45a]">✓</td>
+                <td className="py-2.5 px-2 font-medium text-[#f1f5f9]">Werbefrei & Privat</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">✓</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">✓</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">✓</td>
+                <td className="py-2.5 px-2 text-center text-[#60a5fa]">✓</td>
               </tr>
             </tbody>
           </table>
@@ -453,27 +453,27 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
           <button
             type="button"
             onClick={() => setIsAccessCardOpen(true)}
-            className="w-full min-h-[50px] rounded-full bg-[#161d14] hover:bg-[#1e271b] border border-[#2b3627] hover:border-[#cfe45a]/50 text-[#eef2e4] text-xs font-semibold flex items-center justify-center gap-2.5 transition-all cursor-pointer shadow-sm active:scale-[0.99]"
+            className="w-full min-h-[50px] rounded-full bg-[#0c1529] hover:bg-[#132244] border border-[#1e3568] hover:border-[#3b82f6]/50 text-[#f1f5f9] text-xs font-semibold flex items-center justify-center gap-2.5 transition-all cursor-pointer shadow-sm active:scale-[0.99]"
           >
-            <Key className="w-4 h-4 text-[#cfe45a]" />
+            <Key className="w-4 h-4 text-[#3b82f6]" />
             <span>Access Card einlösen oder Code eingeben</span>
           </button>
         </div>
       </div>
 
       {/* Fixed Bottom Dock (CTA) */}
-      <div className="fixed left-0 right-0 bottom-0 z-20 bg-[#000000]/90 backdrop-blur-md border-t border-[#2b3627] px-4 py-3">
+      <div className="fixed left-0 right-0 bottom-0 z-20 bg-[#050814]/90 backdrop-blur-md border-t border-[#1e3568] px-4 py-3">
         <div className="max-w-[480px] mx-auto">
           {isCurrentActive ? (
-            <div className="w-full min-h-[52px] rounded-full bg-[#1e271b] border border-[#cfe45a]/30 text-[#cfe45a] font-semibold text-sm flex items-center justify-center gap-2">
-              <Check className="w-4 h-4 text-[#cfe45a]" />
+            <div className="w-full min-h-[52px] rounded-full bg-[#132244] border border-[#3b82f6]/40 text-[#60a5fa] font-semibold text-sm flex items-center justify-center gap-2">
+              <Check className="w-4 h-4 text-[#3b82f6]" />
               <span>Dein aktueller Plan ({selectedPlan.name})</span>
             </div>
           ) : selectedPlan.isFree ? (
             <button
               type="button"
               onClick={() => setShowSwitchConfirm(true)}
-              className="w-full min-h-[52px] rounded-full bg-[#1e271b] hover:bg-[#2b3627] border border-[#2b3627] text-[#eef2e4] font-semibold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
+              className="w-full min-h-[52px] rounded-full bg-[#132244] hover:bg-[#1e3568] border border-[#1e3568] text-[#f1f5f9] font-semibold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
               <span>Auf Basis-Plan (Kostenlos) zurücksetzen</span>
             </button>
@@ -481,13 +481,13 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
             <button
               type="button"
               onClick={() => setIsAccessCardOpen(true)}
-              className="w-full min-h-[52px] rounded-full bg-[#cfe45a] text-[#1a2307] font-bold text-sm flex items-center justify-center gap-2 transition-transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer shadow-lg shadow-[#cfe45a]/20"
+              className="w-full min-h-[52px] rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold text-sm flex items-center justify-center gap-2 transition-transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer shadow-lg shadow-[#2563eb]/30"
             >
-              <Key className="w-4 h-4 text-[#1a2307]" />
+              <Key className="w-4 h-4 text-white" />
               <span>Access Card einlösen ({selectedPlan.name} freischalten)</span>
             </button>
           )}
-          <small className="block text-center text-[#9aa58f] text-xs mt-2">
+          <small className="block text-center text-[#94a3b8] text-xs mt-2">
             Abos sind nicht kostenlos · Jedes Abo kostet eine Access Card (365 Tage Laufzeit)
           </small>
         </div>
@@ -496,10 +496,10 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
       {/* Modal / Sheet: Access Card einlösen */}
       {isAccessCardOpen && (
         <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:p-4 bg-black/75 backdrop-blur-sm animate-fadeIn">
-          <div className="w-full max-w-[480px] bg-[#161d14] border-t sm:border border-[#2b3627] rounded-t-[26px] sm:rounded-[26px] p-6 shadow-2xl space-y-4">
+          <div className="w-full max-w-[480px] bg-[#0c1529] border-t sm:border border-[#1e3568] rounded-t-[26px] sm:rounded-[26px] p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-1">
-              <div className="flex items-center gap-2 text-[#eef2e4] text-base font-bold">
-                <Key className="w-5 h-5 text-[#cfe45a]" />
+              <div className="flex items-center gap-2 text-[#f1f5f9] text-base font-bold">
+                <Key className="w-5 h-5 text-[#3b82f6]" />
                 <span style={{ fontFamily: '"Bricolage Grotesque", sans-serif' }}>Access Card einlösen</span>
               </div>
               <button
@@ -508,19 +508,19 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
                   setIsAccessCardOpen(false);
                   setAccessCardFeedback(null);
                 }}
-                className="text-xs text-[#9aa58f] hover:text-[#eef2e4] transition-colors cursor-pointer px-2 py-1 rounded-md"
+                className="text-xs text-[#94a3b8] hover:text-[#f1f5f9] transition-colors cursor-pointer px-2 py-1 rounded-md"
               >
                 Schließen
               </button>
             </div>
 
-            <p className="text-xs text-[#9aa58f] leading-relaxed">
+            <p className="text-xs text-[#94a3b8] leading-relaxed">
               Gib deinen offiziellen Access Card Code ein, um deinen Tarif dauerhaft freizuschalten.
             </p>
 
             {/* Quick-Test Codes */}
             <div className="flex flex-wrap items-center gap-1.5 pt-1">
-              <span className="text-[11px] text-[#9aa58f] mr-1">Test-Codes:</span>
+              <span className="text-[11px] text-[#94a3b8] mr-1">Test-Codes:</span>
               {[
                 { code: 'PLUS84921049', label: 'Plus' },
                 { code: 'PRO74910283', label: 'Pro' },
@@ -533,7 +533,7 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
                     setAccessCardInput(chip.code);
                     handleRedeem(chip.code);
                   }}
-                  className="px-2.5 py-1 rounded-full bg-[#1e271b] hover:bg-[#2b3627] text-[#cfe45a] border border-[#cfe45a]/30 text-[11px] font-mono transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-full bg-[#132244] hover:bg-[#1e3568] text-[#60a5fa] border border-[#3b82f6]/30 text-[11px] font-mono transition-colors cursor-pointer"
                 >
                   {chip.label}
                 </button>
@@ -552,12 +552,12 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
                   }
                 }}
                 placeholder="z. B. PRO74910283"
-                className="flex-1 bg-[#1e271b] border border-[#2b3627] rounded-xl px-3.5 py-3 text-xs text-[#eef2e4] placeholder-[#9aa58f]/60 focus:outline-none focus:border-[#cfe45a] uppercase font-mono tracking-wider"
+                className="flex-1 bg-[#132244] border border-[#1e3568] rounded-xl px-3.5 py-3 text-xs text-[#f1f5f9] placeholder-[#94a3b8]/60 focus:outline-none focus:border-[#3b82f6] uppercase font-mono tracking-wider"
               />
               <button
                 type="button"
                 onClick={() => handleRedeem()}
-                className="px-4 py-3 bg-[#cfe45a] hover:bg-[#b4cb4b] text-[#1a2307] font-bold rounded-xl text-xs transition-colors cursor-pointer shrink-0"
+                className="px-4 py-3 bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold rounded-xl text-xs transition-colors cursor-pointer shrink-0 shadow-md shadow-[#2563eb]/20"
               >
                 Einlösen
               </button>
@@ -567,12 +567,12 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
               <div
                 className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
                   accessCardFeedback.type === 'success'
-                    ? 'bg-[#cfe45a]/15 text-[#cfe45a] border border-[#cfe45a]/40 font-medium'
+                    ? 'bg-[#2563eb]/20 text-[#60a5fa] border border-[#3b82f6]/40 font-medium'
                     : 'bg-[#f27a5e]/15 text-[#f27a5e] border border-[#f27a5e]/40 font-medium'
                 }`}
               >
                 {accessCardFeedback.type === 'success' ? (
-                  <Check className="w-4 h-4 shrink-0 text-[#cfe45a]" />
+                  <Check className="w-4 h-4 shrink-0 text-[#3b82f6]" />
                 ) : (
                   <AlertCircle className="w-4 h-4 shrink-0 text-[#f27a5e]" />
                 )}
@@ -586,35 +586,35 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
       {/* Switch Confirmation Modal */}
       {showSwitchConfirm && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-          <div className="w-full max-w-[420px] bg-[#161d14] border border-[#2b3627] rounded-t-[26px] sm:rounded-[26px] p-6 shadow-2xl space-y-4 text-center">
-            <div className="w-12 h-12 rounded-full bg-[#cfe45a]/20 border border-[#cfe45a]/40 flex items-center justify-center text-[#cfe45a] mx-auto">
+          <div className="w-full max-w-[420px] bg-[#0c1529] border border-[#1e3568] rounded-t-[26px] sm:rounded-[26px] p-6 shadow-2xl space-y-4 text-center">
+            <div className="w-12 h-12 rounded-full bg-[#2563eb]/20 border border-[#3b82f6]/40 flex items-center justify-center text-[#60a5fa] mx-auto">
               <Sparkles className="w-6 h-6 stroke-[2]" />
             </div>
 
             <div>
               <h3
-                className="text-lg font-bold text-[#eef2e4] tracking-tight"
+                className="text-lg font-bold text-[#f1f5f9] tracking-tight"
                 style={{ fontFamily: '"Bricolage Grotesque", sans-serif' }}
               >
                 Auf Basis-Plan zurücksetzen
               </h3>
-              <p className="text-xs text-[#9aa58f] mt-1 max-w-[280px] mx-auto">
-                Möchtest du zum kostenlosen <strong className="text-[#cfe45a]">Dandelious Basis-Plan</strong> zurückwechseln?
+              <p className="text-xs text-[#94a3b8] mt-1 max-w-[280px] mx-auto">
+                Möchtest du zum kostenlosen <strong className="text-[#60a5fa]">Dandelious Basis-Plan</strong> zurückwechseln?
               </p>
             </div>
 
-            <div className="bg-[#1e271b] p-3.5 rounded-2xl border border-[#2b3627] space-y-2 text-left text-xs">
+            <div className="bg-[#132244] p-3.5 rounded-2xl border border-[#1e3568] space-y-2 text-left text-xs">
               <div className="flex justify-between items-center">
-                <span className="text-[#9aa58f]">Aktueller Plan:</span>
-                <span className="text-[#eef2e4] font-medium">Dandelious {normalizedTier}</span>
+                <span className="text-[#94a3b8]">Aktueller Plan:</span>
+                <span className="text-[#f1f5f9] font-medium">Dandelious {normalizedTier}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[#9aa58f]">Neuer Plan:</span>
-                <span className="text-[#cfe45a] font-bold">Dandelious Basis (Kostenlos)</span>
+                <span className="text-[#94a3b8]">Neuer Plan:</span>
+                <span className="text-[#60a5fa] font-bold">Dandelious Basis (Kostenlos)</span>
               </div>
-              <div className="flex justify-between items-center pt-2 border-t border-[#2b3627]">
-                <span className="text-[#9aa58f]">Kosten:</span>
-                <span className="text-[#cfe45a] font-bold font-mono">0,00 € (kostenlos)</span>
+              <div className="flex justify-between items-center pt-2 border-t border-[#1e3568]">
+                <span className="text-[#94a3b8]">Kosten:</span>
+                <span className="text-[#60a5fa] font-bold font-mono">0,00 € (kostenlos)</span>
               </div>
             </div>
 
@@ -622,14 +622,14 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
               <button
                 type="button"
                 onClick={() => setShowSwitchConfirm(false)}
-                className="flex-1 py-3 rounded-xl bg-[#1e271b] hover:bg-[#2b3627] text-[#9aa58f] hover:text-[#eef2e4] font-semibold text-xs transition-colors cursor-pointer"
+                className="flex-1 py-3 rounded-xl bg-[#132244] hover:bg-[#1e3568] text-[#94a3b8] hover:text-[#f1f5f9] font-semibold text-xs transition-colors cursor-pointer"
               >
                 Abbrechen
               </button>
               <button
                 type="button"
                 onClick={confirmSwitch}
-                className="flex-1 py-3 rounded-xl bg-[#cfe45a] hover:bg-[#b4cb4b] text-[#1a2307] font-extrabold text-xs transition-colors cursor-pointer shadow-md shadow-[#cfe45a]/20 flex items-center justify-center gap-1.5"
+                className="flex-1 py-3 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-extrabold text-xs transition-colors cursor-pointer shadow-md shadow-[#2563eb]/30 flex items-center justify-center gap-1.5"
               >
                 <Check className="w-4 h-4 stroke-[2.5]" />
                 <span>Bestätigen</span>
@@ -641,7 +641,7 @@ export const AboPlanView: React.FC<AboPlanViewProps> = ({
 
       {/* Toast Notification */}
       {switchSuccessToast && (
-        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-[#161d14] border border-[#cfe45a] text-[#cfe45a] px-4 py-2.5 rounded-full text-xs font-semibold shadow-xl flex items-center gap-2 animate-bounce">
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-[#0c1529] border border-[#3b82f6] text-[#60a5fa] px-4 py-2.5 rounded-full text-xs font-semibold shadow-xl flex items-center gap-2 animate-bounce">
           <Check className="w-4 h-4 stroke-[3]" />
           <span>{switchSuccessToast}</span>
         </div>

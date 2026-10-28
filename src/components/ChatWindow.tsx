@@ -95,6 +95,7 @@ import { RealtimeAudioWaveform } from "./RealtimeAudioWaveform";
 import { GeminiLiveClient } from "../utils/geminiLiveClient";
 import { formatMemoryGraphForAIContext } from "../lib/memoryGraphService";
 import { AudioTranscribeModal } from "./AudioTranscribeModal";
+import { ImageGenUnavailableEmbed } from "./ImageGenUnavailableEmbed";
 
 export const TwoLinesIcon: React.FC<{ className?: string }> = ({
   className = "w-5 h-5",
@@ -243,21 +244,21 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   const [isUserScrolledUp, setIsUserScrolledUp] = useState(false);
   const [moreMenuOpenId, setMoreMenuOpenId] = useState<string | null>(null);
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
+  const [isAttachMenuOpen, setIsAttachMenuOpen] = useState(false);
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
   const [renameValue, setRenameValue] = useState("");
   const [isShareToastOpen, setIsShareToastOpen] = useState(false);
   const [isSendingAnim, setIsSendingAnim] = useState(false);
+
+  // Model reel swipe & drag gesture state
+  const [modelDragOffset, setModelDragOffset] = useState(0);
+  const isModelDraggingRef = useRef(false);
+  const modelStartYRef = useRef(0);
+  const modelStartXRef = useRef(0);
+  const hasMovedModelRef = useRef(false);
   const CHAT_TUTORIAL_STORAGE_KEY = 'saphire_chat_first_tutorial_seen';
   const [chatTutorialStep, setChatTutorialStep] = useState<1 | 2 | 3 | 4 | null>(null);
-
-  useEffect(() => {
-    try {
-      const seen = localStorage.getItem(CHAT_TUTORIAL_STORAGE_KEY);
-      if (!seen && !isInsidePopupModal) {
-        setChatTutorialStep(1);
-      }
-    } catch (e) {}
-  }, [isInsidePopupModal]);
+  // Tutorial rings disabled to ensure clean borderless buttons without highlighting rings
   
   // Speech Recognition, MediaRecorder & Multimodal Voice State
   const [isRecording, setIsRecording] = useState(false);
@@ -1272,10 +1273,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.96 }}
             transition={{ duration: 0.18 }}
-            className="absolute inset-0 z-50 bg-black/85 backdrop-blur-2xl flex flex-col items-center justify-center p-8 border-4 border-dashed border-lime-500/40 m-4 rounded-3xl pointer-events-none"
+            className="absolute inset-0 z-50 bg-black/85 backdrop-blur-2xl flex flex-col items-center justify-center p-8 border-4 border-dashed border-blue-500/40 m-4 rounded-3xl pointer-events-none"
           >
-            <div className="w-20 h-20 rounded-full bg-lime-500/10 border border-lime-400/30 flex items-center justify-center text-white mb-4 animate-bounce shadow-[0_0_25px_rgba(168,85,247,0.25)]">
-              <UploadCloud className="w-10 h-10 text-lime-300" />
+            <div className="w-20 h-20 rounded-full bg-blue-500/10 border border-blue-400/30 flex items-center justify-center text-white mb-4 animate-bounce shadow-[0_0_25px_rgba(168,85,247,0.25)]">
+              <UploadCloud className="w-10 h-10 text-blue-300" />
             </div>
             <h2 className="text-2xl font-bold text-white tracking-tight">
               Datei hier ablegen
@@ -1297,9 +1298,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.95 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-1.5 rounded-full bg-[#111114] border border-emerald-500/35 text-emerald-300 text-xs font-medium shadow-2xl flex items-center gap-2 pointer-events-none select-none"
+            className="absolute top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-1.5 rounded-full bg-[#111114] border border-[#4c8dff]/35 text-blue-200 text-xs font-medium shadow-2xl flex items-center gap-2 pointer-events-none select-none"
           >
-            <Zap className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+            <Zap className="w-3.5 h-3.5 text-[#4c8dff] animate-pulse" />
             <span>{fallbackToast}</span>
           </motion.div>
         )}
@@ -1337,484 +1338,233 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         </>
       )}
 
-      {/* Top Header Bar (Matching Screenshot 1:1) */}
-      <header className={`absolute top-0 left-0 right-0 h-32 pt-[max(env(safe-area-inset-top,0px),12px)] px-4 sm:px-6 flex items-start justify-between bg-gradient-to-b from-black via-black/80 to-transparent shrink-0 pointer-events-none ${
-        chatTutorialStep !== null ? 'z-50' : 'z-30'
-      }`}>
-        {/* Left: Sidebar Toggle Button or Popup Back Button + Model Selector right next to it */}
-        <div className="flex items-center gap-2 sm:gap-3 z-10 pointer-events-auto">
-          {isInsidePopupModal ? (
-            <button
-              type="button"
-              onClick={() => {
-                playSound("click", soundEnabled);
-                onClosePopup?.();
-              }}
-              className="w-10 h-10 rounded-full bg-[#242426] hover:bg-[#2c2c2e] text-white cursor-pointer flex items-center justify-center transition-all shadow-md active:scale-95 border border-white/5 shrink-0"
-              title="Zurück zum Projekt"
-            >
-              <ArrowLeft className="w-5 h-5 text-white" />
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                playSound("click", soundEnabled);
-                onToggleSidebar?.();
-              }}
-              className="w-10 h-10 rounded-full bg-[#242426] hover:bg-[#2c2c2e] text-white cursor-pointer flex items-center justify-center transition-all shadow-md active:scale-95 border border-white/5 shrink-0"
-              title="Seitenleiste umschalten"
-              id="chat-header-sidebar-btn"
-            >
-              <TwoLinesIcon className="w-5 h-5 text-white" />
-            </button>
-          )}
+      {/* Top Header Bar matching Dandelious prototype */}
+      <header className={`top ${chatTutorialStep !== null ? 'z-50' : 'z-30'}`}>
+        {/* Left: Sidebar Toggle Button */}
+        {isInsidePopupModal ? (
+          <button
+            type="button"
+            data-s="38"
+            onClick={() => {
+              playSound("click", soundEnabled);
+              onClosePopup?.();
+            }}
+            className="circle lg"
+            title="Zurück"
+          >
+            <ArrowLeft className="w-5 h-5 text-white" />
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="circle lg"
+            id="menuBtn"
+            aria-label="Menü"
+            data-s="38"
+            onClick={() => {
+              playSound("click", soundEnabled);
+              onToggleSidebar?.();
+            }}
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+          </button>
+        )}
 
-          {/* Model Selector aligned to the LEFT next to sidebar button */}
-          {!isLiveActive ? (
-            <div className={chatTutorialStep === 4 ? "relative z-50 pointer-events-auto ring-4 ring-[#C5DC57]/80 shadow-[0_0_30px_rgba(197,220,87,0.95)] animate-pulse rounded-full" : ""}>
-              <ModelSelectorDropdown
-                selectedModelId={selectedModel}
-                onSelectModel={(modelId) => {
-                  onModelChange(modelId);
-                  if (chatTutorialStep === 4) {
-                    playSound('chime', soundEnabled);
-                    setChatTutorialStep(null);
-                    try {
-                      localStorage.setItem(CHAT_TUTORIAL_STORAGE_KEY, 'true');
-                    } catch (e) {}
-                  }
-                }}
-                isOpen={isModelDropdownOpen}
-                onToggle={() => {
-                  setIsModelDropdownOpen(!isModelDropdownOpen);
-                  if (chatTutorialStep === 4) {
-                    playSound('chime', soundEnabled);
-                    setChatTutorialStep(null);
-                    try {
-                      localStorage.setItem(CHAT_TUTORIAL_STORAGE_KEY, 'true');
-                    } catch (e) {}
-                  }
-                }}
-                onClose={() => setIsModelDropdownOpen(false)}
-                soundEnabled={soundEnabled}
-                userTier={settings?.userTier}
-              />
-            </div>
-          ) : (
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => {
-                  playSound("click", soundEnabled);
-                  setIsLiveVoiceDropdownOpen(!isLiveVoiceDropdownOpen);
-                }}
-                className="flex items-center gap-2 px-4 py-2 bg-[#242426] hover:bg-[#2c2c2e] rounded-full text-white font-medium text-sm transition-all shadow-md border border-white/5 active:scale-95 cursor-pointer"
-              >
-                <span>Stimme: {liveVoice}</span>
-                <ChevronDown className={`w-4 h-4 text-white/50 transition-transform ${isLiveVoiceDropdownOpen ? 'rotate-180' : ''}`} />
-              </button>
-              
-              <AnimatePresence>
-                {isLiveVoiceDropdownOpen && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setIsLiveVoiceDropdownOpen(false)} />
-                    <motion.div
-                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                      className="absolute top-full mt-2 left-0 w-48 bg-black rounded-[24px] border border-white/15 p-2 shadow-2xl z-50 overflow-hidden"
-                    >
-                      {['Aoede', 'Charon', 'Fenrir', 'Kore', 'Puck', 'Zephyr'].map(voice => (
-                        <button
-                          key={voice}
-                          onClick={() => {
-                            playSound("click", soundEnabled);
-                            setLiveVoice(voice);
-                            setIsLiveVoiceDropdownOpen(false);
-                          }}
-                          className={`w-full text-left px-4 py-2.5 rounded-[16px] text-sm font-medium transition-colors cursor-pointer ${liveVoice === voice ? 'bg-white/10 text-white' : 'text-neutral-400 hover:bg-white/5 hover:text-white'}`}
-                        >
-                          {voice}
-                        </button>
-                      ))}
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </div>
-          )}
-        </div>
+        {/* Right Header Actions: Unified long liquid-glass pill button (Neuer Chat + 3 Punkte) */}
+        <div className="top-right lg" data-s="38">
+          <button
+            type="button"
+            className="circle new"
+            id="newChat"
+            aria-label="Neuer Chat"
+            title="Neuer Chat"
+            onClick={() => {
+              playSound("click", soundEnabled);
+              if (onNewChat) onNewChat();
+            }}
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-[20px] h-[20px]">
+              <path fillRule="evenodd" d="M3 21.2 5.21 16.9A9 9 0 1 1 8.77 19.4ZM11 7.2h2v3.8h3.8v2H13v3.8h-2V13H7.2v-2H11Z"/>
+            </svg>
+          </button>
 
-        {/* Right Header Actions: Neuer Chat Pen Button + Connected Profile Avatar & 3-Dots Menu Pill Button + "API besorgen" Button */}
-        <div className="relative z-10 flex flex-col items-end gap-1.5 pointer-events-auto">
-          {isInsidePopupModal ? (
-            <button
-              type="button"
-              onClick={() => {
-                playSound("click", soundEnabled);
-                onClosePopup?.();
-              }}
-              className="w-8 h-8 rounded-full bg-[#C5DC57] hover:bg-[#b8d049] active:bg-[#a6bd3a] text-black flex items-center justify-center transition-colors cursor-pointer shadow-md shrink-0 active:scale-95 mt-1"
-              title="Fertig"
-            >
-              <Check className="w-4 h-4 stroke-[3] text-black" />
-            </button>
-          ) : (
-            <div className="flex items-center gap-2 sm:gap-2.5">
-              {/* Neuer Chat Button - Eigener runder grauer Button */}
-              <button
-                type="button"
-                onClick={() => {
-                  playSound("click", soundEnabled);
-                  if (onNewChat) onNewChat();
-                }}
-                className="w-10 h-10 rounded-full bg-[#242426] hover:bg-[#2c2c2e] text-white flex items-center justify-center cursor-pointer shadow-md transition-all shrink-0 active:scale-95 border border-white/5"
-                title="Neuer Chat"
-                id="chat-header-new-chat-btn"
-              >
-                <PenSquare className="w-5 h-5 text-white stroke-[1.8]" />
-              </button>
-
-              {/* Profil / Account Button - Eigener runder grauer Button */}
-              {currentUser ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    playSound("click", soundEnabled);
-                    onOpenSettings?.('account');
-                  }}
-                  className="w-10 h-10 rounded-full bg-[#242426] hover:bg-[#2c2c2e] flex items-center justify-center overflow-hidden cursor-pointer shadow-md transition-all shrink-0 active:scale-95 border border-white/5 p-1"
-                  title={currentUser.displayName || currentUser.email || 'Mein Account'}
-                  id="chat-header-profile-btn"
-                >
-                  {currentUser.photoURL ? (
-                    <img
-                      src={currentUser.photoURL}
-                      alt={currentUser.displayName || 'Profil'}
-                      className="w-full h-full object-cover rounded-full"
-                      referrerPolicy="no-referrer"
-                    />
-                  ) : (
-                    <div className="w-full h-full rounded-full bg-gradient-to-tr from-lime-800 via-lime-700 to-lime-600 text-white text-xs font-semibold flex items-center justify-center">
-                      {(currentUser.displayName || currentUser.email || 'U').charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (chatTutorialStep !== null) return;
-                    playSound("click", soundEnabled);
-                    onOpenAuth?.();
-                  }}
-                  className={`w-10 h-10 rounded-full bg-[#242426] hover:bg-[#2c2c2e] text-white flex items-center justify-center transition-all shrink-0 shadow-md active:scale-95 border border-white/5 ${
-                    chatTutorialStep !== null ? 'opacity-30 pointer-events-none' : 'cursor-pointer'
-                  }`}
-                  title="Mit Google anmelden"
-                  id="chat-header-profile-btn"
-                >
-                  <UserIcon className="w-5 h-5 text-white stroke-[1.8]" />
-                </button>
-              )}
-
-              {/* 3-Punkte Button - Eigener runder grauer Button */}
-              <button
-                type="button"
-                onClick={() => {
-                  playSound("click", soundEnabled);
-                  setIsHeaderMenuOpen(!isHeaderMenuOpen);
-                  if (chatTutorialStep === 2) {
-                    setChatTutorialStep(3);
-                  }
-                }}
-                className={`w-10 h-10 rounded-full cursor-pointer flex items-center justify-center shrink-0 border border-white/5 shadow-md transition-all active:scale-95 ${
-                  chatTutorialStep === 2
-                    ? 'bg-[#C5DC57] text-black ring-4 ring-[#C5DC57]/80 shadow-[0_0_25px_rgba(197,220,87,0.95)] animate-pulse relative z-50 pointer-events-auto'
-                    : 'bg-[#242426] hover:bg-[#2c2c2e] text-white'
-                }`}
-                title="Optionen"
-                id="dandelious-three-dots-btn"
-              >
-                <MoreHorizontal className={`w-5 h-5 ${chatTutorialStep === 2 ? 'text-black' : 'text-white'}`} />
-              </button>
-            </div>
-          )}
-
-          {/* "API besorgen" Button: Placed underneath Account and 3-dots, subtle and discreet with white text */}
-          <AnimatePresence>
-            {!isInsidePopupModal && (!settings?.customApiKey || settings.customApiKey.trim().length < 6) && (
-              <motion.button
-                initial={{ opacity: 0, y: -4, scale: 0.94 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -4, scale: 0.94 }}
-                transition={{ duration: 0.2 }}
-                type="button"
-                onClick={() => {
-                  playSound("click", soundEnabled);
-                  onOpenSettings?.('engine');
-                }}
-                className="mt-1 px-3 py-1 rounded-full bg-black hover:bg-neutral-900 text-white text-[12px] font-medium shadow-[0_2px_10px_rgba(0,0,0,0.7)] transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer border-0 select-none group"
-                title="Google AI Studio API-Key einrichten"
-              >
-                <Key className="w-3 h-3 text-white/80 group-hover:text-white transition-colors shrink-0" />
-                <span className="text-white/90 group-hover:text-white transition-colors">API besorgen</span>
-              </motion.button>
-            )}
-          </AnimatePresence>
-
-          {/* Dandelious 3-dots Dropdown Menu (matching Bild 2 exactly) */}
-          <AnimatePresence>
-            {isHeaderMenuOpen && (
-              <>
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setIsHeaderMenuOpen(false)}
-                />
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.72, y: -16, filter: "blur(14px)" }}
-                  animate={{ 
-                    opacity: 1, 
-                    scale: 1, 
-                    y: 0, 
-                    filter: "blur(0px)",
-                    transition: {
-                      type: "spring",
-                      damping: 22,
-                      stiffness: 360,
-                      mass: 0.65,
-                      staggerChildren: 0.035,
-                      delayChildren: 0.02
-                    }
-                  }}
-                  exit={{ 
-                    opacity: 0, 
-                    scale: 0.8, 
-                    y: -10, 
-                    filter: "blur(8px)",
-                    transition: { duration: 0.16, ease: "easeInOut" }
-                  }}
-                  style={{ transformOrigin: "top right" }}
-                  className="absolute right-0 top-full mt-2 z-50 w-72 bg-black rounded-[28px] shadow-2xl p-2 border border-white/10 backdrop-blur-md overflow-hidden"
-                >
-                  <motion.div 
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                      hidden: {},
-                      visible: {
-                        transition: {
-                          staggerChildren: 0.03,
-                          delayChildren: 0.02
-                        }
-                      }
-                    }}
-                    className="space-y-0.5"
-                  >
-                    {isLiveActive ? (
-                      <>
-                        {/* Kamera teilen */}
-                        <motion.button
-                          variants={{
-                            hidden: { opacity: 0, y: -8, filter: "blur(4px)" },
-                            visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", damping: 20, stiffness: 350 } }
-                          }}
-                          type="button"
-                          onClick={() => {
-                            setIsHeaderMenuOpen(false);
-                            playSound("click", soundEnabled);
-                            handleToggleLiveCamera();
-                          }}
-                          className={`w-full text-left px-4 py-3 rounded-2xl flex items-center gap-4 transition-colors cursor-pointer ${isLiveCameraActive ? 'text-emerald-400 bg-emerald-500/10' : 'text-neutral-200 hover:text-white hover:bg-white/10'}`}
-                        >
-                          <Camera className={`w-5 h-5 shrink-0 stroke-[1.8] ${isLiveCameraActive ? 'text-emerald-400' : 'text-neutral-300'}`} />
-                          <span className="text-[15px] font-normal">{isLiveCameraActive ? "Kamera beenden" : "Kamera teilen"}</span>
-                        </motion.button>
-
-                        {/* Bildschirm teilen */}
-                        <motion.button
-                          variants={{
-                            hidden: { opacity: 0, y: -8, filter: "blur(4px)" },
-                            visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", damping: 20, stiffness: 350 } }
-                          }}
-                          type="button"
-                          onClick={() => {
-                            setIsHeaderMenuOpen(false);
-                            playSound("click", soundEnabled);
-                            handleToggleLiveScreen();
-                          }}
-                          className={`w-full text-left px-4 py-3 rounded-2xl flex items-center gap-4 transition-colors cursor-pointer ${isLiveScreenActive ? 'text-emerald-400 bg-emerald-500/10' : 'text-neutral-200 hover:text-white hover:bg-white/10'}`}
-                        >
-                          <Monitor className={`w-5 h-5 shrink-0 stroke-[1.8] ${isLiveScreenActive ? 'text-emerald-400' : 'text-neutral-300'}`} />
-                          <span className="text-[15px] font-normal">{isLiveScreenActive ? "Bildschirm teilen beenden" : "Bildschirm teilen"}</span>
-                        </motion.button>
-                      </>
-                    ) : (
-                      <>
-                        {/* Unterhaltung teilen */}
-                    <motion.button
-                      variants={{
-                        hidden: { opacity: 0, y: -8, filter: "blur(4px)" },
-                        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", damping: 20, stiffness: 350 } }
-                      }}
-                      type="button"
-                      onClick={async () => {
-                        setIsHeaderMenuOpen(false);
-                        playSound("click", soundEnabled);
-                        try {
-                          if (navigator.clipboard) {
-                            await navigator.clipboard.writeText(window.location.href);
-                          }
-                          setIsShareToastOpen(true);
-                          setTimeout(() => setIsShareToastOpen(false), 2500);
-                        } catch (e) {
-                          console.warn(e);
-                        }
-                      }}
-                      className="w-full text-left px-4 py-3 rounded-2xl flex items-center gap-4 text-neutral-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                    >
-                      <Share2 className="w-5 h-5 text-neutral-300 shrink-0 stroke-[1.8]" />
-                      <span className="text-[15px] font-normal">Unterhaltung teilen</span>
-                    </motion.button>
-
-                    {/* Anpinnen */}
-                    <motion.button
-                      variants={{
-                        hidden: { opacity: 0, y: -8, filter: "blur(4px)" },
-                        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", damping: 20, stiffness: 350 } }
-                      }}
-                      type="button"
-                      onClick={() => {
-                        setIsHeaderMenuOpen(false);
-                        playSound("click", soundEnabled);
-                        if (session && onUpdateSession) {
-                          onUpdateSession({
-                            ...session,
-                            isPinned: !session.isPinned
-                          });
-                        }
-                      }}
-                      className="w-full text-left px-4 py-3 rounded-2xl flex items-center gap-4 text-neutral-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                    >
-                      <Pin className="w-5 h-5 text-neutral-300 shrink-0 stroke-[1.8]" />
-                      <span className="text-[15px] font-normal">
-                        {session?.isPinned ? "Pin lösen" : "Anpinnen"}
-                      </span>
-                    </motion.button>
-
-                    {/* Umbenennen (only for normal chats) */}
-                    {(!session?.projectId) && (
-                      <motion.button
-                        variants={{
-                          hidden: { opacity: 0, y: -8, filter: "blur(4px)" },
-                          visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", damping: 20, stiffness: 350 } }
-                        }}
-                        type="button"
-                        onClick={() => {
-                          setIsHeaderMenuOpen(false);
-                          playSound("click", soundEnabled);
-                          setRenameValue(session?.title || "");
-                          setIsRenameModalOpen(true);
-                        }}
-                        className="w-full text-left px-4 py-3 rounded-2xl flex items-center gap-4 text-neutral-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                      >
-                        <Edit3 className="w-5 h-5 text-neutral-300 shrink-0 stroke-[1.8]" />
-                        <span className="text-[15px] font-normal">Umbenennen</span>
-                      </motion.button>
-                    )}
-
-                    {/* Hilfe */}
-                    <motion.button
-                      variants={{
-                        hidden: { opacity: 0, y: -8, filter: "blur(4px)" },
-                        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", damping: 20, stiffness: 350 } }
-                      }}
-                      type="button"
-                      onClick={() => {
-                        setIsHeaderMenuOpen(false);
-                        playSound("click", soundEnabled);
-                        openHelpLexikon();
-                      }}
-                      className="w-full text-left px-4 py-3 rounded-2xl flex items-center justify-between text-neutral-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                    >
-                      <div className="flex items-center gap-4">
-                        <HelpCircle className="w-5 h-5 text-neutral-300 shrink-0 stroke-[1.8]" />
-                        <span className="text-[15px] font-normal">Hilfe</span>
-                      </div>
-                      <Share2 className="w-3.5 h-3.5 text-neutral-400 rotate-45" />
-                    </motion.button>
-
-                    {/* Feedback */}
-                    <motion.button
-                      variants={{
-                        hidden: { opacity: 0, y: -8, filter: "blur(4px)" },
-                        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", damping: 20, stiffness: 350 } }
-                      }}
-                      type="button"
-                      onClick={() => {
-                        setIsHeaderMenuOpen(false);
-                        playSound("click", soundEnabled);
-                        if (onOpenFeedback) {
-                          onOpenFeedback();
-                        } else if (onOpenSettings) {
-                          onOpenSettings('feedback');
-                        }
-                      }}
-                      className="w-full text-left px-4 py-3 rounded-2xl flex items-center gap-4 text-neutral-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                    >
-                      <Flag className="w-5 h-5 text-neutral-300 shrink-0 stroke-[1.8]" />
-                      <span className="text-[15px] font-normal">Feedback</span>
-                    </motion.button>
-
-                    {/* Einstellungen */}
-                    <motion.button
-                      variants={{
-                        hidden: { opacity: 0, y: -8, filter: "blur(4px)" },
-                        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", damping: 20, stiffness: 350 } }
-                      }}
-                      type="button"
-                      onClick={() => {
-                        setIsHeaderMenuOpen(false);
-                        playSound("click", soundEnabled);
-                        if (onOpenSettings) onOpenSettings();
-                      }}
-                      className="w-full text-left px-4 py-3 rounded-2xl flex items-center gap-4 text-neutral-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                    >
-                      <Settings className="w-5 h-5 text-neutral-300 shrink-0 stroke-[1.8]" />
-                      <span className="text-[15px] font-normal">Einstellungen</span>
-                    </motion.button>
-
-                    {/* Löschen */}
-                    <motion.button
-                      variants={{
-                        hidden: { opacity: 0, y: -8, filter: "blur(4px)" },
-                        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", damping: 20, stiffness: 350 } }
-                      }}
-                      type="button"
-                      onClick={() => {
-                        setIsHeaderMenuOpen(false);
-                        playSound("click", soundEnabled);
-                        if (session?.id && onDeleteChat) {
-                          onDeleteChat(session.id);
-                        } else {
-                          onClearMessages();
-                        }
-                      }}
-                      className="w-full text-left px-4 py-3 rounded-2xl flex items-center gap-4 text-neutral-200 hover:text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer"
-                    >
-                      <Trash2 className="w-5 h-5 text-neutral-300 shrink-0 stroke-[1.8]" />
-                      <span className="text-[15px] font-normal">Löschen</span>
-                    </motion.button>
-                      </>
-                  )}
-                  </motion.div>
-                </motion.div>
-              </>
-            )}
-          </AnimatePresence>
+          <button
+            type="button"
+            className="circle"
+            id="more"
+            aria-label="Mehr Aktionen"
+            title="Mehr Aktionen"
+            onClick={() => {
+              playSound("click", soundEnabled);
+              setIsHeaderMenuOpen(!isHeaderMenuOpen);
+            }}
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-[19px] h-[19px]">
+              <circle cx="5" cy="12" r="2.3"/>
+              <circle cx="12" cy="12" r="2.3"/>
+              <circle cx="19" cy="12" r="2.3"/>
+            </svg>
+          </button>
         </div>
       </header>
+
+      {/* Backdrop for More Menu */}
+      {isHeaderMenuOpen && (
+        <div
+          className="fixed inset-0 z-30"
+          onClick={() => setIsHeaderMenuOpen(false)}
+        />
+      )}
+
+      {/* Prototype 3-Dots Dropdown Menu with deeper blur */}
+      <div className={`more lg ${isHeaderMenuOpen ? 'open' : ''}`} id="moreMenu" data-s="36" data-b="8">
+        <button
+          type="button"
+          className="item"
+          id="optShare"
+          onClick={async () => {
+            setIsHeaderMenuOpen(false);
+            playSound("click", soundEnabled);
+            try {
+              if (navigator.clipboard) {
+                await navigator.clipboard.writeText(window.location.href);
+              }
+              setIsShareToastOpen(true);
+              setTimeout(() => setIsShareToastOpen(false), 2500);
+            } catch (e) {
+              console.warn(e);
+            }
+          }}
+        >
+          <span className="ic">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+            </svg>
+          </span>
+          Unterhaltung teilen
+        </button>
+
+        <button
+          type="button"
+          className="item"
+          id="optPin"
+          onClick={() => {
+            setIsHeaderMenuOpen(false);
+            playSound("click", soundEnabled);
+            if (session && onUpdateSession) {
+              onUpdateSession({
+                ...session,
+                isPinned: !session.isPinned,
+              });
+            }
+          }}
+        >
+          <span className="ic">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z"/>
+            </svg>
+          </span>
+          {session?.isPinned ? "Pin lösen" : "Anpinnen"}
+        </button>
+
+        <button
+          type="button"
+          className="item"
+          id="optRename"
+          onClick={() => {
+            setIsHeaderMenuOpen(false);
+            playSound("click", soundEnabled);
+            setRenameValue(session?.title || "");
+            setIsRenameModalOpen(true);
+          }}
+        >
+          <span className="ic">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>
+          </span>
+          Umbenennen
+        </button>
+
+        <button
+          type="button"
+          className="item"
+          id="optHelp"
+          onClick={() => {
+            setIsHeaderMenuOpen(false);
+            playSound("click", soundEnabled);
+            openHelpLexikon();
+          }}
+        >
+          <span className="ic">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
+            </svg>
+          </span>
+          Hilfe
+        </button>
+
+        <button
+          type="button"
+          className="item"
+          id="optFeedback"
+          onClick={() => {
+            setIsHeaderMenuOpen(false);
+            playSound("click", soundEnabled);
+            if (onOpenFeedback) onOpenFeedback();
+            else if (onOpenSettings) onOpenSettings('feedback');
+          }}
+        >
+          <span className="ic">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/>
+            </svg>
+          </span>
+          Feedback
+        </button>
+
+        <button
+          type="button"
+          className="item"
+          id="optSettings"
+          onClick={() => {
+            setIsHeaderMenuOpen(false);
+            playSound("click", soundEnabled);
+            if (onOpenSettings) onOpenSettings();
+          }}
+        >
+          <span className="ic">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+            </svg>
+          </span>
+          Einstellungen
+        </button>
+
+        <button
+          type="button"
+          className="item danger"
+          id="optDelete"
+          onClick={() => {
+            setIsHeaderMenuOpen(false);
+            playSound("click", soundEnabled);
+            if (session?.id && onDeleteChat) {
+              onDeleteChat(session.id);
+            } else {
+              onClearMessages();
+            }
+          }}
+        >
+          <span className="ic">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>
+          </span>
+          Löschen
+        </button>
+      </div>
 
       {/* Main Messages Canvas Area with Smart Scroll */}
       <div
@@ -1829,11 +1579,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
           className="flex-1 flex flex-col w-full min-h-full"
         >
-          {/* Soft Ambient Glow: Limettengrün for Project Chats */}
-          {session?.projectId ? (
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[950px] h-[450px] bg-[#C5DC57]/18 rounded-full blur-[160px] pointer-events-none -z-10" />
-          ) : (
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] sm:w-[900px] h-[360px] bg-white/[0.03] rounded-full blur-[140px] pointer-events-none -z-10" />
+          {/* Subtle Ambient Glow for Project Chats */}
+          {session?.projectId && (
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[950px] h-[450px] bg-blue-600/18 rounded-full blur-[160px] pointer-events-none -z-10" />
           )}
 
         {isLiveActive && liveVideoStream ? (
@@ -1851,7 +1599,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               {/* Status Header Overlay */}
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
                 <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-xs text-white/90 font-medium">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-[#4c8dff] animate-pulse" />
                   <span>{isLiveScreenActive ? "Bildschirmübertragung aktiv" : "Kamera aktiv"}</span>
                 </div>
 
@@ -1905,8 +1653,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         ) : (!session?.messages || session.messages.length === 0) ? (
           /* Empty State - Minimalist Hero matching Bild 1:1 */
           <div className="flex-1 flex flex-col items-center justify-center relative select-none my-auto p-4 text-center">
-            {/* Background Limettengrün Glow */}
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] sm:w-[740px] h-[380px] ${session?.projectId ? 'bg-[#C5DC57]/25' : 'bg-[#C5DC57]/15'} rounded-full blur-[140px] pointer-events-none -z-10`} />
 
             <motion.div
               initial={{ opacity: 0, scale: 0.92, y: 12 }}
@@ -1955,14 +1701,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                               setEditingMessageId(null);
                               onSendMessage(editPromptText);
                             }}
-                            className="px-3 py-1 bg-white text-black text-xs font-semibold rounded-lg hover:bg-neutral-200 cursor-pointer"
+                            className="px-3 py-1 bg-[#4c8dff] text-white text-xs font-semibold rounded-lg hover:bg-[#3b82f6] border-0 cursor-pointer"
                           >
                             Speichern & Senden
                           </button>
                         </div>
                       </div>
                     ) : (
-                      <div className="relative max-w-[85%] sm:max-w-[75%] bg-[#C5DC57] text-[#0e1603] rounded-3xl px-5 py-3.5 text-sm sm:text-base border border-[#b4cc45] leading-relaxed shadow-[0_4px_22px_rgba(197,220,87,0.22)] font-medium">
+                      <div className="relative max-w-[88%] sm:max-w-[78%] bubble-user backdrop-blur-md shadow-[0_10px_28px_rgba(0,0,0,0.6)] font-normal text-[16.5px] sm:text-[17px] leading-[1.4] border-0">
                         {/* Mode Capsule Chip matching screenshot */}
                         {(() => {
                           let userModeInfo: { name: string; icon: React.ComponentType<{ className?: string }> } | null = null;
@@ -1987,14 +1733,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                           return (
                             <>
                               {msg.isPinned && (
-                                <div className="inline-flex items-center gap-1.5 text-[#131f05] text-xs font-semibold px-2.5 py-1 rounded-full mb-2 bg-black/15 border border-black/15 shadow-sm float-right ml-2">
-                                  <Pin className="w-3 h-3 fill-black/30 stroke-[2]" />
+                                <div className="inline-flex items-center gap-1.5 text-white/90 text-xs font-semibold px-2.5 py-1 rounded-full mb-2 bg-white/10 border border-white/15 shadow-sm float-right ml-2">
+                                  <Pin className="w-3 h-3 fill-white/40 stroke-[2]" />
                                   Gepinnt
                                 </div>
                               )}
                               {userModeInfo && (
-                                <div className="inline-flex items-center gap-2 bg-black/15 text-[#101b04] text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-full mb-2 border border-black/10 shadow-sm">
-                                  <userModeInfo.icon className="w-3.5 h-3.5 text-[#101b04] stroke-[2.2]" />
+                                <div className="inline-flex items-center gap-2 bg-white/10 text-white text-xs sm:text-sm font-semibold px-3.5 py-1.5 rounded-full mb-2 border border-white/15 shadow-sm">
+                                  <userModeInfo.icon className="w-3.5 h-3.5 text-white stroke-[2.2]" />
                                   <span>{userModeInfo.name}</span>
                                 </div>
                               )}
@@ -2009,7 +1755,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                         className="max-w-full max-h-72 rounded-2xl object-cover cursor-pointer hover:opacity-95 transition-opacity"
                                       />
                                       <span className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-[10px] font-semibold text-white flex items-center gap-1 shadow opacity-90 group-hover/chatimg:opacity-100 transition-opacity pointer-events-none">
-                                        <Sparkles className="w-2.5 h-2.5 text-lime-300" />
+                                        <Sparkles className="w-2.5 h-2.5 text-blue-300" />
                                         <span>MotionPicture</span>
                                       </span>
                                     </div>
@@ -2047,22 +1793,28 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
                             <AnimatePresence>
                               {activeMessageDropdown === `more-user-${msg.id}` && (
-                                <>
-                                  <div
-                                    className="fixed inset-0 z-30"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setActiveMessageDropdown(null);
-                                    }}
-                                  />
-                                  <motion.div
-                                    initial={{ opacity: 0, scale: 0.95, y: -4 }}
-                                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                                    exit={{ opacity: 0, scale: 0.95, y: -4 }}
-                                    transition={{ duration: 0.15 }}
-                                    className="absolute left-0 top-full mt-2 z-50 w-56 max-w-[calc(100vw-32px)] p-2 rounded-2xl bg-black shadow-2xl space-y-1 text-sm text-neutral-200 border border-white/15 backdrop-blur-xl"
-                                    onClick={(e) => e.stopPropagation()}
-                                  >
+                                <motion.div
+                                  key={`more-user-backdrop-${msg.id}`}
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  exit={{ opacity: 0 }}
+                                  className="fixed inset-0 z-30"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setActiveMessageDropdown(null);
+                                  }}
+                                />
+                              )}
+                              {activeMessageDropdown === `more-user-${msg.id}` && (
+                                <motion.div
+                                  key={`more-user-menu-${msg.id}`}
+                                  initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                                  exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                                  transition={{ duration: 0.15 }}
+                                  className="absolute left-0 top-full mt-2 z-50 w-56 max-w-[calc(100vw-32px)] p-2 rounded-2xl bg-black shadow-2xl space-y-1 text-sm text-neutral-200 border border-white/15 backdrop-blur-xl"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
                                     <button
                                       onClick={() => {
                                         setActiveMessageDropdown(null);
@@ -2096,7 +1848,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                       )}
                                     </button>
                                   </motion.div>
-                                </>
                               )}
                             </AnimatePresence>
                           </div>
@@ -2205,50 +1956,41 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             </div>
                           </div>
                         ) : (
-                          <div className="bg-white/[0.04] backdrop-blur-[60px] border-white/10 shadow-2xl border border-white/10 hover:border-white/20 rounded-[28px] p-4 sm:p-5 flex items-center justify-between gap-4 my-3 shadow-xl transition-all">
-                            <div className="flex items-center gap-3.5 min-w-0">
-                              <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white shrink-0">
-                                {isDeepResearchPrompt ? (
-                                  <Orbit className="w-6 h-6 stroke-[1.5] text-neutral-300" />
-                                ) : (
-                                  <FileText className="w-6 h-6 stroke-[1.5]" />
-                                )}
-                              </div>
-                              <div className="min-w-0">
-                                <h4 className="text-[15px] sm:text-[16px] font-semibold text-white truncate">
-                                  {extractedDocTitle}
-                                </h4>
-                                <p className="text-xs text-neutral-400 mt-0.5">
-                                  {new Date(msg.timestamp || Date.now()).toLocaleDateString('de-DE', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
-                                </p>
-                              </div>
+                          <div
+                            className="card lg my-3"
+                            data-s="34"
+                            onClick={() => {
+                              playSound("click", soundEnabled);
+                              setSelectedDocumentModalItem({
+                                id: `doc_${msg.id}`,
+                                type: isDeepResearchPrompt ? 'deep_research' : 'document',
+                                title: extractedDocTitle,
+                                content: msg.content,
+                                createdAt: msg.timestamp || Date.now(),
+                                authorName: "Dandelious",
+                                docMetadata: {
+                                  docId: "PRJ-2026-X4",
+                                  status: "Fertiggestellt",
+                                  classification: "Intern / Konzeptphase",
+                                  lastUpdated: new Date().toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }),
+                                },
+                              });
+                            }}
+                          >
+                            <div className="thumb">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
+                                <rect x="3" y="7" width="14" height="11" rx="2.5"/>
+                                <path d="M7 7V5.5A2.5 2.5 0 0 1 9.5 3H19a2 2 0 0 1 2 2v8a2.5 2.5 0 0 1-2.5 2.5H17"/>
+                              </svg>
                             </div>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                playSound("click", soundEnabled);
-                                setSelectedDocumentModalItem({
-                                  id: `doc_${msg.id}`,
-                                  type: isDeepResearchPrompt ? 'deep_research' : 'document',
-                                  title: extractedDocTitle,
-                                  content: msg.content,
-                                  createdAt: msg.timestamp || Date.now(),
-                                  authorName: "Dandelious",
-                                  docMetadata: {
-                                    docId: "PRJ-2026-X4",
-                                    status: "Fertiggestellt",
-                                    classification: "Intern / Konzeptphase",
-                                    lastUpdated: new Date().toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }),
-                                  },
-                                });
-                              }}
-                              className="px-5 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-black font-semibold text-xs sm:text-sm shadow-md transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0"
-                            >
-                              <span>Öffnen</span>
-                            </button>
+                            <div className="min-w-0">
+                              <h3 className="truncate">{extractedDocTitle}</h3>
+                              <p>{isDeepResearchPrompt ? 'Recherche-Bericht' : 'Dokument'}&nbsp; DOCX</p>
+                            </div>
                           </div>
                         )
                       ) : (
+                        <div className="reply">
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm]}
                           components={{
@@ -2416,11 +2158,21 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                       >
                         {msg.content}
                       </ReactMarkdown>
+                      </div>
                       )}
 
                       {/* Typing cursor */}
                       {msg.isStreaming && (
                         <span className="inline-block w-2 h-2 ml-1.5 bg-white rounded-full align-middle" />
+                      )}
+
+                      {/* Image Generation Unavailable Embed */}
+                      {(msg.imageGenEmbed || (msg.content && msg.content.includes("kann leider keine Bilder erstellen") && msg.content.includes("reines Sprachmodell"))) && (
+                        <ImageGenUnavailableEmbed
+                          originalPrompt={msg.imageGenEmbed?.originalPrompt || (index > 0 ? session?.messages[index - 1]?.content : undefined)}
+                          onNavigateToImageStudio={() => onSelectView?.('image')}
+                          onGeneratePrompt={(prompt) => onSendMessage(prompt)}
+                        />
                       )}
 
                       {/* Interactive API Key / Action Card for Errors */}
@@ -2452,7 +2204,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                   playSound("click", soundEnabled);
                                   onOpenSettings("api");
                                 }}
-                                className="relative z-10 px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-neutral-200 transition-all shrink-0 cursor-pointer shadow-md hover:scale-[1.02] active:scale-95 flex items-center gap-1.5"
+                                className="relative z-10 px-4 py-2 rounded-xl bg-[#4c8dff] text-white font-semibold text-xs hover:bg-[#3b82f6] border-0 transition-all shrink-0 cursor-pointer shadow-md hover:scale-[1.02] active:scale-95 flex items-center gap-1.5"
                               >
                                 <Key className="w-3.5 h-3.5" />
                                 <span>API-Key eintragen</span>
@@ -2604,23 +2356,29 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 
                             <AnimatePresence>
                               {activeMessageDropdown === `more-${msg.id}` && (
-                                <>
-                                  <div
-                                    className="fixed inset-0 z-30"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setActiveMessageDropdown(null);
-                                    }}
-                                  />
-                                  <motion.div
-                                    initial={{ opacity: 0, scale: 0.72, y: -12, filter: "blur(10px)" }}
-                                    animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
-                                    exit={{ opacity: 0, scale: 0.8, y: -8, filter: "blur(6px)", transition: { duration: 0.14 } }}
-                                    transition={{ type: "spring", damping: 22, stiffness: 380, mass: 0.6 }}
-                                    style={{ transformOrigin: "top right" }}
-                                    className="absolute right-0 top-full mt-2 z-50 w-56 max-w-[calc(100vw-32px)] p-2 rounded-2xl bg-black shadow-2xl space-y-1 text-sm text-neutral-200 border border-white/15 backdrop-blur-2xl origin-top-right overflow-hidden"
-                                    onClick={(e) => e.stopPropagation()}
-                                  >
+                                <motion.div
+                                  key={`more-asst-backdrop-${msg.id}`}
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  exit={{ opacity: 0 }}
+                                  className="fixed inset-0 z-30"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setActiveMessageDropdown(null);
+                                  }}
+                                />
+                              )}
+                              {activeMessageDropdown === `more-${msg.id}` && (
+                                <motion.div
+                                  key={`more-asst-menu-${msg.id}`}
+                                  initial={{ opacity: 0, scale: 0.72, y: -12, filter: "blur(10px)" }}
+                                  animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+                                  exit={{ opacity: 0, scale: 0.8, y: -8, filter: "blur(6px)", transition: { duration: 0.14 } }}
+                                  transition={{ type: "spring", damping: 22, stiffness: 380, mass: 0.6 }}
+                                  style={{ transformOrigin: "top right" }}
+                                  className="absolute right-0 top-full mt-2 z-50 w-56 max-w-[calc(100vw-32px)] p-2 rounded-2xl bg-black shadow-2xl space-y-1 text-sm text-neutral-200 border border-white/15 backdrop-blur-2xl origin-top-right overflow-hidden"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
                                     <motion.button
                                       whileHover={{ x: 3 }}
                                       whileTap={{ scale: 0.98 }}
@@ -2658,7 +2416,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                                       )}
                                     </motion.button>
                                   </motion.div>
-                                </>
                               )}
                             </AnimatePresence>
                           </div>
@@ -2691,19 +2448,16 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         </motion.div>
       </div>
 
-      {/* Floating Pill Input Bar */}
+      {/* Composer Area matching Liquid Glass Prototype */}
       <div
-        className={`absolute bottom-0 left-0 right-0 px-3 sm:px-4 pt-4 transition-all duration-150 ease-out pointer-events-none ${
+        className={`composer-wrap ${
           chatTutorialStep !== null ? 'z-50' : 'z-20'
         }`}
         style={{
           paddingBottom: "calc(env(safe-area-inset-bottom, 14px) + var(--viewport-offset-bottom, 0px))",
         }}
       >
-        {/* Soft subtle base gradient for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent -z-20 pointer-events-none" />
-
-        <div className="max-w-xl sm:max-w-2xl mx-auto relative space-y-2 pointer-events-auto z-10">
+        <div className="w-full max-w-[680px] relative pointer-events-auto z-10 flex flex-col gap-2">
           {/* Dynamic File-Preview Glass Cards */}
           <AnimatePresence>
             {attachedFiles.length > 0 && (
@@ -2716,7 +2470,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 {attachedFiles.map((file, fileIdx) => (
                   <div
                     key={`att-file-${file.id || fileIdx}-${fileIdx}`}
-                    className="relative w-[110px] h-[60px] rounded-full shadow-md shrink-0 border border-white/20 overflow-hidden"
+                    className="relative w-[110px] h-[60px] rounded-2xl shadow-md shrink-0 border border-white/20 overflow-hidden bg-white/5"
                   >
                     {file.type === 'image' || file.content?.startsWith('data:image/') ? (
                       <img src={file.content} alt={file.name} className="absolute inset-0 w-full h-full object-cover" />
@@ -2727,9 +2481,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     )}
                     <button
                       onClick={() => removeAttachedFile(file.id)}
-                      className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white text-black flex items-center justify-center shadow-lg hover:bg-neutral-200 transition-colors cursor-pointer"
+                      className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-white text-black flex items-center justify-center shadow-lg hover:bg-neutral-200 transition-colors cursor-pointer"
                     >
-                      <X className="w-3.5 h-3.5" />
+                      <X className="w-3 h-3" />
                     </button>
                   </div>
                 ))}
@@ -2780,180 +2534,75 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             )}
           </AnimatePresence>
 
-          {/* Conditional Layout: Mode Card (matching screenshot 1:1) vs Normal Compact Pill */}
-          {!isLiveActive && activeInputMode ? (
-            /* Mode Selected Card Layout (Grey with smooth dynamic focus) */
-            <div
-              data-tour-target="prompt-input"
-              className="w-full bg-[#242426] border border-white/10 rounded-[34px] sm:rounded-[38px] p-4 sm:p-4.5 shadow-[0_14px_45px_rgba(0,0,0,0.7)] flex flex-col justify-between min-h-[148px] sm:min-h-[158px] transition-all duration-300 focus-within:border-white/20 focus-within:ring-2 focus-within:ring-white/10"
-            >
-              {/* Top Row: Mode Chip with Close Button */}
-              <div className="flex items-center justify-between">
-                <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-xl border border-white/10 text-white text-sm font-medium px-3.5 py-1.5 rounded-full shadow-sm">
-                  {React.createElement(inputModeConfigs[activeInputMode].icon, { className: "w-4 h-4 text-white stroke-[2]" })}
-                  <span>{inputModeConfigs[activeInputMode].name}</span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      playSound('click', soundEnabled);
-                      setActiveInputMode(null);
-                    }}
-                    className="w-5 h-5 rounded-full bg-white text-black hover:bg-neutral-200 flex items-center justify-center transition-colors shrink-0 ml-1 cursor-pointer active:scale-90"
-                    title="Modus schließen"
-                  >
-                    <X className="w-3 h-3 stroke-[3]" />
-                  </button>
+          {/* Voice Listening Active Indicator Pill with Waveform & Status */}
+          <AnimatePresence>
+            {(isRecording || isTranscribing) && (
+              <motion.div
+                initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 450, damping: 28 }}
+                className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-full bg-black/80 border border-blue-400/40 text-blue-200 text-xs sm:text-sm font-medium backdrop-blur-2xl shadow-xl select-none"
+              >
+                <div className="flex items-center gap-2">
+                  {isTranscribing ? (
+                    <Loader2 className="w-3.5 h-3.5 text-blue-400 animate-spin" />
+                  ) : (
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
+                    </span>
+                  )}
+                  <span className="text-white font-medium">
+                    {voiceFeedbackStatus || (isTranscribing ? "Transkribiere mit KI..." : "Höre zu... Sprich jetzt")}
+                  </span>
                 </div>
 
-                {isRecording && (
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-lime-500/15 border border-lime-400/30">
-                    <span className="w-2 h-2 rounded-full bg-lime-400 animate-ping" />
-                    <div className="w-20 h-5 flex items-center">
+                {!isTranscribing && (
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 sm:w-32 h-5 flex items-center">
                       <RealtimeAudioWaveform
                         analyser={activeAnalyserNode}
                         isRecording={isRecording}
                         height={18}
-                        barCount={16}
+                        barCount={20}
                         theme="sapphire"
                       />
                     </div>
-                    <span className="text-[11px] font-mono text-lime-300 font-semibold">
+                    <span className="font-mono text-[11px] text-blue-300 font-semibold min-w-[32px]">
                       {Math.floor(recordingSeconds / 60)}:{(recordingSeconds % 60).toString().padStart(2, '0')}
                     </span>
+                    <button
+                      type="button"
+                      onClick={toggleVoiceRecording}
+                      className="ml-1 px-2.5 py-1 rounded-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer shadow-sm"
+                    >
+                      <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                      <span>Fertig</span>
+                    </button>
                   </div>
                 )}
-              </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-              {/* Middle Row: Textarea */}
-              <div className="my-1.5">
-                <textarea
-                  ref={textareaRef}
-                  rows={2}
-                  value={inputPrompt}
-                  spellCheck={settings?.autoSpellCheck ?? true}
-                  onChange={(e) => setInputPrompt(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder={inputModeConfigs[activeInputMode].placeholder}
-                  className="w-full bg-transparent text-[15px] sm:text-[16px] text-white placeholder-neutral-400 focus:outline-none px-1 font-normal resize-none scrollbar-none py-1 leading-relaxed max-h-36"
-                  autoFocus
-                />
-              </div>
+          {/* Voice Toast Banner (e.g. Permission denied, no speech) */}
+          <AnimatePresence>
+            {voiceToast && (
+              <motion.div
+                initial={{ opacity: 0, y: 6, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 6, scale: 0.96 }}
+                className="flex items-center gap-2 mb-2 px-4 py-2 rounded-full bg-red-950/80 border border-red-500/40 text-red-200 text-xs font-medium shadow-xl backdrop-blur-xl select-none"
+              >
+                <AlertTriangle className="w-3.5 h-3.5 text-red-400 shrink-0" />
+                <span>{voiceToast}</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-              {/* Bottom Row: + on Left, Mic & Send on Right */}
-              <div className="flex items-center justify-between pt-1">
-                {/* Plus Button */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    playSound("click", soundEnabled);
-                    setIsPlusDrawerOpen(true);
-                    if (chatTutorialStep === 1) {
-                      setChatTutorialStep(2);
-                    }
-                  }}
-                  className={`w-10 h-10 rounded-full border border-white/5 shadow-md flex items-center justify-center transition-all shrink-0 cursor-pointer active:scale-95 ${
-                    chatTutorialStep === 1
-                      ? 'bg-[#C5DC57] text-black ring-4 ring-[#C5DC57]/80 shadow-[0_0_30px_rgba(197,220,87,0.95)] animate-pulse relative z-50 pointer-events-auto'
-                      : chatTutorialStep !== null
-                        ? 'bg-[#2c2c2e] text-neutral-500 opacity-25 pointer-events-none'
-                        : 'bg-[#2c2c2e] hover:bg-[#343438] text-neutral-300 hover:text-white'
-                  }`}
-                  title="Aktionen & Anhänge"
-                  id="chatwindow-plus-btn"
-                >
-                  <Plus className={`w-6 h-6 stroke-[1.75] ${chatTutorialStep === 1 ? 'text-black' : ''}`} />
-                </button>
-
-                {/* Right Actions: Mic + Send Button */}
-                <div className="flex items-center gap-2 shrink-0">
-                  <button
-                    type="button"
-                    onClick={toggleVoiceRecording}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer shrink-0 relative active:scale-95 ${
-                      isRecording
-                        ? "bg-lime-600/35 text-lime-200 border border-lime-400/50 shadow-[0_0_20px_rgba(168,85,247,0.6)]"
-                        : "bg-[#2c2c2e] hover:bg-[#343438] text-neutral-300 hover:text-white border border-white/5 shadow-md"
-                    }`}
-                    title={isRecording ? "Spracheingabe beenden" : "Spracheingabe starten"}
-                  >
-                    {isRecording && (
-                      <span className="absolute inset-0 rounded-full bg-lime-500/30 animate-ping pointer-events-none" />
-                    )}
-                    <Mic className="w-5.5 h-5.5 stroke-[1.8]" />
-                  </button>
-
-                  {isStreaming ? (
-                    <motion.button
-                      type="button"
-                      whileHover={{ scale: 1.08 }}
-                      whileTap={{ scale: 0.88 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 22 }}
-                      onClick={() => {
-                        playSound("click", soundEnabled);
-                        onStopStreaming();
-                      }}
-                      className="w-11 h-11 rounded-full bg-[#2c2c2e] hover:bg-[#343438] text-white flex items-center justify-center transition-all cursor-pointer shadow-md shrink-0 border border-white/10"
-                      title="Stoppen"
-                    >
-                      <Square className="w-4 h-4 fill-white text-white" />
-                    </motion.button>
-                  ) : (
-                    <motion.button
-                      type="button"
-                      id="chatwindow-send-btn"
-                      whileHover={{ scale: 1.08 }}
-                      whileTap={{ scale: 0.86 }}
-                      animate={isSendingAnim ? { scale: 0.85 } : { scale: 1 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 22 }}
-                      onClick={handleSubmit}
-                      className={`w-11 h-11 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-md shrink-0 relative overflow-hidden border active:scale-95 ${
-                        inputPrompt.trim().length > 0
-                          ? 'bg-[#C5DC57] text-[#0f1704] font-semibold border-[#C5DC57]/40 shadow-[0_0_20px_rgba(197,220,87,0.4)]'
-                          : 'bg-[#2c2c2e] hover:bg-[#343438] text-white border-white/5'
-                      }`}
-                      title="Senden"
-                    >
-                      <motion.div
-                        animate={isSendingAnim ? { y: [-1, -6, 2, 0], opacity: [1, 0.4, 1] } : {}}
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                      >
-                        <ArrowUp className="w-5 h-5 stroke-[2.5]" />
-                      </motion.div>
-                    </motion.button>
-                  )}
-                </div>
-              </div>
-
-              {/* Extra Buttons for Deep Research: Quellen & Dateien matching Screenshot 4 */}
-              {activeInputMode === 'deep_research' && (
-                <div className="flex items-center gap-2.5 pt-3 mt-1.5 border-t border-white/5">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      playSound("click", soundEnabled);
-                      setIsSourcesModalOpen(true);
-                    }}
-                    className="flex-1 py-2.5 px-4 rounded-full bg-white/[0.04] backdrop-blur-[60px] border-white/10 shadow-2xl hover:bg-white/10 text-white flex items-center justify-center gap-2 text-[14px] font-medium transition-all cursor-pointer shadow-sm active:scale-[0.98] border border-white/5"
-                  >
-                    <GoogleGIcon className="w-4 h-4 shrink-0" />
-                    <span>Quellen</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      playSound("click", soundEnabled);
-                      fileInputRef.current?.click();
-                    }}
-                    className="flex-1 py-2.5 px-4 rounded-full bg-white/[0.04] backdrop-blur-[60px] border-white/10 shadow-2xl hover:bg-white/10 text-white flex items-center justify-center gap-2 text-[14px] font-medium transition-all cursor-pointer shadow-sm active:scale-[0.98] border border-white/5"
-                  >
-                    <Upload className="w-4 h-4 text-neutral-300 stroke-[2] shrink-0" />
-                    <span>Dateien</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : isLiveActive ? (
-            /* Live Mode Floating Bar matching IMG_0907.jpeg with white audio waveform */
+          {isLiveActive ? (
+            /* Live Mode Floating Bar */
             <div className="w-full flex items-center justify-center gap-2.5 sm:gap-4 py-2 select-none">
               {/* Camera Circle Button */}
               <motion.button
@@ -2974,7 +2623,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 <Camera className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.8]" />
               </motion.button>
 
-              {/* Screen Share Circle Button (Icon matching IMG_0907.jpeg) */}
+              {/* Screen Share Circle Button */}
               <motion.button
                 type="button"
                 whileHover={{ scale: 1.08 }}
@@ -2997,8 +2646,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 </svg>
               </motion.button>
 
-              {/* Center Pill: Rounded Capsule with White Tonspur */}
-              <div className="h-12 sm:h-14 px-4 sm:px-6 rounded-full bg-white/[0.04] backdrop-blur-[60px] shadow-[0_0_30px_rgba(255,255,255,0.05)] border-white/10 border border-white/10 flex items-center justify-center shadow-xl min-w-[140px] sm:min-w-[190px] max-w-[260px]">
+              {/* Center Pill */}
+              <div className="h-12 sm:h-14 px-4 sm:px-6 rounded-full bg-white/[0.04] backdrop-blur-[60px] shadow-[0_0_30px_rgba(255,255,255,0.05)] border border-white/10 flex items-center justify-center shadow-xl min-w-[140px] sm:min-w-[190px] max-w-[260px]">
                 <LiveRecordingSpool
                   status={liveStatus === 'disconnected' ? 'closed' : liveStatus}
                   statusText={liveStatusText}
@@ -3039,287 +2688,385 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                   playSound("click", soundEnabled);
                   onCloseLive?.();
                 }}
-                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/[0.04] backdrop-blur-[60px] shadow-[0_0_30px_rgba(255,255,255,0.05)] border-white/10 hover:bg-[#252630] text-white flex items-center justify-center transition-all cursor-pointer shadow-xl border border-white/10"
+                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/[0.04] backdrop-blur-[60px] shadow-[0_0_30px_rgba(255,255,255,0.05)] border border-white/10 hover:bg-[#252630] text-white flex items-center justify-center transition-all cursor-pointer shadow-xl"
                 title="Live Gespräch beenden"
               >
                 <X className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2]" />
               </motion.button>
             </div>
           ) : (
-            /* Main Prompt Input Area: Standalone Outside Plus Button + Dark Transparent Blurred Bar */
-            <div className="w-full flex flex-col items-center">
-              {/* Voice Listening Active Indicator Pill with Waveform & Status */}
-              <AnimatePresence>
-                {(isRecording || isTranscribing) && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 12, scale: 0.94 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 12, scale: 0.94 }}
-                    transition={{ type: "spring", stiffness: 450, damping: 28 }}
-                    className="flex items-center justify-center gap-3 mb-2.5 px-4 py-2 rounded-full bg-[#1b102e]/95 border border-lime-400/40 text-lime-200 text-xs sm:text-sm font-medium backdrop-blur-2xl shadow-[0_8px_32px_rgba(109,40,217,0.45)] z-20 select-none"
-                  >
-                    <div className="flex items-center gap-2">
-                      {isTranscribing ? (
-                        <Loader2 className="w-3.5 h-3.5 text-lime-400 animate-spin" />
-                      ) : (
-                        <span className="relative flex h-2.5 w-2.5">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-lime-500"></span>
-                        </span>
-                      )}
-                      <span className="text-white font-semibold tracking-wide">
-                        {voiceFeedbackStatus || (isTranscribing ? "Transkribiere mit KI..." : "Höre zu... Sprich jetzt")}
-                      </span>
-                    </div>
+            /* Liquid Glass Composer Card matching Dandelious prototype */
+            <div className="composer lg" data-s="36" data-tour-target="prompt-input">
+              {/* Attachment spring menu backdrop */}
+              {isAttachMenuOpen && (
+                <div
+                  className="fixed inset-0 z-30"
+                  onClick={() => setIsAttachMenuOpen(false)}
+                />
+              )}
 
-                    {/* Animated Real-Time Audio Waveform */}
-                    {!isTranscribing && (
-                      <div className="flex items-center gap-2.5 px-1">
-                        <div className="w-28 sm:w-36 h-6 flex items-center">
-                          <RealtimeAudioWaveform
-                            analyser={activeAnalyserNode}
-                            isRecording={isRecording}
-                            height={22}
-                            barCount={24}
-                            theme="sapphire"
-                          />
-                        </div>
-                        <span className="font-mono text-[11px] text-lime-300 font-semibold tracking-wider min-w-[32px]">
-                          {Math.floor(recordingSeconds / 60)}:{(recordingSeconds % 60).toString().padStart(2, '0')}
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Done / Fertig Button */}
-                    {!isTranscribing && (
-                      <button
-                        type="button"
-                        onClick={toggleVoiceRecording}
-                        className="ml-1 px-2.5 py-1 rounded-full bg-lime-600 hover:bg-lime-500 active:scale-95 text-white text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer shadow-sm"
-                      >
-                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                        <span>Fertig</span>
-                      </button>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Voice Toast Banner (e.g. Permission denied, no speech) */}
-              <AnimatePresence>
-                {voiceToast && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 6, scale: 0.96 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.96 }}
-                    className="flex items-center gap-2 mb-2 px-4 py-2 rounded-full bg-red-950/80 border border-red-500/40 text-red-200 text-xs font-medium shadow-xl backdrop-blur-xl select-none"
-                  >
-                    <AlertTriangle className="w-3.5 h-3.5 text-red-400 shrink-0" />
-                    <span>{voiceToast}</span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              <div
-                data-tour-target="prompt-input"
-                className={`w-full flex ${isMultiline ? "items-end" : "items-center"} gap-2.5 sm:gap-3 transition-all duration-300 ease-out`}
-              >
-                {/* Standalone Plus Button outside the bar (matching user request) */}
-                <motion.button
+              {/* Spring Attachment Pop-up Menu */}
+              <div className={`menu lg ${isAttachMenuOpen ? 'open' : ''}`} id="menu" data-s="36" data-b="8">
+                <button
                   type="button"
-                  id="chatwindow-plus-btn"
-                  whileHover={{ scale: 1.06, rotate: 45 }}
-                  whileTap={{ scale: 0.92 }}
-                  transition={{ type: "spring", stiffness: 450, damping: 22 }}
+                  className="item"
+                  id="actCam"
                   onClick={() => {
+                    setIsAttachMenuOpen(false);
+                    playSound("click", soundEnabled);
+                    cameraInputRef.current?.click();
+                  }}
+                >
+                  <span className="ic">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M4 7h4l2-3h4l2 3h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Zm8 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-2a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
+                    </svg>
+                  </span>
+                  Kamera
+                </button>
+
+                <button
+                  type="button"
+                  className="item"
+                  id="actPhoto"
+                  onClick={() => {
+                    setIsAttachMenuOpen(false);
+                    playSound("click", soundEnabled);
+                    photoInputRef.current?.click();
+                  }}
+                >
+                  <span className="ic">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm0 16H5V5h14v14ZM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5Z"/>
+                    </svg>
+                  </span>
+                  Fotos
+                </button>
+
+                <button
+                  type="button"
+                  className="item"
+                  id="actFile"
+                  onClick={() => {
+                    setIsAttachMenuOpen(false);
+                    playSound("click", soundEnabled);
+                    fileInputRef.current?.click();
+                  }}
+                >
+                  <span className="ic">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm4 18H6V4h7v5h5v11Z"/>
+                    </svg>
+                  </span>
+                  Dateien
+                </button>
+
+                <button
+                  type="button"
+                  className="item"
+                  id="actLibrary"
+                  onClick={() => {
+                    setIsAttachMenuOpen(false);
                     playSound("click", soundEnabled);
                     setIsPlusDrawerOpen(true);
-                    if (chatTutorialStep === 1) {
-                      setChatTutorialStep(2);
-                    }
                   }}
-                  className={`w-[52px] h-[52px] sm:w-[58px] sm:h-[58px] rounded-full border border-white/5 flex items-center justify-center transition-all shrink-0 cursor-pointer shadow-md active:scale-95 ${
-                    chatTutorialStep === 1
-                      ? 'bg-[#C5DC57] text-black ring-4 ring-[#C5DC57]/80 shadow-[0_0_30px_rgba(197,220,87,0.95)] animate-pulse relative z-50 pointer-events-auto'
-                      : chatTutorialStep !== null
-                        ? 'bg-[#242426] text-neutral-500 opacity-25 pointer-events-none'
-                        : 'bg-[#242426] hover:bg-[#2c2c2e] text-neutral-200 hover:text-white hover:border-white/15 hover:shadow-lg'
-                  }`}
-                  title="Aktionen & Anhänge"
                 >
-                  <Plus className={`w-6 h-6 sm:w-7 sm:h-7 stroke-[2] ${chatTutorialStep === 1 ? 'text-black' : ''}`} />
-                </motion.button>
+                  <span className="ic">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M4 6H2v14a2 2 0 0 0 2 2h14v-2H4V6Zm16-4H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Zm0 14H8V4h12v12Z"/>
+                    </svg>
+                  </span>
+                  Mediathek
+                </button>
+              </div>
 
-                {/* Unified Persistent Prompt Capsule/Card: Grey #242426 with dynamic focus glow & elevation */}
-                <div
-                  className={`flex-1 bg-[#242426] hover:bg-[#28282b] focus-within:bg-[#28282b] border border-white/5 focus-within:border-white/20 focus-within:ring-2 focus-within:ring-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.65)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.75)] flex transition-all duration-300 ease-out group ${
-                    isMultiline
-                      ? "flex-col justify-between rounded-[28px] sm:rounded-[32px] p-3.5 sm:p-4 min-h-[135px] sm:min-h-[148px]"
-                      : "items-center rounded-full py-1.5 pl-5 sm:pl-6 pr-2 sm:pr-2.5 min-h-[62px] sm:min-h-[68px]"
-                  }`}
-                >
-                  {/* Single Continuous Textarea - Never Unmounted */}
-                  <div className={`w-full transition-all duration-200 ${isMultiline ? "px-1 pt-0.5 pb-2" : "flex-1 min-w-0"}`}>
-                    {isRecording && !inputPrompt ? (
-                      <div className="flex items-center gap-3 py-1.5 px-1">
-                        <div className="w-32 sm:w-44 h-7 flex items-center">
-                          <RealtimeAudioWaveform
-                            analyser={activeAnalyserNode}
-                            isRecording={isRecording}
-                            height={24}
-                            barCount={28}
-                            theme="sapphire"
-                          />
-                        </div>
-                        <span className="text-xs sm:text-[13.5px] font-medium text-lime-300 animate-pulse tracking-wide select-none">
-                          Höre zu... sprich einfach drauflos
-                        </span>
-                      </div>
-                    ) : (
-                      <textarea
-                        ref={textareaRef}
-                        rows={1}
-                        value={inputPrompt}
-                        disabled={chatTutorialStep !== null}
-                        spellCheck={settings?.autoSpellCheck ?? true}
-                        onChange={(e) => setInputPrompt(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        placeholder={isRecording ? "Höre zu... sprich einfach drauflos" : "Frag Dandelious"}
-                        className={`w-full bg-transparent text-[16px] sm:text-[17px] text-white placeholder-neutral-400 focus:outline-none font-normal resize-none leading-normal tracking-wide transition-[height] duration-150 ease-out ${
-                          isMultiline
-                            ? "max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 px-1 py-1"
-                            : "max-h-36 overflow-hidden px-1 py-2 scrollbar-none"
-                        }`}
-                      />
-                    )}
-                  </div>
-
-                  {/* Actions: Voice Mic Button + Live / Send Button */}
-                  <div className={`flex items-center gap-2 sm:gap-2.5 shrink-0 transition-all duration-200 ${isMultiline ? "justify-end w-full pt-1" : ""}`}>
-                    {/* Voice Speech-to-Text Mic Button */}
+              {/* Active Mode Chip (if user selected Document, Deep Research, etc.) */}
+              {activeInputMode && (
+                <div className="flex items-center justify-between mb-1">
+                  <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xl border-0 text-white text-xs sm:text-sm font-medium px-3 py-1 rounded-full shadow-sm">
+                    {React.createElement(inputModeConfigs[activeInputMode].icon, { className: "w-3.5 h-3.5 text-white stroke-[2]" })}
+                    <span>{inputModeConfigs[activeInputMode].name}</span>
                     <button
                       type="button"
-                      id="chatwindow-mic-btn"
-                      onClick={toggleVoiceRecording}
-                      disabled={isTranscribing || chatTutorialStep !== null}
-                      className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all shrink-0 relative active:scale-95 ${
-                        chatTutorialStep !== null
-                          ? 'opacity-25 pointer-events-none'
-                          : 'cursor-pointer'
-                      } ${
-                        isRecording 
-                          ? "bg-[#C5DC57]/30 text-[#e9f78d] border border-[#C5DC57]/60 shadow-[0_0_24px_rgba(197,220,87,0.5)]" 
-                          : isTranscribing
-                            ? "bg-[#C5DC57]/20 text-[#C5DC57] border border-[#C5DC57]/30"
-                            : "bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-transparent hover:border-white/5"
-                      }`}
-                      title={isTranscribing ? "Transkribiere..." : isRecording ? "Spracheingabe beenden" : "Spracheingabe starten"}
+                      onClick={() => {
+                        playSound('click', soundEnabled);
+                        setActiveInputMode(null);
+                      }}
+                      className="w-4 h-4 rounded-full bg-white/20 text-white hover:bg-white/30 flex items-center justify-center transition-colors shrink-0 ml-1 cursor-pointer active:scale-90 border-0"
+                      title="Modus schließen"
                     >
-                      {isRecording && (
-                        <>
-                          <span className="absolute inset-0 rounded-full bg-[#C5DC57]/30 animate-ping pointer-events-none" />
-                          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#C5DC57] border-2 border-black" />
-                        </>
-                      )}
-                      {isTranscribing ? (
-                        <Loader2 className="w-5 h-5 sm:w-5.5 sm:h-5.5 stroke-[2] animate-spin text-[#C5DC57]" />
-                      ) : (
-                        <Mic className="w-5.5 h-5.5 sm:w-6 sm:h-6 stroke-[1.8]" />
-                      )}
+                      <X className="w-2.5 h-2.5 stroke-[3]" />
                     </button>
-
-                    {/* Dandelious Live / Send Button with Soft Glow & Smooth Morph Animation */}
-                    {isStreaming ? (
-                      <motion.button
-                        type="button"
-                        whileHover={{ scale: 1.08 }}
-                        whileTap={{ scale: 0.92 }}
-                        onClick={() => {
-                          playSound("click", soundEnabled);
-                          onStopStreaming();
-                        }}
-                        className="w-12 h-12 sm:w-[52px] sm:h-[52px] rounded-full bg-[#2c2c2e] hover:bg-[#38383c] border border-white/10 text-white flex items-center justify-center transition-all cursor-pointer shrink-0 shadow-md"
-                        title="Stoppen"
-                      >
-                        <Square className="w-4.5 h-4.5 fill-white text-white" />
-                      </motion.button>
-                    ) : (
-                      <motion.button
-                        type="button"
-                        id={inputPrompt.trim().length > 0 ? "chatwindow-send-btn" : "chatwindow-live-btn"}
-                        whileHover={{ scale: 1.07 }}
-                        whileTap={{ scale: 0.92 }}
-                        animate={isSendingAnim ? { scale: [1, 0.8, 1.15, 1], y: [0, -3, 0] } : { scale: 1, y: 0 }}
-                        transition={{ type: "spring", stiffness: 500, damping: 22 }}
-                        onClick={() => {
-                          if (chatTutorialStep === 3) {
-                            playSound("click", soundEnabled);
-                            setChatTutorialStep(4);
-                            return;
-                          }
-                          if (inputPrompt.trim().length > 0) {
-                            handleSubmit();
-                          } else {
-                            playSound("click", soundEnabled);
-                            onOpenLive?.();
-                          }
-                        }}
-                        className={`w-12 h-12 sm:w-[52px] sm:h-[52px] rounded-full flex items-center justify-center transition-all shrink-0 overflow-hidden shadow-md active:scale-95 ${
-                          chatTutorialStep === 3
-                            ? "bg-[#C5DC57] text-black ring-4 ring-[#C5DC57]/80 shadow-[0_0_30px_rgba(197,220,87,0.95)] animate-pulse relative z-50 pointer-events-auto cursor-pointer"
-                            : chatTutorialStep !== null
-                              ? "bg-[#2c2c2e] text-neutral-500 opacity-25 pointer-events-none"
-                              : inputPrompt.trim().length > 0
-                                ? "bg-[#C5DC57] hover:bg-[#b8d049] active:bg-[#a6bd3a] text-[#0f1704] font-semibold cursor-pointer shadow-[0_0_24px_rgba(197,220,87,0.45)] border border-[#C5DC57]/40"
-                                : "bg-white/5 hover:bg-white/10 active:bg-white/15 text-[#C5DC57] border border-white/5 hover:border-white/10 cursor-pointer shadow-sm"
-                        }`}
-                        title={chatTutorialStep === 3 ? "Live Modus" : inputPrompt.trim().length > 0 ? "Senden" : "Live Gespräch starten"}
-                      >
-                        <AnimatePresence mode="wait" initial={false}>
-                          {inputPrompt.trim().length > 0 ? (
-                            <motion.div
-                              key="send-icon"
-                              initial={{ scale: 0.35, rotate: -70, opacity: 0 }}
-                              animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                              exit={{ scale: 0.35, rotate: 70, opacity: 0 }}
-                              transition={{ type: "spring", stiffness: 450, damping: 24 }}
-                              className="flex items-center justify-center text-[#0e1603]"
-                            >
-                              <ArrowUp className="w-5.5 h-5.5 sm:w-6 sm:h-6 stroke-[2.8]" />
-                            </motion.div>
-                          ) : (
-                            <motion.div
-                              key="live-icon"
-                              initial={{ scale: 0.35, rotate: 70, opacity: 0 }}
-                              animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                              exit={{ scale: 0.35, rotate: -70, opacity: 0 }}
-                              transition={{ type: "spring", stiffness: 450, damping: 24 }}
-                              className="flex items-center justify-center text-[#e8f78d]"
-                            >
-                              <svg className="w-5.5 h-5.5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
-                                <rect x="3.5" y="8" width="2.5" height="8" rx="1.25" />
-                                <rect x="9" y="4" width="2.5" height="16" rx="1.25" />
-                                <rect x="14.5" y="6" width="2.5" height="12" rx="1.25" />
-                                <rect x="20" y="10" width="2.5" height="4" rx="1.25" />
-                              </svg>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </motion.button>
-                    )}
                   </div>
                 </div>
+              )}
+
+              {/* Input Textarea */}
+              <textarea
+                ref={textareaRef}
+                rows={isMultiline ? 3 : 2}
+                value={inputPrompt}
+                disabled={chatTutorialStep !== null}
+                spellCheck={settings?.autoSpellCheck ?? true}
+                onChange={(e) => setInputPrompt(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={
+                  activeInputMode
+                    ? inputModeConfigs[activeInputMode].placeholder
+                    : isRecording
+                      ? "Höre zu... sprich einfach drauflos"
+                      : "Frag Dandelious…"
+                }
+                aria-label="Nachricht"
+              />
+
+              {/* Deep Research Extra Actions if active */}
+              {activeInputMode === 'deep_research' && (
+                <div className="flex items-center gap-2 pt-2 mb-1 border-t border-white/5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playSound("click", soundEnabled);
+                      setIsSourcesModalOpen(true);
+                    }}
+                    className="flex-1 py-1.5 px-3 rounded-full bg-white/5 hover:bg-white/10 text-white flex items-center justify-center gap-2 text-xs font-medium transition-all cursor-pointer border border-white/5"
+                  >
+                    <GoogleGIcon className="w-3.5 h-3.5 shrink-0" />
+                    <span>Quellen</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playSound("click", soundEnabled);
+                      fileInputRef.current?.click();
+                    }}
+                    className="flex-1 py-1.5 px-3 rounded-full bg-white/5 hover:bg-white/10 text-white flex items-center justify-center gap-2 text-xs font-medium transition-all cursor-pointer border border-white/5"
+                  >
+                    <Upload className="w-3.5 h-3.5 text-neutral-300 stroke-[2] shrink-0" />
+                    <span>Dateien</span>
+                  </button>
+                </div>
+              )}
+
+              {/* Bottom Row inside Composer */}
+              <div className="row">
+                {/* Group Capsule: Attachment Paperclip + 3D Model Wheel */}
+                <div className="grp lg" data-s="30">
+                  <button
+                    type="button"
+                    aria-label="Anhängen"
+                    id="attach"
+                    onClick={() => {
+                      playSound("click", soundEnabled);
+                      setIsAttachMenuOpen(!isAttachMenuOpen);
+                    }}
+                    className="circle"
+                    title="Anhängen"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                      <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l7.88-7.88"/>
+                    </svg>
+                  </button>
+
+                  {/* 3D Vertical Perspective Model Reel with Touch & Mouse Swipe Gestures */}
+                  <div
+                    className="model select-none touch-none"
+                    id="model"
+                    title="Wischen oder Klicken, um Modell zu wechseln"
+                    style={{ touchAction: 'none', cursor: 'grab' }}
+                    onPointerDown={(e) => {
+                      isModelDraggingRef.current = true;
+                      modelStartYRef.current = e.clientY;
+                      modelStartXRef.current = e.clientX;
+                      hasMovedModelRef.current = false;
+                      setModelDragOffset(0);
+                      try {
+                        (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+                      } catch {}
+                    }}
+                    onPointerMove={(e) => {
+                      if (!isModelDraggingRef.current) return;
+                      const dy = e.clientY - modelStartYRef.current;
+                      const dx = e.clientX - modelStartXRef.current;
+                      if (Math.abs(dy) > 3 || Math.abs(dx) > 3) {
+                        hasMovedModelRef.current = true;
+                      }
+                      const curIdx = selectedModel === 'dandelious-lite' ? 0 : selectedModel === 'dandelious-pro' ? 2 : 1;
+                      const effective = Math.abs(dx) > Math.abs(dy) ? -dx : dy;
+                      let damped = effective;
+                      if ((curIdx === 0 && effective > 0) || (curIdx === 2 && effective < 0)) {
+                        damped = effective * 0.35;
+                      }
+                      setModelDragOffset(damped);
+                    }}
+                    onPointerUp={(e) => {
+                      if (!isModelDraggingRef.current) return;
+                      isModelDraggingRef.current = false;
+                      try {
+                        (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+                      } catch {}
+
+                      const curIdx = selectedModel === 'dandelious-lite' ? 0 : selectedModel === 'dandelious-pro' ? 2 : 1;
+                      const MODELS = ['Lite', 'Plus', 'Pro'] as const;
+                      const MODEL_IDS: GemmaModelId[] = ['dandelious-lite', 'dandelious-plus', 'dandelious-pro'];
+
+                      if (hasMovedModelRef.current && Math.abs(modelDragOffset) >= 12) {
+                        // Swipe recognized
+                        if (modelDragOffset < -12) {
+                          // Swiped UP -> Next model
+                          const nextIdx = Math.min(MODELS.length - 1, curIdx + 1);
+                          if (nextIdx !== curIdx) {
+                            playSound("click", soundEnabled);
+                            onModelChange(MODEL_IDS[nextIdx]);
+                          }
+                        } else if (modelDragOffset > 12) {
+                          // Swiped DOWN -> Prev model
+                          const nextIdx = Math.max(0, curIdx - 1);
+                          if (nextIdx !== curIdx) {
+                            playSound("click", soundEnabled);
+                            onModelChange(MODEL_IDS[nextIdx]);
+                          }
+                        }
+                      } else {
+                        // Quick click / tap: top half moves back, bottom half advances, middle cycles
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const y = e.clientY - rect.top;
+                        let nextIdx = curIdx;
+                        if (y < rect.height * 0.38) {
+                          nextIdx = Math.max(0, curIdx - 1);
+                        } else if (y > rect.height * 0.62) {
+                          nextIdx = Math.min(MODELS.length - 1, curIdx + 1);
+                        } else {
+                          nextIdx = (curIdx + 1) % MODELS.length;
+                        }
+                        if (nextIdx !== curIdx) {
+                          playSound("click", soundEnabled);
+                          onModelChange(MODEL_IDS[nextIdx]);
+                        }
+                      }
+                      setModelDragOffset(0);
+                    }}
+                    onPointerCancel={() => {
+                      isModelDraggingRef.current = false;
+                      setModelDragOffset(0);
+                    }}
+                    onWheel={(e) => {
+                      const curIdx = selectedModel === 'dandelious-lite' ? 0 : selectedModel === 'dandelious-pro' ? 2 : 1;
+                      const MODEL_IDS: GemmaModelId[] = ['dandelious-lite', 'dandelious-plus', 'dandelious-pro'];
+                      if (e.deltaY > 12) {
+                        const nextIdx = Math.min(2, curIdx + 1);
+                        if (nextIdx !== curIdx) {
+                          playSound("click", soundEnabled);
+                          onModelChange(MODEL_IDS[nextIdx]);
+                        }
+                      } else if (e.deltaY < -12) {
+                        const nextIdx = Math.max(0, curIdx - 1);
+                        if (nextIdx !== curIdx) {
+                          playSound("click", soundEnabled);
+                          onModelChange(MODEL_IDS[nextIdx]);
+                        }
+                      }
+                    }}
+                  >
+                    <div className="mreel pointer-events-none" id="mreel">
+                      {(['Lite', 'Plus', 'Pro'] as const).map((m, i) => {
+                        const curIdx = selectedModel === 'dandelious-lite' ? 0 : selectedModel === 'dandelious-pro' ? 2 : 1;
+                        const fractionalPos = curIdx - (modelDragOffset / 44);
+                        const d = i - fractionalPos;
+                        const deg = -d * 50;
+                        const op = Math.max(0, 1 - Math.min(Math.abs(d), 1) * 0.7);
+                        return (
+                          <div
+                            key={m}
+                            className="mi"
+                            style={{
+                              transform: `perspective(160px) rotateX(${deg}deg)`,
+                              opacity: op,
+                              transition: modelDragOffset !== 0 ? 'none' : 'transform 0.28s cubic-bezier(0.2, 0.9, 0.4, 1), opacity 0.22s ease',
+                            }}
+                          >
+                            {m}
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="mdots pointer-events-none" id="mdots">
+                      {[0, 1, 2].map((i) => {
+                        const curIdx = selectedModel === 'dandelious-lite' ? 0 : selectedModel === 'dandelious-pro' ? 2 : 1;
+                        const fractionalPos = curIdx - (modelDragOffset / 44);
+                        const activeDotIdx = Math.max(0, Math.min(2, Math.round(fractionalPos)));
+                        return <i key={i} className={i === activeDotIdx ? 'on' : ''} />;
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Voice Mic Button */}
+                <button
+                  type="button"
+                  data-s="32"
+                  id="mic"
+                  aria-label="Diktieren"
+                  onClick={toggleVoiceRecording}
+                  disabled={isTranscribing}
+                  className={`circle lg ${isRecording ? '!text-blue-400 !bg-blue-600/30' : ''}`}
+                  title={isTranscribing ? "Transkribiere..." : isRecording ? "Spracheingabe beenden" : "Diktieren"}
+                >
+                  {isTranscribing ? (
+                    <Loader2 className="w-5 h-5 stroke-[2] animate-spin text-[#4c8dff]" />
+                  ) : (
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-[22px] h-[22px]">
+                      <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2Z"/>
+                    </svg>
+                  )}
+                </button>
+
+                {/* Spacer */}
+                <span className="spacer" />
+
+                {/* Send / Stop Button */}
+                {isStreaming ? (
+                  <button
+                    type="button"
+                    data-s="34"
+                    aria-label="Stoppen"
+                    onClick={() => {
+                      playSound("click", soundEnabled);
+                      onStopStreaming();
+                    }}
+                    className="send lg !bg-red-600/50 hover:!bg-red-600/70 !text-white border-0"
+                    title="Stoppen"
+                  >
+                    <Square className="w-4 h-4 fill-white text-white" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    data-s="34"
+                    aria-label="Senden"
+                    id="chatwindow-send-btn"
+                    onClick={() => {
+                      if (inputPrompt.trim().length > 0) {
+                        handleSubmit();
+                      } else {
+                        playSound("click", soundEnabled);
+                        textareaRef.current?.focus();
+                      }
+                    }}
+                    className="send lg blue border-0"
+                    title="Senden"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-[22px] h-[22px]">
+                      <path fillRule="evenodd" d="M3 21.2 5.21 16.9A9 9 0 1 1 8.77 19.4ZM12 6.4l4.4 4.4-1.4 1.4-2-2V17h-2v-6.8l-2 2-1.4-1.4Z"/>
+                    </svg>
+                  </button>
+                )}
               </div>
             </div>
           )}
-          
-          {/* Disclaimer Text */}
-          <div className="text-center mt-1.5 mb-0.5 text-[11px] text-[#8e8e93] font-medium max-w-md mx-auto leading-tight px-4 select-none">
-            Dandelious ist eine KI und kann Fehler machen, auch bei Informationen über Personen.{" "}
-            <a href="#" className="underline decoration-dotted underline-offset-4 hover:text-[#a0a0a5] transition-colors">
-              Datenschutz und Context
-            </a>
-          </div>
+
+          {/* Prototype Hint Disclaimer */}
+          <p className="hint">Dandelious ist eine KI und kann Fehler machen.</p>
         </div>
       </div>
 
@@ -3411,7 +3158,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             exit={{ opacity: 0, y: 20 }}
             className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-white/[0.04] backdrop-blur-[60px] border-white/10 shadow-2xl border border-white/10 text-white text-sm font-medium shadow-2xl flex items-center gap-2"
           >
-            <Check className="w-4 h-4 text-emerald-400" />
+            <Check className="w-4 h-4 text-[#4c8dff]" />
             <span>Link in die Zwischenablage kopiert!</span>
           </motion.div>
         )}
@@ -3420,12 +3167,12 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
       {/* Rename Chat Modal */}
       <AnimatePresence>
         {isRenameModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-md bg-white/[0.04] backdrop-blur-[60px] border-white/10 shadow-2xl border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4"
+              className="w-full max-w-md bg-white/[0.06] backdrop-blur-[40px] border border-white/10 rounded-3xl p-6 shadow-2xl space-y-4"
             >
               <h3 className="text-lg font-semibold text-white">Chat umbenennen</h3>
               <input
@@ -3440,7 +3187,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     setIsRenameModalOpen(false);
                   }
                 }}
-                className="w-full bg-white/[0.03] backdrop-blur-[50px] border border-white/10 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-lime-500"
+                className="w-full bg-white/[0.03] backdrop-blur-[50px] border border-white/10 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-blue-500"
                 placeholder="Name der Unterhaltung"
                 autoFocus
               />

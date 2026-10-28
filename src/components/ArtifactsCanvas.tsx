@@ -137,7 +137,7 @@ export const ArtifactsCanvas: React.FC<ArtifactsCanvasProps> = ({ artifact, onCl
         <div className="h-16 px-5 border-b border-white/10 flex items-center justify-between bg-[#0d0e12]/90 backdrop-blur-2xl shrink-0 z-10">
           <div className="flex items-center gap-3 min-w-0">
             <div className="w-8 h-8 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white shrink-0 shadow-xs">
-              <Zap className="w-4 h-4 text-lime-400" />
+              <Zap className="w-4 h-4 text-blue-400" />
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
@@ -227,14 +227,14 @@ export const ArtifactsCanvas: React.FC<ArtifactsCanvasProps> = ({ artifact, onCl
               onClick={() => setIsConsoleOpen(!isConsoleOpen)}
               className={`p-2 rounded-xl border transition-colors cursor-pointer relative ${
                 isConsoleOpen 
-                  ? 'bg-lime-600/20 border-lime-400/40 text-lime-300' 
+                  ? 'bg-blue-600/20 border-blue-400/40 text-blue-300' 
                   : 'bg-white/5 hover:bg-white/10 border-white/10 text-neutral-300 hover:text-white'
               }`}
               title="Konsole & Logs öffnen"
             >
               <Terminal className="w-4 h-4" />
               {consoleLogs.length > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-lime-500 text-white text-[9px] font-bold flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-blue-600 text-white text-[9px] font-bold flex items-center justify-center">
                   {consoleLogs.length > 9 ? '9+' : consoleLogs.length}
                 </span>
               )}
@@ -311,7 +311,7 @@ export const ArtifactsCanvas: React.FC<ArtifactsCanvasProps> = ({ artifact, onCl
                 {/* Console Header */}
                 <div className="px-4 py-2 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
                   <div className="flex items-center gap-2">
-                    <Terminal className="w-3.5 h-3.5 text-lime-400" />
+                    <Terminal className="w-3.5 h-3.5 text-blue-400" />
                     <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
                       Dice Live Console
                     </span>
@@ -345,9 +345,9 @@ export const ArtifactsCanvas: React.FC<ArtifactsCanvasProps> = ({ artifact, onCl
                       Keine Konsolenausgaben erfasst. Interagiere mit der Vorschau, um Logs zu sehen.
                     </div>
                   ) : (
-                    consoleLogs.map((log) => (
+                    consoleLogs.map((log, lIdx) => (
                       <div 
-                        key={log.id} 
+                        key={`console-log-${log.id || lIdx}-${lIdx}`} 
                         className={`flex items-start gap-2.5 p-1.5 rounded-lg border ${
                           log.type === 'error' 
                             ? 'bg-rose-500/10 border-rose-500/20 text-rose-300' 

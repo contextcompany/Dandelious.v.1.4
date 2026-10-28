@@ -103,7 +103,7 @@ export default function App() {
       <p className="text-sm text-neutral-400 mb-6">Interaktive Komponente direkt im Code-Workspace.</p>
       <button
         onClick={() => setCount(c => c + 1)}
-        className="px-6 py-2.5 rounded-full bg-[#C5DC57] text-black font-semibold text-xs transition-transform active:scale-95 cursor-pointer shadow-lg"
+        className="px-6 py-2.5 rounded-full bg-[#2563eb] text-white font-semibold text-xs transition-transform active:scale-95 cursor-pointer shadow-lg shadow-blue-600/20"
       >
         Geklickt: {count}x
       </button>
@@ -821,10 +821,10 @@ Erkläre kurz, was du gebaut hast.`
               <div className="flex-1 overflow-y-auto px-4 sm:px-6 space-y-4 no-scrollbar pb-4">
                 {(!selectedCodebase.messages || selectedCodebase.messages.length === 0) ? (
                   <div className="py-14 sm:py-16 flex flex-col items-center justify-center text-center relative px-4">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-[#C5DC57]/20 rounded-full blur-3xl pointer-events-none -z-10" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-blue-600/20 rounded-full blur-3xl pointer-events-none -z-10" />
 
                     <div className="relative group mb-4">
-                      <div className="absolute inset-0 rounded-3xl bg-[#C5DC57]/35 blur-2xl group-hover:bg-[#C5DC57]/50 transition-all pointer-events-none" />
+                      <div className="absolute inset-0 rounded-3xl bg-blue-600/35 blur-2xl group-hover:bg-blue-500/50 transition-all pointer-events-none" />
                       <DandeliousLogo className="w-16 h-16 sm:w-20 sm:h-20 shadow-2xl relative z-10" variant="badge" />
                     </div>
 
@@ -839,7 +839,7 @@ Erkläre kurz, was du gebaut hast.`
                   <div className="space-y-4 w-full pt-2">
                     {selectedCodebase.messages.map((msg, mIdx) => (
                       <div
-                        key={msg.id || mIdx}
+                        key={`codebase-msg-${msg.id || mIdx}-${mIdx}`}
                         className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                       >
                         <div
@@ -857,7 +857,7 @@ Erkläre kurz, was du gebaut hast.`
                               {msg.codeBlocks.map((blk, bIdx) => (
                                 <div key={bIdx} className="bg-black/60 rounded-xl p-2.5 border border-white/10 font-mono text-xs">
                                   <div className="flex items-center justify-between text-[11px] text-neutral-400 mb-1.5">
-                                    <span className="text-[#C5DC57] font-semibold">{blk.filename || 'Code'}</span>
+                                    <span className="text-[#3b82f6] font-semibold">{blk.filename || 'Code'}</span>
                                     <button
                                       type="button"
                                       onClick={() => {
@@ -948,7 +948,7 @@ Erkläre kurz, was du gebaut hast.`
 
                     {isGenerating ? (
                       <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-neutral-300 shrink-0">
-                        <RefreshCw className="w-5 h-5 animate-spin text-[#C5DC57]" />
+                        <RefreshCw className="w-5 h-5 animate-spin text-[#3b82f6]" />
                       </div>
                     ) : (
                       <motion.button
@@ -963,7 +963,7 @@ Erkläre kurz, was du gebaut hast.`
                         disabled={!programmingPrompt.trim()}
                         className={`w-12 h-12 rounded-full flex items-center justify-center transition-all shrink-0 shadow-[0_4px_20px_rgba(0,0,0,0.8)] ${
                           programmingPrompt.trim()
-                            ? 'bg-[#C5DC57] hover:bg-[#b8d049] text-[#0e1603] cursor-pointer'
+                            ? 'bg-[#2563eb] hover:bg-[#1d4ed8] text-white cursor-pointer'
                             : 'bg-white/10 text-neutral-500 cursor-not-allowed'
                         }`}
                         title="Absenden (Enter)"
@@ -1194,7 +1194,7 @@ Erkläre kurz, was du gebaut hast.`
               {/* Header */}
               <div className="h-14 border-b border-white/10 px-5 flex items-center justify-between shrink-0 bg-white/5">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <FileCode className="w-5 h-5 text-[#C5DC57]" />
+                  <FileCode className="w-5 h-5 text-[#3b82f6]" />
                   <span className="font-semibold text-sm truncate">{viewingFile.name}</span>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-black/40 text-neutral-400 uppercase">
                     {viewingFile.language}

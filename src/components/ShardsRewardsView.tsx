@@ -169,45 +169,45 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
             type="button"
             onClick={onBack}
             aria-label="Zurück"
-            className="w-11 h-11 rounded-full bg-[#161d14] border border-[#2b3627] flex items-center justify-center text-[#eef2e4] hover:border-[#cfe45a]/50 transition-colors cursor-pointer"
+            className="w-11 h-11 rounded-full bg-[#0c1529] border border-[#1e3568] flex items-center justify-center text-[#f1f5f9] hover:border-[#3b82f6]/50 transition-colors cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div className="flex-1 min-w-0">
             <h1
-              className="text-[22px] font-bold tracking-tight text-[#eef2e4] truncate"
+              className="text-[22px] font-bold tracking-tight text-[#f1f5f9] truncate"
               style={{ fontFamily: '"Bricolage Grotesque", sans-serif' }}
             >
               Shards & Belohnungen
             </h1>
           </div>
-          <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1e271b] border border-[#2b3627] text-xs font-semibold text-[#cfe45a]">
-            <Zap className="w-3.5 h-3.5 fill-[#cfe45a]/20" />
+          <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#132244] border border-[#1e3568] text-xs font-semibold text-[#60a5fa]">
+            <Zap className="w-3.5 h-3.5 fill-[#3b82f6]/20" />
             {state.shardsCount}
           </span>
         </header>
 
         {/* Guthaben Hero Card */}
         <section
-          className="mt-3.5 bg-[#161d14] border border-[#2b3627] rounded-[26px] p-5 relative overflow-hidden"
+          className="mt-3.5 bg-[#0c1529] border border-[#1e3568] rounded-[26px] p-5 relative overflow-hidden"
           aria-label="Shards Guthaben"
         >
           {/* Subtle Ambient Glow */}
-          <div className="absolute -right-8 -top-8 w-36 h-36 bg-[#cfe45a]/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -right-8 -top-8 w-36 h-36 bg-[#2563eb]/15 rounded-full blur-2xl pointer-events-none" />
 
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-full bg-[#1e271b] border border-[#2b3627] flex items-center justify-center text-[#cfe45a]">
-                <Zap className="w-4 h-4 fill-[#cfe45a]/30" />
+              <span className="w-8 h-8 rounded-full bg-[#132244] border border-[#1e3568] flex items-center justify-center text-[#60a5fa]">
+                <Zap className="w-4 h-4 fill-[#3b82f6]/30" />
               </span>
-              <span className="text-xs uppercase tracking-wider font-semibold text-[#9aa58f]">
+              <span className="text-xs uppercase tracking-wider font-semibold text-[#94a3b8]">
                 Aktuelles Guthaben
               </span>
             </div>
 
             {state.daysActiveCount > 1 && (
-              <span className="flex items-center gap-1 text-xs font-semibold text-[#f0b878] bg-[#2d2214] border border-[#f0b878]/30 px-2.5 py-0.5 rounded-full">
-                <Flame className="w-3.5 h-3.5 text-[#f0b878] fill-[#f0b878]/20" />
+              <span className="flex items-center gap-1 text-xs font-semibold text-[#60a5fa] bg-[#132244] border border-[#3b82f6]/30 px-2.5 py-0.5 rounded-full">
+                <Flame className="w-3.5 h-3.5 text-[#60a5fa] fill-[#3b82f6]/20" />
                 {state.daysActiveCount} Tage Serie
               </span>
             )}
@@ -215,27 +215,27 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
 
           <div className="flex items-baseline gap-2.5">
             <span
-              className="text-[40px] font-bold text-[#cfe45a] leading-none"
+              className="text-[40px] font-bold text-[#3b82f6] leading-none"
               style={{ fontFamily: '"Bricolage Grotesque", sans-serif' }}
             >
               {state.shardsCount}
             </span>
-            <span className="text-base text-[#9aa58f] font-medium">Shards gesammelt</span>
+            <span className="text-base text-[#94a3b8] font-medium">Shards gesammelt</span>
           </div>
 
-          <p className="text-xs text-[#9aa58f] mt-1.5 leading-relaxed">
+          <p className="text-xs text-[#94a3b8] mt-1.5 leading-relaxed">
             Sammle Shards durch tägliche Besuche und Unterhaltungen. Löse sie gegen sofortige Limit-Wiederherstellungen und Extras ein.
           </p>
 
           {/* Progress Bar towards 50 milestone */}
-          <div className="mt-4 pt-3 border-t border-[#2b3627]">
-            <div className="flex justify-between items-center text-xs text-[#9aa58f] mb-1.5">
+          <div className="mt-4 pt-3 border-t border-[#1e3568]">
+            <div className="flex justify-between items-center text-xs text-[#94a3b8] mb-1.5">
               <span>Etappenziel (50 Shards)</span>
-              <span className="font-semibold text-[#eef2e4]">{state.shardsCount} / 50</span>
+              <span className="font-semibold text-[#f1f5f9]">{state.shardsCount} / 50</span>
             </div>
-            <div className="h-2 rounded-full bg-[#1e271b] overflow-hidden">
+            <div className="h-2 rounded-full bg-[#132244] overflow-hidden">
               <div 
-                className="h-full rounded-full bg-[#cfe45a] transition-all duration-500 ease-out"
+                className="h-full rounded-full bg-[#3b82f6] shadow-[0_0_12px_rgba(59,130,246,0.6)] transition-all duration-500 ease-out"
                 style={{ width: `${goalProgress}%` }}
               />
             </div>
@@ -243,35 +243,35 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
 
           {/* Daily Reward Claim CTA */}
           {canClaimDaily ? (
-            <div className="mt-4 p-3.5 rounded-[16px] bg-[#1e271b] border border-[#cfe45a]/30 flex items-center justify-between gap-3">
+            <div className="mt-4 p-3.5 rounded-[16px] bg-[#132244] border border-[#3b82f6]/30 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 rounded-full bg-[#cfe45a] text-[#1a2307] flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-full bg-[#2563eb] text-white flex items-center justify-center shrink-0 shadow-md shadow-[#2563eb]/20">
                   <Gift className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-xs font-bold text-[#eef2e4]">Tägliche Belohnung bereit</div>
-                  <div className="text-[11px] text-[#cfe45a] font-medium">+2 Shards kostenlos abholen</div>
+                  <div className="text-xs font-bold text-[#f1f5f9]">Tägliche Belohnung bereit</div>
+                  <div className="text-[11px] text-[#60a5fa] font-medium">+2 Shards kostenlos abholen</div>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={handleClaimDaily}
-                className="px-3.5 py-1.5 rounded-full bg-[#cfe45a] text-[#1a2307] text-xs font-bold hover:bg-[#b4cb4b] active:scale-95 transition-all cursor-pointer shrink-0 shadow-sm"
+                className="px-3.5 py-1.5 rounded-full bg-[#2563eb] text-white text-xs font-bold hover:bg-[#1d4ed8] active:scale-95 transition-all cursor-pointer shrink-0 shadow-sm"
               >
                 Einsammeln
               </button>
             </div>
           ) : (
-            <div className="mt-3.5 flex items-center gap-2 text-[11px] text-[#9aa58f]">
-              <Check className="w-3.5 h-3.5 text-[#cfe45a]" />
+            <div className="mt-3.5 flex items-center gap-2 text-[11px] text-[#94a3b8]">
+              <Check className="w-3.5 h-3.5 text-[#3b82f6]" />
               <span>Heutige +2 Shards bereits eingesammelt. Neuer Bonus ab Mitternacht!</span>
             </div>
           )}
 
           {/* Active Limit Boost Banner if applicable */}
           {isBoostActive && (
-            <div className="mt-3 p-3 rounded-[16px] bg-[#cfe45a]/10 border border-[#cfe45a]/30 flex items-center gap-2.5 text-xs text-[#cfe45a]">
-              <Clock className="w-4 h-4 shrink-0" />
+            <div className="mt-3 p-3 rounded-[16px] bg-[#2563eb]/15 border border-[#3b82f6]/30 flex items-center gap-2.5 text-xs text-[#60a5fa]">
+              <Clock className="w-4 h-4 shrink-0 text-[#3b82f6]" />
               <div className="flex-1 min-w-0">
                 <span className="font-bold">Limit-Boost aktiv:</span> Noch ca. {boostRemainingHours} Stunden gültig.
               </div>
@@ -281,7 +281,7 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
 
         {/* Segment Tabs Navigation */}
         <nav
-          className="mt-5 grid grid-cols-3 gap-1 bg-[#161d14] border border-[#2b3627] rounded-[16px] p-1"
+          className="mt-5 grid grid-cols-3 gap-1 bg-[#0c1529] border border-[#1e3568] rounded-[16px] p-1"
           aria-label="Bereiche"
         >
           <button
@@ -292,8 +292,8 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
             }}
             className={`min-h-[40px] rounded-[12px] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'rewards'
-                ? 'bg-[#cfe45a] text-[#1a2307] shadow-sm font-bold'
-                : 'text-[#9aa58f] hover:text-[#eef2e4]'
+                ? 'bg-[#2563eb] text-white shadow-sm font-bold'
+                : 'text-[#94a3b8] hover:text-[#f1f5f9]'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -307,8 +307,8 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
             }}
             className={`min-h-[40px] rounded-[12px] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'earn'
-                ? 'bg-[#cfe45a] text-[#1a2307] shadow-sm font-bold'
-                : 'text-[#9aa58f] hover:text-[#eef2e4]'
+                ? 'bg-[#2563eb] text-white shadow-sm font-bold'
+                : 'text-[#94a3b8] hover:text-[#f1f5f9]'
             }`}
           >
             <Zap className="w-3.5 h-3.5" />
@@ -322,8 +322,8 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
             }}
             className={`min-h-[40px] rounded-[12px] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'history'
-                ? 'bg-[#cfe45a] text-[#1a2307] shadow-sm font-bold'
-                : 'text-[#9aa58f] hover:text-[#eef2e4]'
+                ? 'bg-[#2563eb] text-white shadow-sm font-bold'
+                : 'text-[#94a3b8] hover:text-[#f1f5f9]'
             }`}
           >
             <History className="w-3.5 h-3.5" />
@@ -335,25 +335,25 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
         {activeTab === 'rewards' && (
           <div className="mt-5 space-y-5">
             <div>
-              <h2 className="text-xs uppercase tracking-wider text-[#9aa58f] font-semibold mb-2.5 px-1">
+              <h2 className="text-xs uppercase tracking-wider text-[#94a3b8] font-semibold mb-2.5 px-1">
                 Nutzungslimit-Boosts
               </h2>
 
               <div className="space-y-2.5">
                 {/* 10 Shards Quick Boost */}
-                <div className="bg-[#161d14] border border-[#2b3627] rounded-[22px] p-4 flex items-center justify-between gap-3 hover:border-[#cfe45a]/30 transition-colors">
+                <div className="bg-[#0c1529] border border-[#1e3568] rounded-[22px] p-4 flex items-center justify-between gap-3 hover:border-[#3b82f6]/30 transition-colors">
                   <div className="flex items-start gap-3 min-w-0">
-                    <div className="w-10 h-10 rounded-[14px] bg-[#1e271b] border border-[#2b3627] flex items-center justify-center text-[#cfe45a] shrink-0 mt-0.5">
-                      <Zap className="w-5 h-5 fill-[#cfe45a]/20" />
+                    <div className="w-10 h-10 rounded-[14px] bg-[#132244] border border-[#1e3568] flex items-center justify-center text-[#60a5fa] shrink-0 mt-0.5">
+                      <Zap className="w-5 h-5 fill-[#3b82f6]/20" />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-sm text-[#eef2e4]">Sofort-Boost</span>
-                        <span className="px-2 py-0.5 rounded-full bg-[#cfe45a]/10 border border-[#cfe45a]/30 text-[10px] font-bold text-[#cfe45a]">
+                        <span className="font-bold text-sm text-[#f1f5f9]">Sofort-Boost</span>
+                        <span className="px-2 py-0.5 rounded-full bg-[#2563eb]/20 border border-[#3b82f6]/40 text-[10px] font-bold text-[#60a5fa]">
                           Beliebt
                         </span>
                       </div>
-                      <p className="text-xs text-[#9aa58f] mt-0.5 leading-relaxed">
+                      <p className="text-xs text-[#94a3b8] mt-0.5 leading-relaxed">
                         Verdoppelt dein verfügbares Kontingent sofort für 24 Stunden.
                       </p>
                     </div>
@@ -365,8 +365,8 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
                     disabled={state.shardsCount < 10}
                     className={`px-4 py-2 rounded-full text-xs font-bold shrink-0 transition-all cursor-pointer ${
                       state.shardsCount >= 10
-                        ? 'bg-[#cfe45a] text-[#1a2307] hover:bg-[#b4cb4b] active:scale-95 shadow-sm'
-                        : 'bg-[#1e271b] text-[#9aa58f] opacity-40 cursor-not-allowed'
+                        ? 'bg-[#2563eb] text-white hover:bg-[#1d4ed8] active:scale-95 shadow-sm'
+                        : 'bg-[#132244] text-[#94a3b8] opacity-40 cursor-not-allowed'
                     }`}
                   >
                     10 Shards
@@ -379,15 +379,15 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
                   return (
                     <div
                       key={tier.shardsRequired}
-                      className="bg-[#161d14] border border-[#2b3627] rounded-[22px] p-4 flex items-center justify-between gap-3 hover:border-[#cfe45a]/30 transition-colors"
+                      className="bg-[#0c1529] border border-[#1e3568] rounded-[22px] p-4 flex items-center justify-between gap-3 hover:border-[#3b82f6]/30 transition-colors"
                     >
                       <div className="flex items-start gap-3 min-w-0">
-                        <div className="w-10 h-10 rounded-[14px] bg-[#1e271b] border border-[#2b3627] flex items-center justify-center text-[#cfe45a] shrink-0 mt-0.5">
+                        <div className="w-10 h-10 rounded-[14px] bg-[#132244] border border-[#1e3568] flex items-center justify-center text-[#60a5fa] shrink-0 mt-0.5">
                           <Sparkles className="w-5 h-5" />
                         </div>
                         <div className="min-w-0">
-                          <div className="font-bold text-sm text-[#eef2e4]">{tier.title}</div>
-                          <p className="text-xs text-[#9aa58f] mt-0.5 leading-relaxed">
+                          <div className="font-bold text-sm text-[#f1f5f9]">{tier.title}</div>
+                          <p className="text-xs text-[#94a3b8] mt-0.5 leading-relaxed">
                             Stellt +{tier.limitPercentRecovery}% deines Tageslimits sofort wieder her.
                           </p>
                         </div>
@@ -399,8 +399,8 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
                         disabled={!canAfford}
                         className={`px-4 py-2 rounded-full text-xs font-bold shrink-0 transition-all cursor-pointer ${
                           canAfford
-                            ? 'bg-[#cfe45a] text-[#1a2307] hover:bg-[#b4cb4b] active:scale-95 shadow-sm'
-                            : 'bg-[#1e271b] text-[#9aa58f] opacity-40 cursor-not-allowed'
+                            ? 'bg-[#2563eb] text-white hover:bg-[#1d4ed8] active:scale-95 shadow-sm'
+                            : 'bg-[#132244] text-[#94a3b8] opacity-40 cursor-not-allowed'
                         }`}
                       >
                         {tier.shardsRequired} Shards
@@ -413,7 +413,7 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
 
             {/* Exklusive Extras */}
             <div>
-              <h2 className="text-xs uppercase tracking-wider text-[#9aa58f] font-semibold mb-2.5 px-1">
+              <h2 className="text-xs uppercase tracking-wider text-[#94a3b8] font-semibold mb-2.5 px-1">
                 Exklusive Upgrades & Themes
               </h2>
 
@@ -425,31 +425,31 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
                   return (
                     <div
                       key={reward.id}
-                      className="bg-[#161d14] border border-[#2b3627] rounded-[22px] p-4 flex items-center justify-between gap-3 hover:border-[#cfe45a]/30 transition-colors"
+                      className="bg-[#0c1529] border border-[#1e3568] rounded-[22px] p-4 flex items-center justify-between gap-3 hover:border-[#3b82f6]/30 transition-colors"
                     >
                       <div className="flex items-start gap-3 min-w-0">
-                        <div className="w-10 h-10 rounded-[14px] bg-[#1e271b] border border-[#2b3627] flex items-center justify-center text-[#cfe45a] shrink-0 mt-0.5">
+                        <div className="w-10 h-10 rounded-[14px] bg-[#132244] border border-[#1e3568] flex items-center justify-center text-[#60a5fa] shrink-0 mt-0.5">
                           {reward.icon === 'palette' && <Palette className="w-5 h-5" />}
                           {reward.icon === 'sparkles' && <Sparkles className="w-5 h-5" />}
                           {reward.icon === 'compass' && <Compass className="w-5 h-5" />}
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="font-bold text-sm text-[#eef2e4]">{reward.title}</span>
+                            <span className="font-bold text-sm text-[#f1f5f9]">{reward.title}</span>
                             {isUnlocked && (
-                              <span className="px-2 py-0.5 rounded-full bg-[#cfe45a]/10 border border-[#cfe45a]/30 text-[10px] font-bold text-[#cfe45a]">
+                              <span className="px-2 py-0.5 rounded-full bg-[#2563eb]/20 border border-[#3b82f6]/40 text-[10px] font-bold text-[#60a5fa]">
                                 Freigeschaltet
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-[#9aa58f] mt-0.5 leading-relaxed">
+                          <p className="text-xs text-[#94a3b8] mt-0.5 leading-relaxed">
                             {reward.desc}
                           </p>
                         </div>
                       </div>
 
                       {isUnlocked ? (
-                        <div className="w-8 h-8 rounded-full bg-[#1e271b] text-[#cfe45a] flex items-center justify-center shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-[#132244] text-[#60a5fa] flex items-center justify-center shrink-0">
                           <Check className="w-4 h-4 stroke-[2.5]" />
                         </div>
                       ) : (
@@ -459,8 +459,8 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
                           disabled={!canAfford}
                           className={`px-4 py-2 rounded-full text-xs font-bold shrink-0 transition-all cursor-pointer ${
                             canAfford
-                              ? 'bg-[#cfe45a] text-[#1a2307] hover:bg-[#b4cb4b] active:scale-95 shadow-sm'
-                              : 'bg-[#1e271b] text-[#9aa58f] opacity-40 cursor-not-allowed'
+                              ? 'bg-[#2563eb] text-white hover:bg-[#1d4ed8] active:scale-95 shadow-sm'
+                              : 'bg-[#132244] text-[#94a3b8] opacity-40 cursor-not-allowed'
                           }`}
                         >
                           {reward.cost} Shards
@@ -477,60 +477,60 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
         {/* TAB CONTENT 2: SHARDS VERDIENEN */}
         {activeTab === 'earn' && (
           <div className="mt-5 space-y-3">
-            <h2 className="text-xs uppercase tracking-wider text-[#9aa58f] font-semibold mb-2.5 px-1">
+            <h2 className="text-xs uppercase tracking-wider text-[#94a3b8] font-semibold mb-2.5 px-1">
               So sammelst du Shards
             </h2>
 
             {/* Täglicher Login */}
-            <div className="bg-[#161d14] border border-[#2b3627] rounded-[22px] p-4 flex items-center justify-between gap-3">
+            <div className="bg-[#0c1529] border border-[#1e3568] rounded-[22px] p-4 flex items-center justify-between gap-3">
               <div className="flex items-start gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-[14px] bg-[#1e271b] border border-[#2b3627] flex items-center justify-center text-[#cfe45a] shrink-0 mt-0.5">
-                  <Flame className="w-5 h-5 fill-[#cfe45a]/20" />
+                <div className="w-10 h-10 rounded-[14px] bg-[#132244] border border-[#1e3568] flex items-center justify-center text-[#60a5fa] shrink-0 mt-0.5">
+                  <Flame className="w-5 h-5 fill-[#3b82f6]/20" />
                 </div>
                 <div className="min-w-0">
-                  <div className="font-bold text-sm text-[#eef2e4]">Täglicher Besuch</div>
-                  <p className="text-xs text-[#9aa58f] mt-0.5 leading-relaxed">
+                  <div className="font-bold text-sm text-[#f1f5f9]">Täglicher Besuch</div>
+                  <p className="text-xs text-[#94a3b8] mt-0.5 leading-relaxed">
                     Öffne Dandelious jeden Kalendertag für deine Aktivitätsserie.
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full bg-[#1e271b] border border-[#2b3627] text-xs font-bold text-[#cfe45a] shrink-0">
+              <span className="px-3 py-1 rounded-full bg-[#132244] border border-[#1e3568] text-xs font-bold text-[#60a5fa] shrink-0">
                 +2 Shards
               </span>
             </div>
 
             {/* Chat & Prompts */}
-            <div className="bg-[#161d14] border border-[#2b3627] rounded-[22px] p-4 flex items-center justify-between gap-3">
+            <div className="bg-[#0c1529] border border-[#1e3568] rounded-[22px] p-4 flex items-center justify-between gap-3">
               <div className="flex items-start gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-[14px] bg-[#1e271b] border border-[#2b3627] flex items-center justify-center text-[#cfe45a] shrink-0 mt-0.5">
+                <div className="w-10 h-10 rounded-[14px] bg-[#132244] border border-[#1e3568] flex items-center justify-center text-[#60a5fa] shrink-0 mt-0.5">
                   <MessageSquare className="w-5 h-5" />
                 </div>
                 <div className="min-w-0">
-                  <div className="font-bold text-sm text-[#eef2e4]">Fragen & Recherchen</div>
-                  <p className="text-xs text-[#9aa58f] mt-0.5 leading-relaxed">
+                  <div className="font-bold text-sm text-[#f1f5f9]">Fragen & Recherchen</div>
+                  <p className="text-xs text-[#94a3b8] mt-0.5 leading-relaxed">
                     Sende Prompts und nutze die Deep Research Features.
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full bg-[#1e271b] border border-[#2b3627] text-xs font-bold text-[#cfe45a] shrink-0">
+              <span className="px-3 py-1 rounded-full bg-[#132244] border border-[#1e3568] text-xs font-bold text-[#60a5fa] shrink-0">
                 +1 pro 10
               </span>
             </div>
 
             {/* Erfolge abschließen */}
-            <div className="bg-[#161d14] border border-[#2b3627] rounded-[22px] p-4 flex items-center justify-between gap-3">
+            <div className="bg-[#0c1529] border border-[#1e3568] rounded-[22px] p-4 flex items-center justify-between gap-3">
               <div className="flex items-start gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-[14px] bg-[#1e271b] border border-[#2b3627] flex items-center justify-center text-[#cfe45a] shrink-0 mt-0.5">
+                <div className="w-10 h-10 rounded-[14px] bg-[#132244] border border-[#1e3568] flex items-center justify-center text-[#60a5fa] shrink-0 mt-0.5">
                   <Trophy className="w-5 h-5" />
                 </div>
                 <div className="min-w-0">
-                  <div className="font-bold text-sm text-[#eef2e4]">Erfolge freischalten</div>
-                  <p className="text-xs text-[#9aa58f] mt-0.5 leading-relaxed">
+                  <div className="font-bold text-sm text-[#f1f5f9]">Erfolge freischalten</div>
+                  <p className="text-xs text-[#94a3b8] mt-0.5 leading-relaxed">
                     Entdecke versteckte Meilensteine, Studios und Funktionen.
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full bg-[#1e271b] border border-[#2b3627] text-xs font-bold text-[#cfe45a] shrink-0">
+              <span className="px-3 py-1 rounded-full bg-[#132244] border border-[#1e3568] text-xs font-bold text-[#60a5fa] shrink-0">
                 bis zu +10
               </span>
             </div>
@@ -543,7 +543,7 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
                   playSound('click', soundEnabled);
                   onOpenAchievements();
                 }}
-                className="w-full mt-2 p-3.5 rounded-[18px] bg-[#1e271b] border border-[#2b3627] hover:border-[#cfe45a]/50 text-xs font-bold text-[#cfe45a] flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="w-full mt-2 p-3.5 rounded-[18px] bg-[#132244] border border-[#1e3568] hover:border-[#3b82f6]/50 text-xs font-bold text-[#60a5fa] flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <Trophy className="w-4 h-4" />
                 <span>Alle Erfolge ansehen</span>
@@ -556,7 +556,7 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
         {/* TAB CONTENT 3: HISTORIE */}
         {activeTab === 'history' && (
           <div className="mt-5 space-y-3">
-            <h2 className="text-xs uppercase tracking-wider text-[#9aa58f] font-semibold mb-2.5 px-1">
+            <h2 className="text-xs uppercase tracking-wider text-[#94a3b8] font-semibold mb-2.5 px-1">
               Letzte Transaktionen
             </h2>
 
@@ -567,23 +567,23 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
                   return (
                     <div
                       key={idx}
-                      className="bg-[#161d14] border border-[#2b3627] rounded-[18px] p-3.5 flex items-center justify-between gap-3"
+                      className="bg-[#0c1529] border border-[#1e3568] rounded-[18px] p-3.5 flex items-center justify-between gap-3"
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <span
                           className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
                             isPositive
-                              ? 'bg-[#cfe45a]/15 text-[#cfe45a] border border-[#cfe45a]/30'
-                              : 'bg-[#1e271b] text-[#9aa58f] border border-[#2b3627]'
+                              ? 'bg-[#2563eb]/20 text-[#60a5fa] border border-[#3b82f6]/40'
+                              : 'bg-[#132244] text-[#94a3b8] border border-[#1e3568]'
                           }`}
                         >
                           {isPositive ? '+' : '-'}
                         </span>
                         <div className="min-w-0">
-                          <div className="text-xs font-semibold text-[#eef2e4] truncate">
+                          <div className="text-xs font-semibold text-[#f1f5f9] truncate">
                             {log.reason}
                           </div>
-                          <div className="text-[11px] text-[#9aa58f] mt-0.5">
+                          <div className="text-[11px] text-[#94a3b8] mt-0.5">
                             {log.date}
                           </div>
                         </div>
@@ -591,7 +591,7 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
 
                       <span
                         className={`text-xs font-mono font-bold shrink-0 ${
-                          isPositive ? 'text-[#cfe45a]' : 'text-[#eef2e4]'
+                          isPositive ? 'text-[#3b82f6]' : 'text-[#f1f5f9]'
                         }`}
                       >
                         {isPositive ? `+${log.change}` : log.change} Shards
@@ -601,9 +601,9 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
                 })}
               </div>
             ) : (
-              <div className="bg-[#161d14] border border-[#2b3627] rounded-[22px] p-8 text-center">
-                <History className="w-8 h-8 text-[#9aa58f] mx-auto mb-2 opacity-50" />
-                <p className="text-xs text-[#9aa58f]">
+              <div className="bg-[#0c1529] border border-[#1e3568] rounded-[22px] p-8 text-center">
+                <History className="w-8 h-8 text-[#94a3b8] mx-auto mb-2 opacity-50" />
+                <p className="text-xs text-[#94a3b8]">
                   Noch keine Transaktionen aufgezeichnet. Starte mit täglichen Logins oder Prompts!
                 </p>
               </div>
@@ -617,12 +617,12 @@ export const ShardsRewardsView: React.FC<ShardsRewardsViewProps> = ({
             <div
               className={`px-4 py-2.5 rounded-full text-xs font-semibold shadow-lg flex items-center gap-2 border ${
                 toastType === 'success'
-                  ? 'bg-[#161d14] border-[#cfe45a] text-[#cfe45a]'
-                  : 'bg-[#161d14] border-red-500 text-red-400'
+                  ? 'bg-[#0c1529] border-[#3b82f6] text-[#60a5fa]'
+                  : 'bg-[#0c1529] border-red-500 text-red-400'
               }`}
             >
               {toastType === 'success' ? (
-                <Check className="w-4 h-4 text-[#cfe45a]" />
+                <Check className="w-4 h-4 text-[#3b82f6]" />
               ) : (
                 <AlertCircle className="w-4 h-4 text-red-400" />
               )}

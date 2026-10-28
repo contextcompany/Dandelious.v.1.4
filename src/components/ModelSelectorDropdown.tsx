@@ -15,6 +15,7 @@ interface ModelSelectorDropdownProps {
   soundEnabled?: boolean;
   userTier?: SubscriptionTier;
   onOpenSettings?: () => void;
+  variant?: 'header' | 'composer';
 }
 
 const TIER_HIERARCHY: Record<string, number> = {
@@ -44,46 +45,91 @@ export const ModelSelectorDropdown: React.FC<ModelSelectorDropdownProps> = ({
   onClose,
   soundEnabled = true,
   userTier = 'Kostenlos',
-  onOpenSettings
+  onOpenSettings,
+  variant = 'composer'
 }) => {
   // Find current selected model or fallback to Dandelious Lite
   const currentModel =
     GEMMA_MODELS.find((m) => m.id === selectedModelId) || GEMMA_MODELS[0];
 
+  const shortName = currentModel.name.replace(/^Dandelious\s*/i, '') || currentModel.name;
+
   return (
     <div className="relative inline-block text-left" id="model-selector-wrapper">
-      {/* Trigger Button (e.g. "Dandelious Lite ⌵") */}
-      <button
-        type="button"
-        onClick={() => {
-          playSound('click', soundEnabled);
-          onToggle();
-        }}
-        className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#242426] hover:bg-[#2c2c2e] text-white font-normal text-[15.5px] sm:text-[16.5px] transition-all cursor-pointer select-none border border-white/5 shadow-md active:scale-95"
-        id="model-selector-trigger"
-      >
-        <span className="tracking-tight">{currentModel.name}</span>
-        <ChevronDown
-          className={`w-4 h-4 text-neutral-300 transition-transform duration-200 ${
-            isOpen ? 'rotate-180' : ''
-          }`}
-        />
-      </button>
+      {/* Trigger Button: In composer mode matches .model inside .grp from user prototype */}
+      {variant === 'composer' ? (
+        <button
+          type="button"
+          onClick={() => {
+            playSound('click', soundEnabled);
+            onToggle();
+          }}
+          className="model"
+          id="model-selector-trigger"
+        >
+          <span>{shortName}</span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`w-3.5 h-3.5 text-neutral-300 transition-transform duration-200 ${
+              isOpen ? 'rotate-180' : ''
+            }`}
+          >
+            <path d="M5 9l7 7 7-7"/>
+          </svg>
+        </button>
+      ) : (
+        <button
+          type="button"
+          data-s="32"
+          onClick={() => {
+            playSound('click', soundEnabled);
+            onToggle();
+          }}
+          className="circle lg flex items-center gap-1.5 px-3.5 py-2 rounded-full text-white font-normal text-[15.5px] sm:text-[16.5px] transition-all cursor-pointer select-none active:scale-95"
+          id="model-selector-trigger"
+        >
+          <span className="tracking-tight">{currentModel.name}</span>
+          <ChevronDown
+            className={`w-4 h-4 text-neutral-300 transition-transform duration-200 ${
+              isOpen ? 'rotate-180' : ''
+            }`}
+          />
+        </button>
+      )}
 
       {/* Dropdown Card */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            <div className="fixed inset-0 z-40" onClick={onClose} />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.88, y: -8 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.88, y: -6 }}
-              transition={{ type: "spring", damping: 25, stiffness: 420, mass: 0.6 }}
-              style={{ transformOrigin: "top left", backgroundColor: "#000000" }}
-              className="absolute top-full left-0 mt-2.5 z-[100] w-[310px] sm:w-[330px] bg-black bg-[#000000] rounded-[28px] shadow-[0_30px_90px_rgba(0,0,0,1)] p-3 text-neutral-200 select-none border border-white/20 overflow-hidden opacity-100"
-              id="model-selector-dropdown-card"
-            >
+          <motion.div
+            key="model-dropdown-backdrop"
+            className="fixed inset-0 z-40"
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+        )}
+        {isOpen && (
+          <motion.div
+            key="model-dropdown-sheet"
+            initial={{ opacity: 0, scale: 0.88, y: variant === 'composer' ? 8 : -8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.88, y: variant === 'composer' ? 8 : -6 }}
+            transition={{ type: "spring", damping: 25, stiffness: 420, mass: 0.6 }}
+            style={{
+              transformOrigin: variant === 'composer' ? "bottom left" : "top left",
+              backgroundColor: "#000000"
+            }}
+            className={`absolute ${
+              variant === 'composer' ? 'bottom-full left-0 mb-3' : 'top-full left-0 mt-2.5'
+            } z-[100] w-[310px] sm:w-[330px] bg-black bg-[#000000] rounded-[28px] shadow-[0_30px_90px_rgba(0,0,0,1)] p-3 text-neutral-200 select-none border-0 overflow-hidden opacity-100`}
+            id="model-selector-dropdown-card"
+          >
               <LayoutGroup id="model-selector-dropdown-scope">
                 <div className="flex flex-col gap-1">
                   {GEMMA_MODELS.map((model, idx) => {
@@ -119,7 +165,7 @@ export const ModelSelectorDropdown: React.FC<ModelSelectorDropdownProps> = ({
                       {isSelected && !locked && (
                         <motion.div
                           layoutId="modelSelectorActivePill"
-                          className="absolute inset-0 bg-white/15 rounded-2xl border border-white/20 shadow-md -z-10"
+                          className="absolute inset-0 bg-white/10 rounded-2xl shadow-sm -z-10 border-0"
                           transition={{ type: "spring", stiffness: 450, damping: 30 }}
                         />
                       )}
@@ -145,7 +191,6 @@ export const ModelSelectorDropdown: React.FC<ModelSelectorDropdownProps> = ({
                 </div>
               </LayoutGroup>
             </motion.div>
-          </>
         )}
       </AnimatePresence>
     </div>

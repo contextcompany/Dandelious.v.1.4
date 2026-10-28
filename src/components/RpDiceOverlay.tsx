@@ -245,9 +245,9 @@ export const RpDiceOverlay: React.FC<RpDiceOverlayProps> = ({
 
               <button
                 onClick={() => handlePostResult(true)}
-                className="py-2 px-3 rounded-xl bg-lime-600/20 hover:bg-lime-600/30 border border-lime-400/40 text-xs font-bold text-lime-300 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
+                className="py-2 px-3 rounded-xl bg-[#4c8dff]/20 hover:bg-[#4c8dff]/30 border border-[#4c8dff]/40 text-xs font-bold text-blue-200 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
               >
-                <Bot className="w-3.5 h-3.5 text-lime-400" />
+                <Bot className="w-3.5 h-3.5 text-[#4c8dff]" />
                 <span>Posten + Dandelious KI</span>
               </button>
             </div>

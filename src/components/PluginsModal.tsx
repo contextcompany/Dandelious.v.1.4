@@ -286,13 +286,13 @@ export const PluginsModal: React.FC<PluginsModalProps> = ({
       case 'sheets':
         return <Table className={`${size} text-emerald-400`} />;
       case 'calendar':
-        return <CalendarIcon className={`${size} text-lime-400`} />;
+        return <CalendarIcon className={`${size} text-blue-400`} />;
       case 'github':
         return <Github className={`${size} text-white`} />;
       case 'onedrive':
         return <Cloud className={`${size} text-sky-300`} />;
       default:
-        return <Sparkles className={`${size} text-[#C5DC57]`} />;
+        return <Sparkles className={`${size} text-[#3b82f6]`} />;
     }
   };
 
@@ -312,7 +312,7 @@ export const PluginsModal: React.FC<PluginsModalProps> = ({
             exit={{ opacity: 0, y: -20 }}
             className="fixed top-4 left-1/2 -translate-x-1/2 z-[110] bg-neutral-900/95 backdrop-blur-md text-white text-xs font-medium px-4 py-2 rounded-full shadow-2xl flex items-center gap-2 border border-white/15 pointer-events-none"
           >
-            <Check className="w-3.5 h-3.5 text-[#C5DC57] shrink-0" />
+            <Check className="w-3.5 h-3.5 text-[#3b82f6] shrink-0" />
             <span>{toastMsg}</span>
           </motion.div>
         )}
@@ -399,7 +399,7 @@ export const PluginsModal: React.FC<PluginsModalProps> = ({
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Plugins & Cloud-Tools durchsuchen..."
-                  className="w-full bg-[#1c1c1e] sm:bg-[#202022] border border-white/10 rounded-full pl-11 pr-4 py-2.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#C5DC57] transition-all shadow-inner"
+                  className="w-full bg-[#1c1c1e] sm:bg-[#202022] border border-white/10 rounded-full pl-11 pr-4 py-2.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-blue-500 transition-all shadow-inner"
                 />
                 {searchTerm && (
                   <button
@@ -523,7 +523,7 @@ export const PluginsModal: React.FC<PluginsModalProps> = ({
                     className={`px-4 py-2 rounded-full text-xs font-semibold transition-all cursor-pointer shadow-md ${
                       connectedPlugins[selectedPlugin.id]
                         ? 'bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20'
-                        : 'bg-[#C5DC57] text-black hover:brightness-110'
+                        : 'bg-[#2563eb] text-white hover:brightness-110'
                     }`}
                   >
                     {isAuthenticating ? 'Verbinde...' : connectedPlugins[selectedPlugin.id] ? 'Deaktivieren' : 'Aktivieren'}
@@ -553,12 +553,12 @@ export const PluginsModal: React.FC<PluginsModalProps> = ({
                       className="rounded-2xl px-4 py-3 bg-[#1c1c1e] hover:bg-[#2c2c2e] border border-white/5 flex items-center justify-between transition-all cursor-pointer group shadow-sm"
                     >
                       <div className="flex items-center gap-3 min-w-0 mr-2">
-                        <Sparkles className="w-3.5 h-3.5 text-[#C5DC57] shrink-0" />
+                        <Sparkles className="w-3.5 h-3.5 text-[#3b82f6] shrink-0" />
                         <span className="text-xs text-neutral-200 group-hover:text-white font-mono truncate">
                           {prompt}
                         </span>
                       </div>
-                      <div className="flex items-center gap-1 text-[11px] text-[#C5DC57] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="flex items-center gap-1 text-[11px] text-[#3b82f6] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                         <span>Ausführen</span>
                         <Send className="w-3 h-3" />
                       </div>
@@ -582,8 +582,8 @@ export const PluginsModal: React.FC<PluginsModalProps> = ({
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl bg-[#C5DC57]/20 flex items-center justify-center">
-                      <Zap className="w-5 h-5 text-[#C5DC57]" />
+                    <div className="w-9 h-9 rounded-xl bg-blue-600/20 flex items-center justify-center">
+                      <Zap className="w-5 h-5 text-[#3b82f6]" />
                     </div>
                     <h3 className="text-lg font-bold">Dandelious Plugins</h3>
                   </div>

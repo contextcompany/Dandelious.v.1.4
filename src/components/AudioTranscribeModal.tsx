@@ -321,13 +321,13 @@ export const AudioTranscribeModal: React.FC<AudioTranscribeModalProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between pb-4 border-b border-white/10">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-lime-500/15 border border-lime-500/30 flex items-center justify-center text-lime-400 shadow-md">
+              <div className="w-10 h-10 rounded-2xl bg-lime-500/15 border border-lime-500/30 flex items-center justify-center text-blue-400 shadow-md">
                 <Mic className="w-5 h-5" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <h2 className="text-lg font-bold text-white tracking-tight">Audio Transkription</h2>
-                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-lime-950/80 border border-lime-400/40 text-lime-300">
+                  <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-lime-950/80 border border-lime-400/40 text-blue-300">
                     gemini-3.5-transcribe
                   </span>
                 </div>
@@ -385,7 +385,7 @@ export const AudioTranscribeModal: React.FC<AudioTranscribeModalProps> = ({
 
             {/* Language Selector */}
             <div className="flex items-center gap-2">
-              <Languages className="w-4 h-4 text-lime-400 shrink-0" />
+              <Languages className="w-4 h-4 text-blue-400 shrink-0" />
               <select
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
@@ -427,7 +427,7 @@ export const AudioTranscribeModal: React.FC<AudioTranscribeModalProps> = ({
                   className={`relative z-10 w-20 h-20 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-xl ${
                     isRecording
                       ? 'bg-red-600 hover:bg-red-500 text-white ring-4 ring-red-500/30'
-                      : 'bg-lime-600 hover:bg-lime-500 text-white ring-4 ring-purple-500/20 hover:scale-105'
+                      : 'bg-blue-600 hover:bg-blue-500 text-white ring-4 ring-purple-500/20 hover:scale-105'
                   } disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                   {isRecording ? (
@@ -464,7 +464,7 @@ export const AudioTranscribeModal: React.FC<AudioTranscribeModalProps> = ({
                         height: `${Math.max(6, Math.round(h * audioVolume))}px`
                       }}
                       transition={{ duration: 0.1 }}
-                      className="w-1.5 bg-gradient-to-t from-lime-600 to-lime-300 rounded-full"
+                      className="w-1.5 bg-gradient-to-t from-blue-600 to-blue-300 rounded-full"
                     />
                   ))}
                 </div>
@@ -476,7 +476,7 @@ export const AudioTranscribeModal: React.FC<AudioTranscribeModalProps> = ({
           {mode === 'upload' && (
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="p-8 rounded-3xl bg-white/[0.02] border-2 border-dashed border-lime-500/30 hover:border-lime-400/50 flex flex-col items-center justify-center text-center cursor-pointer transition-all hover:bg-lime-500/5 group space-y-3"
+              className="p-8 rounded-3xl bg-white/[0.02] border-2 border-dashed border-blue-500/30 hover:border-blue-400/50 flex flex-col items-center justify-center text-center cursor-pointer transition-all hover:bg-blue-500/5 group space-y-3"
             >
               <input
                 ref={fileInputRef}
@@ -485,7 +485,7 @@ export const AudioTranscribeModal: React.FC<AudioTranscribeModalProps> = ({
                 className="hidden"
                 onChange={handleFileUpload}
               />
-              <div className="w-14 h-14 rounded-2xl bg-lime-500/10 border border-lime-500/20 text-lime-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-blue-500/15 border border-blue-500/20 text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <UploadCloud className="w-7 h-7" />
               </div>
               <div>
@@ -501,13 +501,13 @@ export const AudioTranscribeModal: React.FC<AudioTranscribeModalProps> = ({
 
           {/* Transcribing Indicator */}
           {isTranscribing && (
-            <div className="p-4 rounded-2xl bg-lime-950/40 border border-lime-500/30 flex items-center gap-3">
-              <RefreshCw className="w-5 h-5 text-lime-400 animate-spin shrink-0" />
+            <div className="p-4 rounded-2xl bg-blue-950/40 border border-blue-500/30 flex items-center gap-3">
+              <RefreshCw className="w-5 h-5 text-blue-400 animate-spin shrink-0" />
               <div className="space-y-0.5">
                 <span className="text-xs font-bold text-white block">
                   Transkribiere mit gemini-3.5-transcribe...
                 </span>
-                <span className="text-[11px] text-lime-300">
+                <span className="text-[11px] text-blue-300">
                   Audio wird analysiert und präzise in Text gewandelt
                 </span>
               </div>
@@ -527,7 +527,7 @@ export const AudioTranscribeModal: React.FC<AudioTranscribeModalProps> = ({
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-neutral-300 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-lime-400" />
+                  <Sparkles className="w-3.5 h-3.5 text-blue-400" />
                   Transkript ({transcript.split(/\s+/).filter(Boolean).length} Wörter)
                 </span>
 
@@ -589,7 +589,7 @@ export const AudioTranscribeModal: React.FC<AudioTranscribeModalProps> = ({
                   <button
                     type="button"
                     onClick={handleInsert}
-                    className="px-5 py-2.5 rounded-xl bg-lime-600 hover:bg-lime-500 text-white text-xs font-bold transition-all shadow-lg hover:shadow-lime-600/30 flex items-center gap-2 cursor-pointer"
+                    className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-lg hover:shadow-blue-600/30 flex items-center gap-2 cursor-pointer"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>In Chat einfügen</span>
@@ -602,7 +602,7 @@ export const AudioTranscribeModal: React.FC<AudioTranscribeModalProps> = ({
           {/* Audio Player if audio available */}
           {audioUrl && !isRecording && (
             <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
-              <FileAudio className="w-5 h-5 text-lime-400 shrink-0" />
+              <FileAudio className="w-5 h-5 text-blue-400 shrink-0" />
               <div className="flex-1 min-w-0">
                 <span className="text-xs text-neutral-300 font-medium truncate block">
                   {audioFileName || 'Audioaufnahme'}

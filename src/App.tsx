@@ -41,6 +41,8 @@ import { AppBootLoader } from './components/AppBootLoader';
 import { openHelpLexikon } from './utils/openHelp';
 import { GlassCapsuleDock } from './components/GlassCapsuleDock';
 import { AudioTranscribeModal } from './components/AudioTranscribeModal';
+import { FeatureIntroModal, IntroFeatureKey, hasSeenFeatureIntro } from './components/FeatureIntroModal';
+import { initLiquidGlass } from './utils/liquidGlass';
 import { generateSaphireChatResponse } from './server/saphireSynthesis';
 import { useDeviceType } from './utils/useDeviceType';
 import { playSound } from './utils/sound';
@@ -342,12 +344,43 @@ export default function App() {
     return 'chat';
   });
 
+  // First-time feature intro state (matching IMG_1233_ac1d5731.png)
+  const [activeIntroFeature, setActiveIntroFeature] = useState<IntroFeatureKey | null>(null);
+
   useEffect(() => {
     if (activeView === 'projects') checkAchievement('open_projects');
     else if (activeView === 'mediathek') checkAchievement('open_mediathek');
     else if (activeView === 'crypto') checkAchievement('open_crypto');
     else if (activeView === 'stocks' || activeView === 'aktien') checkAchievement('open_stocks');
+
+    // Automatically trigger feature intro on first-time open
+    const featureMap: Record<string, IntroFeatureKey> = {
+      image: 'image',
+      mediathek: 'mediathek',
+      video: 'video',
+      music: 'music',
+      projects: 'projects',
+      crypto: 'crypto',
+      stocks: 'stocks',
+      aktien: 'stocks',
+      releases: 'releases',
+      remote: 'remote',
+      knowledge: 'knowledge',
+      dice: 'dice',
+      code: 'code'
+    };
+    const key = featureMap[activeView];
+    if (key && !hasSeenFeatureIntro(key)) {
+      setActiveIntroFeature(key);
+    }
   }, [activeView]);
+
+  // Mount Liquid Glass refraction displacement engine
+  useEffect(() => {
+    const cleanup = initLiquidGlass();
+    return cleanup;
+  }, []);
+
   const [isAppBooting, setIsAppBooting] = useState<boolean>(false);
 
   // Shards & Activity status synchronization (starts at 0 without auto-crediting)
@@ -669,7 +702,15 @@ export default function App() {
       setOnboardingStep(9);
     }
   };
+
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  // Trigger intro when settings are opened for the first time (matching IMG_1233_ac1d5731.png)
+  useEffect(() => {
+    if (isSettingsOpen && !hasSeenFeatureIntro('settings')) {
+      setActiveIntroFeature('settings');
+    }
+  }, [isSettingsOpen]);
   const [isHelpLexiconOpen, setIsHelpLexiconOpen] = useState(false);
   const [isPluginsOpen, setIsPluginsOpen] = useState(false);
   const [installedPluginIds, setInstalledPluginIds] = useState<string[]>([]);
@@ -1246,6 +1287,59 @@ export default function App() {
       timestamp: Date.now(),
       images: userMessageImages
     };
+
+    // User prompt: "Passe an, wenn man „Erstelle ein Bild“ oder so eingibt soll die Antwort kommen dass es keine Bilder erstellen kann und nur ein LLM ist aber nicht zur Bildgenerierung fähig ist und darunter noch ein Embed damit es schöner aussieht."
+    const isImageGenRequest = (text: string): boolean => {
+      const t = text.trim().toLowerCase();
+      if (images && images.length > 0 && !t.includes('erstelle') && !t.includes('generiere') && !t.includes('bild')) {
+        return false;
+      }
+      const patterns = [
+        /(?:erstelle|generiere|zeichne|male|mach|erzeuge)\s+(?:mir\s+)?(?:ein\s+|einem\s+|das\s+)?(?:bild|foto|grafik|zeichnung|gemälde|illustration|artwork)/i,
+        /kannst\s+du\s+(?:ein\s+|mir\s+ein\s+)?(?:bild|foto|grafik)\s+(?:erstellen|generieren|zeichnen|malen|machen|erzeugen)/i,
+        /bild\s+(?:erstellen|generieren|erzeugen|zeichnen|malen)/i,
+        /foto\s+(?:erstellen|generieren|erzeugen)/i,
+        /bildgenerierung/i,
+        /^(?:erstelle|generiere|zeichne|male)\s+ein\s+bild\b/i,
+        /^(?:erstelle|generiere)\s+ein\s+foto\b/i,
+        /^(?:create|generate|draw|paint)\s+(?:an?\s+)?(?:image|picture|photo|illustration|artwork)\b/i,
+        /can\s+you\s+(?:create|generate|make)\s+(?:an?\s+)?(?:image|picture|photo)/i,
+      ];
+      return patterns.some(p => p.test(t));
+    };
+
+    if (isImageGenRequest(userText)) {
+      const clarificationText = `Ich kann leider keine Bilder erstellen. Als reines Sprachmodell (Large Language Model / LLM) bin ich auf die Analyse, Generierung und Beantwortung von Texten, Daten und Code spezialisiert, besitze aber keine integrierte Funktion zur Bildgenerierung.
+
+Wenn du möchtest, kann ich dir jedoch gerne einen hochdetaillierten Bild-Prompt für spezialisierte Bildgeneratoren wie Midjourney, Imagen 3 oder DALL-E formulieren oder du wechselst direkt in unser integriertes Bildstudio.`;
+
+      const assistantMessage: Message = {
+        id: `msg-asst-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        role: 'assistant',
+        content: clarificationText,
+        timestamp: Date.now(),
+        modelUsed: GEMMA_MODELS.find(m => m.id === selectedModel)?.name || selectedModel,
+        isStreaming: false,
+        imageGenEmbed: {
+          type: 'image_gen_unavailable',
+          originalPrompt: userText
+        }
+      };
+
+      setSessions(prev => prev.map(s => {
+        if (s.id === currentSessionId) {
+          return {
+            ...s,
+            updatedAt: Date.now(),
+            messages: [...s.messages, userMessage, assistantMessage]
+          };
+        }
+        return s;
+      }));
+
+      playSound("pop", settings.enableSoundEffects ?? true);
+      return;
+    }
 
     const assistantMessageId = `msg-asst-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
     const assistantPlaceholder: Message = {
@@ -2183,8 +2277,8 @@ export default function App() {
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-xl sm:max-w-2xl h-[78vh] max-h-[640px] bg-[#121215] border border-white/10 rounded-[28px] sm:rounded-[32px] shadow-[0_24px_70px_rgba(0,0,0,0.9)] overflow-hidden text-white relative flex flex-col font-['Plus_Jakarta_Sans']"
             >
-              {/* Soft Ambient Limettengrün Glow in Background */}
-              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-96 h-80 bg-[#C5DC57]/20 rounded-full blur-[130px] pointer-events-none -z-10" />
+              {/* Soft Ambient Dunkelblau Glow in Background */}
+              <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-96 h-80 bg-blue-600/20 rounded-full blur-[130px] pointer-events-none -z-10" />
 
               <ChatWindow
                 session={activeSession}
@@ -2364,6 +2458,14 @@ export default function App() {
 
       {/* Steam-Style Achievement Toast Notification */}
       <SteamAchievementToast />
+
+      {/* First-Time Feature Intro Modal matching IMG_1233_ac1d5731.png */}
+      <FeatureIntroModal
+        featureKey={activeIntroFeature}
+        isOpen={Boolean(activeIntroFeature)}
+        onClose={() => setActiveIntroFeature(null)}
+        soundEnabled={settings.enableSoundEffects}
+      />
 
       {/* 5-Second System Boot & Warm-Up Matrix Loader */}
       {isAppBooting && (

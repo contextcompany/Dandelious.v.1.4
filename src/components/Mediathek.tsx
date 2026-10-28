@@ -825,7 +825,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
     return parts.map((part, i) => {
       if (part.startsWith('**') && part.endsWith('**')) {
         return (
-          <span key={i} className="font-semibold text-[#C5DC57]">
+          <span key={i} className="font-semibold text-[#3b82f6]">
             {part.slice(2, -2)}
           </span>
         );
@@ -837,7 +837,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
   return (
     <div className="flex-1 flex flex-col h-full bg-transparent text-neutral-100 font-['Plus_Jakarta_Sans'] overflow-y-auto overflow-x-hidden w-full max-w-full min-w-0 no-scrollbar select-none relative">
       {/* Subtle Ambient Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-lime-900/15 rounded-full blur-[80px] pointer-events-none z-0 overflow-hidden" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-blue-900/20 rounded-full blur-[80px] pointer-events-none z-0 overflow-hidden" />
 
       {/* Top Header - ohne Trennleiste, Knöpfe zentriert, Seitenleisten-Knopf minimal weiter nach links */}
       <header className="sticky top-0 z-30 bg-transparent pl-2.5 sm:pl-3.5 pr-2.5 sm:pr-3.5 h-16 flex items-center justify-between w-full max-w-full shrink-0 relative">
@@ -877,7 +877,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                   }}
                   className={`relative px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-[13px] font-medium transition-all cursor-pointer z-10 ${
                     isHighlightCommunity
-                      ? 'ring-4 ring-[#C5DC57]/80 shadow-[0_0_25px_rgba(197,220,87,0.95)] animate-bounce bg-[#C5DC57] text-black font-bold'
+                      ? 'ring-4 ring-blue-500/80 shadow-[0_0_25px_rgba(37,99,235,0.85)] animate-bounce bg-[#2563eb] text-white font-bold'
                       : isActive ? 'text-black font-semibold' : 'text-neutral-300 hover:text-white'
                   } ${mediathekTutorialStep === 1 || mediathekTutorialStep === 2 ? 'pointer-events-none opacity-40' : ''}`}
                 >
@@ -971,7 +971,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                 }}
                 className={`rounded-full px-5 py-3.5 flex items-center justify-between transition-all group shadow-sm w-full ${
                   isHighlightDokumente
-                    ? 'bg-[#C5DC57] text-black ring-4 ring-[#C5DC57]/80 shadow-[0_0_25px_rgba(197,220,87,0.9)] animate-pulse relative z-30 cursor-pointer'
+                    ? 'bg-[#2563eb] text-white ring-4 ring-blue-500/80 shadow-[0_0_25px_rgba(37,99,235,0.85)] animate-pulse relative z-30 cursor-pointer'
                     : mediathekTutorialStep !== null
                       ? 'bg-[#242426] opacity-25 pointer-events-none'
                       : 'bg-[#242426] hover:bg-[#2c2c2e] cursor-pointer'
@@ -1031,7 +1031,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                 }}
                 className={`absolute top-5 left-5 z-30 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer shadow-lg transition-all duration-300 ease-out ${
                   mediathekTutorialStep === 2
-                    ? 'bg-[#C5DC57] text-black ring-4 ring-[#C5DC57]/80 shadow-[0_0_25px_rgba(197,220,87,0.9)] animate-pulse border-2 border-white pointer-events-auto'
+                    ? 'bg-[#2563eb] text-white ring-4 ring-blue-500/80 shadow-[0_0_25px_rgba(37,99,235,0.85)] animate-pulse border-2 border-white pointer-events-auto'
                     : `bg-[#1c1c1e]/85 backdrop-blur-md hover:bg-[#2c2c2e] text-neutral-300 hover:text-white border border-white/10 ${
                         showPopupClose 
                           ? 'opacity-100 scale-100 translate-y-0 blur-0 pointer-events-auto' 
@@ -1062,7 +1062,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                         {currentPopupConfig?.title || 'Kategorie'}
                       </h3>
                       {activeTab === 'community' && (
-                        <span className="text-[11px] font-semibold text-[#C5DC57] bg-[#C5DC57]/15 px-2.5 py-1 rounded-full border border-[#C5DC57]/25 flex items-center gap-1.5">
+                        <span className="text-[11px] font-semibold text-[#3b82f6] bg-blue-600/15 px-2.5 py-1 rounded-full border border-blue-500/30 flex items-center gap-1.5">
                           <Globe className="w-3 h-3" />
                           Community
                         </span>
@@ -1093,7 +1093,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                 </div>
                                 {activeTab === 'community' && (
                                   isOwnItem(proj) ? (
-                                    <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2.5 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                    <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2.5 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                       Von dir
                                     </span>
                                   ) : (
@@ -1103,7 +1103,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                   )
                                 )}
                                 {activeTab === 'meine' && proj.isShared && (
-                                  <span className="text-[10px] text-lime-400/90 bg-lime-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                  <span className="text-[10px] text-blue-300 bg-blue-500/15 px-2 py-0.5 rounded-full shrink-0">
                                     Freigegeben
                                   </span>
                                 )}
@@ -1145,7 +1145,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                 </div>
                                 {activeTab === 'community' && (
                                   isOwnItem(proj) ? (
-                                    <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                    <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                       Von dir
                                     </span>
                                   ) : (
@@ -1155,7 +1155,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                   )
                                 )}
                                 {activeTab === 'meine' && proj.isShared && (
-                                  <span className="text-[10px] text-lime-400/90 bg-lime-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                  <span className="text-[10px] text-blue-300 bg-blue-500/15 px-2 py-0.5 rounded-full shrink-0">
                                     Freigegeben
                                   </span>
                                 )}
@@ -1208,7 +1208,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                 </div>
                                 {activeTab === 'community' && (
                                   isOwnItem(book) ? (
-                                    <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2.5 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                    <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2.5 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                       Von dir
                                     </span>
                                   ) : (
@@ -1218,7 +1218,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                   )
                                 )}
                                 {activeTab === 'meine' && book.isShared && (
-                                  <span className="text-[10px] text-lime-400/90 bg-lime-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                  <span className="text-[10px] text-blue-300 bg-blue-500/15 px-2 py-0.5 rounded-full shrink-0">
                                     Freigegeben
                                   </span>
                                 )}
@@ -1260,7 +1260,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                 </div>
                                 {activeTab === 'community' && (
                                   isOwnItem(book) ? (
-                                    <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                    <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                       Von dir
                                     </span>
                                   ) : (
@@ -1270,7 +1270,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                   )
                                 )}
                                 {activeTab === 'meine' && book.isShared && (
-                                  <span className="text-[10px] text-lime-400/90 bg-lime-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                  <span className="text-[10px] text-blue-300 bg-blue-500/15 px-2 py-0.5 rounded-full shrink-0">
                                     Freigegeben
                                   </span>
                                 )}
@@ -1323,7 +1323,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                 </div>
                                 {activeTab === 'community' && (
                                   isOwnItem(doc) ? (
-                                    <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2.5 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                    <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2.5 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                       Von dir
                                     </span>
                                   ) : (
@@ -1333,7 +1333,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                   )
                                 )}
                                 {activeTab === 'meine' && doc.isPublished && (
-                                  <span className="text-[10px] text-lime-400/90 bg-lime-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                  <span className="text-[10px] text-blue-300 bg-blue-500/15 px-2 py-0.5 rounded-full shrink-0">
                                     Freigegeben
                                   </span>
                                 )}
@@ -1375,7 +1375,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                 </div>
                                 {activeTab === 'community' && (
                                   isOwnItem(doc) ? (
-                                    <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                    <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                       Von dir
                                     </span>
                                   ) : (
@@ -1385,7 +1385,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                   )
                                 )}
                                 {activeTab === 'meine' && doc.isPublished && (
-                                  <span className="text-[10px] text-lime-400/90 bg-lime-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                  <span className="text-[10px] text-blue-300 bg-blue-500/15 px-2 py-0.5 rounded-full shrink-0">
                                     Freigegeben
                                   </span>
                                 )}
@@ -1438,7 +1438,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                 </div>
                                 {activeTab === 'community' && (
                                   isOwnItem(res) ? (
-                                    <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2.5 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                    <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2.5 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                       Von dir
                                     </span>
                                   ) : (
@@ -1448,7 +1448,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                   )
                                 )}
                                 {activeTab === 'meine' && res.isPublished && (
-                                  <span className="text-[10px] text-lime-400/90 bg-lime-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                  <span className="text-[10px] text-blue-300 bg-blue-500/15 px-2 py-0.5 rounded-full shrink-0">
                                     Freigegeben
                                   </span>
                                 )}
@@ -1490,7 +1490,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                 </div>
                                 {activeTab === 'community' && (
                                   isOwnItem(res) ? (
-                                    <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                    <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                       Von dir
                                     </span>
                                   ) : (
@@ -1500,7 +1500,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                   )
                                 )}
                                 {activeTab === 'meine' && res.isPublished && (
-                                  <span className="text-[10px] text-lime-400/90 bg-lime-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                  <span className="text-[10px] text-blue-300 bg-blue-500/15 px-2 py-0.5 rounded-full shrink-0">
                                     Freigegeben
                                   </span>
                                 )}
@@ -1553,7 +1553,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                 </div>
                                 {activeTab === 'community' && (
                                   isOwnItem(item) ? (
-                                    <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2.5 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                    <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2.5 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                       Von dir
                                     </span>
                                   ) : (
@@ -1563,7 +1563,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                   )
                                 )}
                                 {activeTab === 'meine' && item.isPublished && (
-                                  <span className="text-[10px] text-lime-400/90 bg-lime-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                  <span className="text-[10px] text-blue-300 bg-blue-500/15 px-2 py-0.5 rounded-full shrink-0">
                                     Freigegeben
                                   </span>
                                 )}
@@ -1605,7 +1605,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                 </div>
                                 {activeTab === 'community' && (
                                   isOwnItem(item) ? (
-                                    <span className="text-[11px] font-medium text-[#C5DC57] bg-[#C5DC57]/15 px-2 py-0.5 rounded-full border border-[#C5DC57]/30 shrink-0">
+                                    <span className="text-[11px] font-medium text-[#3b82f6] bg-blue-600/15 px-2 py-0.5 rounded-full border border-blue-500/30 shrink-0">
                                       Von dir
                                     </span>
                                   ) : (
@@ -1615,7 +1615,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
                                   )
                                 )}
                                 {activeTab === 'meine' && item.isPublished && (
-                                  <span className="text-[10px] text-lime-400/90 bg-lime-400/10 px-2 py-0.5 rounded-full shrink-0">
+                                  <span className="text-[10px] text-blue-300 bg-blue-500/15 px-2 py-0.5 rounded-full shrink-0">
                                     Freigegeben
                                   </span>
                                 )}
@@ -1837,7 +1837,7 @@ export const Mediathek: React.FC<MediathekProps> = ({
             exit={{ opacity: 0, y: 12, scale: 0.95 }}
             className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] px-4 py-2 rounded-full bg-[#1c1c1e] border border-white/15 text-white text-xs sm:text-sm font-medium shadow-2xl flex items-center gap-2 pointer-events-none"
           >
-            <Check className="w-4 h-4 text-lime-400 stroke-[2.2]" />
+            <Check className="w-4 h-4 text-blue-400 stroke-[2.2]" />
             <span>{feedbackToast}</span>
           </motion.div>
         )}

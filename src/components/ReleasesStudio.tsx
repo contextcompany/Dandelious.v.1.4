@@ -1010,16 +1010,16 @@ export const ReleasesStudio: React.FC<ReleasesStudioProps> = ({
                   <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/5">
                     <span className="text-neutral-400 block mb-1">Verfügbarkeit</span>
                     <div className="flex flex-wrap gap-1">
-                      {selectedRelease.platforms.map(p => (
-                        <span key={p} className="px-2 py-0.5 rounded bg-black/60 text-white text-[11px]">{p}</span>
+                      {selectedRelease.platforms.map((p, pIdx) => (
+                        <span key={`plat-${p}-${pIdx}`} className="px-2 py-0.5 rounded bg-black/60 text-white text-[11px]">{p}</span>
                       ))}
                     </div>
                   </div>
                   <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/5">
                     <span className="text-neutral-400 block mb-1">Genres</span>
                     <div className="flex flex-wrap gap-1">
-                      {selectedRelease.genres.map(g => (
-                        <span key={g} className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[11px]">{g}</span>
+                      {selectedRelease.genres.map((g, gIdx) => (
+                        <span key={`genre-${g}-${gIdx}`} className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[11px]">{g}</span>
                       ))}
                     </div>
                   </div>

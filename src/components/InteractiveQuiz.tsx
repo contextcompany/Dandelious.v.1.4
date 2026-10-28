@@ -65,7 +65,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({ data, onRestar
 
   const getGradeInfo = () => {
     if (percentage === 100) return { title: 'Perfekt!', badge: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30', text: 'Ausgezeichnet! Alle Antworten sind korrekt.' };
-    if (percentage >= 80) return { title: 'Sehr gut!', badge: 'bg-lime-900/30 text-lime-300 border-lime-500/30', text: 'Großartige Leistung, fast alles richtig!' };
+    if (percentage >= 80) return { title: 'Sehr gut!', badge: 'bg-blue-900/30 text-blue-300 border-blue-500/30', text: 'Großartige Leistung, fast alles richtig!' };
     if (percentage >= 50) return { title: 'Gut bestanden!', badge: 'bg-amber-500/20 text-amber-400 border-amber-500/30', text: 'Gutes Wissen, noch ein kleiner Feinschliff nötig.' };
     return { title: 'Dranbleiben!', badge: 'bg-rose-500/20 text-rose-400 border-rose-500/30', text: 'Versuche es noch einmal, um deinen Score zu verbessern!' };
   };
@@ -77,7 +77,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({ data, onRestar
       {/* Quiz Header */}
       <div className="px-5 py-4 bg-gradient-to-r from-[#1c1c22] to-[#16161b] border-b border-white/10 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-lime-500/10 border border-lime-500/20 flex items-center justify-center text-lime-400 shrink-0">
+          <div className="w-9 h-9 rounded-2xl bg-blue-500/15 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
             <Sparkles className="w-5 h-5" />
           </div>
           <div>
@@ -108,7 +108,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({ data, onRestar
 
             let tabStyle = 'bg-white/5 border-white/10 text-neutral-400 hover:bg-white/10';
             if (activeQuestion === idx) {
-              tabStyle = 'bg-lime-600 text-white font-bold border-lime-400 shadow-md';
+              tabStyle = 'bg-blue-600 text-white font-bold border-blue-400 shadow-md';
             } else if (isSubmitted) {
               if (isCorrect) tabStyle = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40';
               if (isWrong) tabStyle = 'bg-rose-500/20 text-rose-400 border-rose-500/40';
@@ -135,7 +135,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({ data, onRestar
         {/* Current Active Question Display */}
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-lime-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-400">
               Frage {activeQuestion + 1} von {totalQuestions}
             </span>
             <h4 className="text-base sm:text-lg font-semibold text-white leading-relaxed">
@@ -163,8 +163,8 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({ data, onRestar
                   optionStyle = 'bg-[#151518] border-white/5 text-neutral-500 opacity-60';
                 }
               } else if (isSelected) {
-                optionStyle = 'bg-lime-600/15 border-lime-500/50 text-white font-medium shadow-[0_0_15px_rgba(147,51,234,0.15)]';
-                badgeColor = 'bg-lime-600 text-white font-bold';
+                optionStyle = 'bg-blue-600/15 border-blue-500/50 text-white font-medium shadow-[0_0_15px_rgba(147,51,234,0.15)]';
+                badgeColor = 'bg-blue-600 text-white font-bold';
               }
 
               return (
@@ -191,7 +191,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({ data, onRestar
                         <XCircle className="w-5 h-5 text-rose-400" />
                       ) : null
                     ) : (
-                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected ? 'border-lime-400 bg-lime-500' : 'border-neutral-600'}`}>
+                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${isSelected ? 'border-blue-400 bg-blue-500' : 'border-neutral-600'}`}>
                         {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                       </div>
                     )}
@@ -208,7 +208,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({ data, onRestar
               animate={{ opacity: 1, y: 0 }}
               className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-neutral-300 space-y-1"
             >
-              <div className="flex items-center gap-1.5 text-lime-400 font-semibold">
+              <div className="flex items-center gap-1.5 text-blue-400 font-semibold">
                 <HelpCircle className="w-3.5 h-3.5" />
                 <span>Erklärung:</span>
               </div>
@@ -246,7 +246,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({ data, onRestar
                 type="button"
                 onClick={() => setIsSubmitted(true)}
                 disabled={!isAllAnswered}
-                className="px-5 py-2.5 rounded-2xl bg-lime-600 hover:bg-lime-500 disabled:bg-neutral-800 disabled:text-neutral-500 text-white text-xs font-bold transition-all shadow-lg hover:scale-105 active:scale-95 cursor-pointer disabled:cursor-not-allowed flex items-center gap-2"
+                className="px-5 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-500 disabled:bg-neutral-800 disabled:text-neutral-500 text-white text-xs font-bold transition-all shadow-lg hover:scale-105 active:scale-95 cursor-pointer disabled:cursor-not-allowed flex items-center gap-2"
               >
                 <Trophy className="w-4 h-4" />
                 <span>Quiz jetzt auswerten</span>
@@ -271,7 +271,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({ data, onRestar
             animate={{ opacity: 1, scale: 1 }}
             className="p-5 rounded-3xl bg-gradient-to-br from-[#1a1a22] to-[#121216] border border-white/15 text-center space-y-3 shadow-xl"
           >
-            <div className="w-12 h-12 rounded-full bg-lime-500/20 text-lime-400 border border-lime-500/30 flex items-center justify-center mx-auto">
+            <div className="w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center mx-auto">
               <Award className="w-6 h-6" />
             </div>
 
@@ -282,7 +282,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({ data, onRestar
 
             <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-2xl bg-black/40 border border-white/10 text-sm font-bold text-white">
               <span>Testergebnis:</span>
-              <span className="text-lime-400 text-base">{score} / {totalQuestions}</span>
+              <span className="text-blue-400 text-base">{score} / {totalQuestions}</span>
               <span className="text-neutral-400 font-normal">({percentage}%)</span>
             </div>
           </motion.div>

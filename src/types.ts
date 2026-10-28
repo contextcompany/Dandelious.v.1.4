@@ -46,6 +46,11 @@ export interface DeepResearchData {
   reportContent?: string;
 }
 
+export interface ImageGenEmbedData {
+  type: 'image_gen_unavailable';
+  originalPrompt?: string;
+}
+
 export interface Message {
   id: string;
   role: 'user' | 'assistant' | 'system';
@@ -57,6 +62,7 @@ export interface Message {
   error?: boolean;
   images?: MessageImage[];
   deepResearchData?: DeepResearchData;
+  imageGenEmbed?: ImageGenEmbedData;
   isPinned?: boolean;
   autoRouting?: {
     provider: 'gemini' | 'openai';
